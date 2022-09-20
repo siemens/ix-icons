@@ -20,7 +20,7 @@
   "scripts": {
     "start": "gulp watch",
     "build": "gulp symbols",
-    "test": "node ./tests/is-icon-generated.mjs.mjs"
+    "test": "node ./tests/is-icon-generated.mjs"
   },
   "private": false,
   "files": [
