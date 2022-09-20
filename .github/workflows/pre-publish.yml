@@ -14,6 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/build
-      - uses: ./.github/workflows/test
+      - uses: ./.github/workflows/actions/test
       - name: publish lib
         run: yarn publish --tag beta
