@@ -2,8 +2,8 @@ name: build
 
 on: [push, pull_request, workflow_dispatch]
 
-concurrency: 
-  group: ${{ github.sha }}
+concurrency:
+  group: ci-${{ github.sha }}
   cancel-in-progress: true
 
 jobs:

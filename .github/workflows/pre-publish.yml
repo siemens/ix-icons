@@ -5,6 +5,10 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+'
 
+concurrency:
+  group: prepublish-${{ github.sha }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,7 +18,12 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
     steps:
       - uses: actions/checkout@v3
+
       - uses: ./.github/workflows/actions/build
+
       - uses: ./.github/workflows/actions/test
-      - name: publish lib
-        run: echo yarn publish --tag beta
+
+      - name: Publish beta version to npmjs.org
+        run: yarn publish --tag beta
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
