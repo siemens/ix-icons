@@ -15,11 +15,9 @@ jobs:
         with:
           node-version: 16
       - name: load dependencies
-        run: |
-          - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
-          - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
-          - yarn install --frozen-lockfile --no-progress
-          - yarn build
+        run: echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
+        run: echo 'yarn-offline-mirror-pruning true' >> .yarnrc
+        run: yarn install --frozen-lockfile --no-progress
+        run: yarn build
       - name: build
-        run: |
-          yarn build
+        run: yarn build
