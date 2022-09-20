@@ -1,8 +1,13 @@
-name: publish
+name: pre-publish
 
 on:
-  release:
-    types: [prerelease]
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+'
+
+concurrency:
+  group: prepublish-${{ github.sha }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -13,7 +18,12 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
     steps:
       - uses: actions/checkout@v3
+
       - uses: ./.github/workflows/actions/build
+
       - uses: ./.github/workflows/actions/test
-      - name: publish lib
-        run: yarn publish --tag beta
+
+      - name: Publish beta version to npmjs.org
+        run: yarn publish --access public --tag beta
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
