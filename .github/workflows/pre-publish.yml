@@ -2,7 +2,7 @@ name: publish
 
 on:
   release:
-    types: [published]
+    types: [prerelease]
 
 jobs:
   build:
@@ -14,6 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/build
-      - uses: ./.github/workflows/actions/test
+      - uses: ./.github/workflows/test
       - name: publish lib
-        run: yarn publish
+        run: yarn publish --tag beta

@@ -19,7 +19,8 @@
   },
   "scripts": {
     "start": "gulp watch",
-    "build": "gulp symbols"
+    "build": "gulp symbols",
+    "test": "node ./tests/is-icon-generated.mjs.mjs"
   },
   "private": false,
   "files": [
@@ -31,6 +32,8 @@
     "dist/sample.json"
   ],
   "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "fs-extra": "^10.1.0",
     "gulp": "^4.0.2",
     "gulp-consolidate": "^0.2.0",
     "gulp-iconfont": "^11.0.0",
