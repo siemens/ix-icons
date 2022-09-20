@@ -28,3 +28,4 @@ jobs:
           name: dist
           path: |
             dist
+        if: github.head_ref == 'main'
