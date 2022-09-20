@@ -1,0 +1,19 @@
+name: publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: node:16.16.0
+      env:
+        DEBIAN_FRONTEND: noninteractive
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/actions/build
+      - uses: ./.github/workflows/actions/test
+      - name: publish lib
+        run: yarn publish
