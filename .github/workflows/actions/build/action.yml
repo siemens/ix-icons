@@ -12,6 +12,7 @@ runs:
       run: |
         echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
         echo 'yarn-offline-mirror-pruning true' >> .yarnrc
+      shell: bash
     - uses: actions/cache@v2
       id: cache
       with:
@@ -20,8 +21,10 @@ runs:
     - name: install
       if: steps.cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile --no-progress
+      shell: bash
     - name: build
       run: yarn build
+      shell: bash
     - uses: actions/upload-artifact@v3
       with:
         name: dist
