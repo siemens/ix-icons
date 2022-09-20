@@ -18,7 +18,7 @@ runs:
       id: cache
       with:
         path: ./node_modules
-        key: yarn-modules-${{ hashFiles('yarn-lock.json') }}
+        key: yarn-modules-${{ hashFiles('yarn.lock') }}
 
     - name: install
       if: steps.cache.outputs.cache-hit != 'true'
