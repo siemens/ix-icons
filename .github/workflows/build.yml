@@ -4,6 +4,11 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
+    runs-on: ubuntu-latest
+      container:
+          image: node:16.16.0
+          env:
+              DEBIAN_FRONTEND: noninteractive
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
