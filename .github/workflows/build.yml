@@ -1,6 +1,8 @@
 name: build
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  pull_request:
+    branches: ['**']
 
 jobs:
   build:
@@ -11,41 +13,4 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: 'https://registry.npmjs.org'
-      - name: configure yarnrc
-        run: |
-          echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
-          echo 'yarn-offline-mirror-pruning true' >> .yarnrc
-      - uses: actions/cache@v2
-        id: cache
-        with:
-          path: ./node_modules
-          key: yarn-modules-${{ hashFiles('yarn-lock.json') }}
-      - name: install
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile --no-progress
-      - name: build
-        run: yarn build
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist
-          path: |
-            dist
-        if: github.head_ref == 'main'
-
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-    container:
-      image: node:16.16.0
-      env:
-        DEBIAN_FRONTEND: noninteractive
-    steps:
-      - name: Download dist
-        uses: actions/download-artifact@v3
-      - name: publish
-        run: echo $GITHUB_EVENT_NAME
+      - uses: ./.github/workflows/actions/build
