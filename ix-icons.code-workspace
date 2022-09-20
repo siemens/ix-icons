@@ -1,0 +1,34 @@
+{
+  "folders": [
+    {
+      "name": "@siemens/ix-icons",
+      "path": "."
+    }
+  ],
+  "settings": {
+      "psi-header.config": {
+        "blankLinesAfter": 0,
+        "forceToTop": true
+      },
+      "psi-header.templates": [
+        {
+          "language": "*",
+          "template": [
+            "SPDX-FileCopyrightText: <<year>> Siemens AG",
+            "",
+            "SPDX-License-Identifier: MIT",
+            "",
+            "This source code is licensed under the MIT license found in the",
+            "LICENSE file in the root directory of this source tree."
+          ]
+        }
+      ],
+      "psi-header.changes-tracking": {
+        "isActive": true,
+        "enforceHeader": false,
+        "autoHeader": "autoSave",
+        "language": "*",
+        "exclude": ["yaml", "md"]
+      },
+  }
+}

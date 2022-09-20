@@ -1,0 +1,7 @@
+{
+  "icons": [
+    <% _.each(glyphs, function(glyph, idx, array) { %>
+      "<%= glyph.name %>" <% if (idx !== array.length - 1){ %>, <% } %>
+    <% }); %>
+  ]
+}
