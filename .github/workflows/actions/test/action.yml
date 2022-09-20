@@ -3,11 +3,6 @@ description: 'Test if all svg files are generated to dist'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        registry-url: 'https://registry.npmjs.org'
-    - name: build
+    - name: test
       run: yarn test
       shell: bash

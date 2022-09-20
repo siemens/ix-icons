@@ -1,8 +1,9 @@
 name: publish
 
 on:
-  release:
-    types: [prerelease]
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+'
 
 jobs:
   build:
@@ -16,4 +17,4 @@ jobs:
       - uses: ./.github/workflows/actions/build
       - uses: ./.github/workflows/actions/test
       - name: publish lib
-        run: yarn publish --tag beta
+        run: echo yarn publish --tag beta

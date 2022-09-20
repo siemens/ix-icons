@@ -1,8 +1,10 @@
 name: build
 
-on:
-  pull_request:
-    branches: ['**']
+on: [push, pull_request, workflow_dispatch]
+
+concurrency: 
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
