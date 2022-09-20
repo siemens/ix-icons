@@ -1,0 +1,20 @@
+name: build
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: load dependencies
+        run: |
+          - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
+          - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
+          - yarn install --frozen-lockfile --no-progress
+          - yarn build
+      - name: build
+        run: |
+          yarn build
