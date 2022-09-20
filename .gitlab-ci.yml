@@ -1,0 +1,36 @@
+# stages:
+#   - build
+#   - pages
+
+# build:
+#   stage: build
+#   script:
+#     - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
+#     - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
+#     - yarn install --frozen-lockfile --no-progress
+#     - yarn build
+#   cache:
+#     key:
+#       files:
+#         - yarn.lock
+#     paths:
+#       - .yarn-cache/
+#   artifacts:
+#     paths:
+#       - dist
+#     expire_in: 1 hour
+
+# pages:
+#   stage: pages
+#   needs:
+#     - job: build
+#       artifacts: true
+#   script:
+#     - cp -R dist public
+#     - mv public/sample.html public/index.html
+#   artifacts:
+#     name: 'bin'
+#     paths:
+#       - public
+#   rules:
+#     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
