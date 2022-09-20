@@ -1,0 +1,31 @@
+name: build
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: node:16.16.0
+      env:
+        DEBIAN_FRONTEND: noninteractive
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: configure yarnrc
+        run: |
+          echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
+          echo 'yarn-offline-mirror-pruning true' >> .yarnrc
+      - name: install
+        run: yarn install --frozen-lockfile --no-progress
+      - name: build
+        run: yarn build
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: |
+            dist
+        if: github.head_ref == 'main'
