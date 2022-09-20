@@ -3,7 +3,7 @@ name: build
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  install:
+  build:
     runs-on: ubuntu-latest
     container:
       image: node:16.16.0
