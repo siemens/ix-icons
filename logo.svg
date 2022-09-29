@@ -1,0 +1,16 @@
+<!--
+SPDX-FileCopyrightText: 2022 Siemens AG
+
+SPDX-License-Identifier: MIT
+
+This source code is licensed under the MIT license found in the
+LICENSE file in the root directory of this source tree.
+-->
+<svg data-name="220920_iX_Logo_transparenz" xmlns="http://www.w3.org/2000/svg" width="244" height="178" viewBox="0 0 244 178">
+  <path d="M0 0h244v178H0z" style="fill:#333353;opacity:.9"/>
+  <g data-name="Gruppe 4617">
+      <path data-name="Pfad 4043" d="M216.5 48h-33.94L152 78.56 121.44 48H87.5l47.53 47.53L88.56 142h33.94l29.5-29.5 29.5 29.5h33.94l-46.47-46.47z" style="fill:#00bedc"/>
+      <path data-name="Rechteck 1096" transform="translate(36 72)" style="fill:#00bedc" d="M0 0h24v70H0z"/>
+      <circle data-name="Ellipse 35" cx="12" cy="12" r="12" transform="translate(36 24)" style="fill:#00bedc"/>
+  </g>
+</svg>
