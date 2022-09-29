@@ -8,7 +8,6 @@ SPDX-License-Identifier: MIT
 
 > Siemens Industrial Experience Icons
 
-![version](https://img.shields.io/badge/version-0.0.0-green.svg)
 ![npm](https://img.shields.io/badge/npm-%3E%3D8.x.x-blue.svg)
 ![node](https://img.shields.io/badge/node-%3E%3D16.16.x-blue.svg)
 ![yarn](https://img.shields.io/badge/yarn->=1.x.x-blue.svg)
@@ -17,6 +16,17 @@ SPDX-License-Identifier: MIT
 Icon web font library for `@siemens/ix`
 
 ## Usage
+
+Using icons within your project. You need to:
+
+- Install `@siemens/ix-icons` e.g `npm install --save @siemens/ix-icons`
+- Load styling `@siemens/ix-icons/dist/scss/ix-icons.css` e.g
+
+```scss
+@import '@siemens/ix-icons/dist/scss/ix-icons.css';
+```
+
+## Development
 
 ### Installation
 
