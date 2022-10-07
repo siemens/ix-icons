@@ -26,56 +26,57 @@ jobs:
           path: |
             dist
 
-  visual-test:
-    needs: [build]
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.24.0-focal
-      env:
-        DEBIAN_FRONTEND: noninteractive
-    steps:
-      - uses: actions/checkout@v3
-      - name: Remove .npmrc
-        run: rm .npmrc
+  # Will be fixed with #5
+  # visual-test:
+  #   needs: [build]
+  #   timeout-minutes: 60
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: mcr.microsoft.com/playwright:v1.24.0-focal
+  #     env:
+  #       DEBIAN_FRONTEND: noninteractive
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Remove .npmrc
+  #       run: rm .npmrc
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: 'https://registry.npmjs.org'
-          scope: '@siemens'
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #         registry-url: 'https://registry.npmjs.org'
+  #         scope: '@siemens'
 
-      - name: configure yarnrc
-        run: |
-          echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
-          echo 'yarn-offline-mirror-pruning true' >> .yarnrc
+  #     - name: configure yarnrc
+  #       run: |
+  #         echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
+  #         echo 'yarn-offline-mirror-pruning true' >> .yarnrc
 
-      - uses: actions/cache@v2
-        id: cache
-        with:
-          path: ./node_modules
-          key: yarn-${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+  #     - uses: actions/cache@v2
+  #       id: cache
+  #       with:
+  #         path: ./node_modules
+  #         key: yarn-${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
 
-      - name: install
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile --no-progress
+  #     - name: install
+  #       if: steps.cache.outputs.cache-hit != 'true'
+  #       run: yarn install --frozen-lockfile --no-progress
 
-      - uses: actions/cache@v2
-        id: build
-        with:
-          key: build-${{ runner.os }}-${{ github.sha }}
-          path: |
-            dist
+  #     - uses: actions/cache@v2
+  #       id: build
+  #       with:
+  #         key: build-${{ runner.os }}-${{ github.sha }}
+  #         path: |
+  #           dist
 
-      - name: Install Playwright Browsers
-        run: yarn playwright install chromium
+  #     - name: Install Playwright Browsers
+  #       run: yarn playwright install chromium
 
-      - name: test
-        run: yarn test
+  #     - name: test
+  #       run: yarn test
 
-      - uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 1
+  #     - uses: actions/upload-artifact@v2
+  #       if: always()
+  #       with:
+  #         name: playwright-report
+  #         path: playwright-report/
+  #         retention-days: 1
