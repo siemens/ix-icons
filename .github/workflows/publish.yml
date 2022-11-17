@@ -18,11 +18,7 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
     steps:
       - uses: actions/checkout@v3
-
       - uses: ./.github/workflows/actions/build
-
-      - uses: ./.github/workflows/actions/test
-
       - name: Publish to npmjs.org
         run: yarn publish --access public
         env:
