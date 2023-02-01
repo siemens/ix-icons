@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:cc="http://creativecommons.org/ns#">
+    <metadata>
+        <cc:Work>
+            <cc:license>https://creativecommons.org/licenses/by/4.0/</cc:license>
+            <cc:attributionName>Christoph Doering</cc:attributionName>
+            <cc:attributionURL>http://keyboardkungfu.io</cc:attributionURL>
+        </cc:Work>
+    </metadata>
+    <title>batteryHealth-A</title>
+    <g id="batteryHealth-A" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M4,8 L4,16 L2,16 L2,8 L4,8 Z M22,5 L22,19 L6,19 L6,5 L22,5 Z M20,7 L8,7 L8,17 L20,17 L20,7 Z M15,8 L15,11 L18,11 L18,13 L15,13 L15,16 L13,16 L13,13 L10,13 L10,11 L13,11 L13,8 L15,8 Z" id="Shape" fill="currentColor"></path>
+    </g>
+</svg>
