@@ -24,18 +24,18 @@
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/ixicons/ixicons.esm.js",
+  "unpkg": "dist/ix-icons/ix-icons.esm.js",
   "files": [
     "dist/",
     "loader/"
   ],
   "scripts": {
-    "build": "stencil build --docs",
+    "build": "stencil build --docs && yarn build:icons",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
-    "build:icons": "rimraf dist && gulp symbols",
+    "build:icons": "gulp symbols",
     "test:icons": "node ./tests/is-icon-generated.mjs && playwright test",
     "host": "http-server -a 127.0.0.1 -p 8080 ./dist"
   },
