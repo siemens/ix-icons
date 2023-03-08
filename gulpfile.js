@@ -15,6 +15,7 @@ const consolidate = require('gulp-consolidate');
 const fontName = 'ix-icons';
 const className = 'glyph';
 const template = 'ix-style';
+const templateInternal = 'ix-style-internal';
 
 const timestamp = Math.round(Date.now() / 1000);
 
@@ -23,7 +24,7 @@ gulp.task(
   gulp.series(() =>
     gulp
       .src('./svg/*.svg')
-      .pipe(gulp.dest('dist/svg'))
+      .pipe(gulp.dest('dist-css/svg'))
       .pipe(
         iconfont({
           fontName,
@@ -46,29 +47,32 @@ gulp.task(
           .src(`templates/${template}.css`)
           .pipe(consolidate('lodash', options))
           .pipe(rename({ basename: fontName }))
-          .pipe(gulp.dest('dist/css/'))
-          .pipe(gulp.dest('www/css/'));
+          .pipe(gulp.dest('dist-css/css/'));
 
         gulp
           .src(`templates/${template}.scss`)
           .pipe(consolidate('lodash', options))
           .pipe(rename({ basename: fontName }))
-          .pipe(gulp.dest('dist/scss/'))
-          .pipe(gulp.dest('www/scss/'));
+          .pipe(gulp.dest('dist-css/scss/'));
+
+        gulp
+          .src(`templates/${templateInternal}.scss`)
+          .pipe(consolidate('lodash', options))
+          .pipe(rename({ basename: fontName }))
+          .pipe(gulp.dest('src/components/icon/generated'));
 
         gulp
           .src(`templates/${template}.html`)
           .pipe(consolidate('lodash', options))
           .pipe(rename({ basename: 'sample' }))
-          .pipe(gulp.dest('dist/'));
+          .pipe(gulp.dest('dist-css/'));
 
         gulp
           .src(`templates/${template}.json`)
           .pipe(consolidate('lodash', options))
           .pipe(rename({ basename: 'sample' }))
-          .pipe(gulp.dest('dist/'));
+          .pipe(gulp.dest('dist-css/'));
       })
-      .pipe(gulp.dest('dist/fonts/'))
-      .pipe(gulp.dest('www/fonts/')),
+      .pipe(gulp.dest('dist-css/fonts/')),
   ),
 );

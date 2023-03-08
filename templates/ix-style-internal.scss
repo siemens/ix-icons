@@ -1,0 +1,37 @@
+/*
+ * COPYRIGHT (c) Siemens AG 2018-2023 ALL RIGHTS RESERVED.
+ */
+.<%= className %> {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  font-family: "<%= fontName %>";
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.<%= className %>-lg {
+  font-size: 1.3333333333333333em;
+  line-height: 0.75em;
+  vertical-align: -15%;
+}
+.<%= className %>-2x { font-size: 2em; }
+.<%= className %>-3x { font-size: 3em; }
+.<%= className %>-4x { font-size: 4em; }
+.<%= className %>-5x { font-size: 5em; }
+.<%= className %>-fw {
+  width: 1.2857142857142858em;
+  text-align: center;
+}
+
+.<%= className %>-12 { font-size: 0.75rem; }
+.<%= className %>-16 { font-size: 1rem; }
+.<%= className %>-24 { font-size: 1.5rem; }
+.<%= className %>-32 { font-size: 2rem; }
+
+<% _.each(glyphs, function(glyph) { %>.<%= className %>-<%= glyph.name %>:before { content: "\<%= glyph.codepoint.toString(16).toUpperCase() %>" }
+<% }); %>

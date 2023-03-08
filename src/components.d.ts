@@ -7,7 +7,18 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface IxIcon {
+        /**
+          * Color of the icon
+         */
+        "color": string;
+        /**
+          * Use one of our defined icon names e.g. `copy`.
+         */
         "name": string;
+        /**
+          * Size of the icon
+         */
+        "size": '12' | '16' | '24' | '32';
     }
     interface MyComponent {
     }
@@ -32,7 +43,18 @@ declare global {
 }
 declare namespace LocalJSX {
     interface IxIcon {
+        /**
+          * Color of the icon
+         */
+        "color"?: string;
+        /**
+          * Use one of our defined icon names e.g. `copy`.
+         */
         "name"?: string;
+        /**
+          * Size of the icon
+         */
+        "size"?: '12' | '16' | '24' | '32';
     }
     interface MyComponent {
     }

@@ -30,8 +30,8 @@
     "loader/"
   ],
   "scripts": {
-    "build": "stencil build --docs && yarn build:icons",
-    "start": "stencil build --dev --watch --serve  && yarn build:icons",
+    "build": "rimraf dist-css && yarn build:icons && stencil build --docs",
+    "start": "rimraf dist-css && yarn build:icons && stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",

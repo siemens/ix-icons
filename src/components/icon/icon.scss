@@ -1,6 +1,36 @@
+/*
+ * SPDX-FileCopyrightText: 2023 Siemens AG
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@import './generated/ix-icons';
+
 :host {
-  display: block;
-  background-color: #ff0000a4;
-  width: 32px;
-  height: 32px;
+  display: inline-flex;
+  height: 1.5rem;
+  width: 1.5rem;
+
+  i {
+    color: inherit;
+    transition: color 150ms;
+  }
+}
+
+:host(.size-12) {
+  height: 0.75rem;
+  width: 0.75rem;
+}
+
+:host(.size-16) {
+  height: 1rem;
+  width: 1rem;
+}
+
+:host(.size-32) {
+  height: 2rem;
+  width: 2rem;
 }
