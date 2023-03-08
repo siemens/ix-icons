@@ -1,6 +1,6 @@
 {
   "name": "@siemens/ix-icons",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "license": "MIT",
   "description": "Siemens ix icon library",
   "author": "Siemens AG",
@@ -17,22 +17,37 @@
     "npm": ">=8.x.x",
     "node": ">=16.16.x"
   },
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/types/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/ixicons/ixicons.esm.js",
+  "files": [
+    "dist/",
+    "loader/"
+  ],
   "scripts": {
-    "start": "gulp watch",
-    "build": "rimraf dist && gulp symbols",
-    "test": "node ./tests/is-icon-generated.mjs && playwright test",
+    "build": "stencil build --docs",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate",
+    "build:icons": "rimraf dist && gulp symbols",
+    "test:icons": "node ./tests/is-icon-generated.mjs && playwright test",
     "host": "http-server -a 127.0.0.1 -p 8080 ./dist"
   },
-  "private": false,
-  "files": [
-    "dist/css/",
-    "dist/svg/",
-    "dist/scss/",
-    "dist/fonts/",
-    "dist/sample.html",
-    "dist/sample.json"
-  ],
+  "dependencies": {
+    "@stencil/core": "^3.0.0"
+  },
   "devDependencies": {
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.11",
+    "jest": "^27.5.1",
+    "jest-cli": "^27.5.1",
+    "puppeteer": "^19.5.2",
     "@playwright/test": "^1.26.1",
     "@types/fs-extra": "^9.0.13",
     "fs-extra": "^10.1.0",
