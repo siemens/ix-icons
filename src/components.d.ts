@@ -6,10 +6,19 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface IxIcon {
+        "name": string;
+    }
     interface MyComponent {
     }
 }
 declare global {
+    interface HTMLIxIconElement extends Components.IxIcon, HTMLStencilElement {
+    }
+    var HTMLIxIconElement: {
+        prototype: HTMLIxIconElement;
+        new (): HTMLIxIconElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -17,13 +26,18 @@ declare global {
         new (): HTMLMyComponentElement;
     };
     interface HTMLElementTagNameMap {
+        "ix-icon": HTMLIxIconElement;
         "my-component": HTMLMyComponentElement;
     }
 }
 declare namespace LocalJSX {
+    interface IxIcon {
+        "name"?: string;
+    }
     interface MyComponent {
     }
     interface IntrinsicElements {
+        "ix-icon": IxIcon;
         "my-component": MyComponent;
     }
 }
@@ -31,6 +45,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "ix-icon": LocalJSX.IxIcon & JSXBase.HTMLAttributes<HTMLIxIconElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
         }
     }

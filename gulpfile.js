@@ -30,14 +30,14 @@ gulp.task(
           formats: ['ttf', 'eot', 'woff', 'woff2', 'svg'],
           timestamp,
           log: () => {},
-        })
+        }),
       )
-      .on('glyphs', (glyphs) => {
+      .on('glyphs', glyphs => {
         const options = {
           className,
           fontName,
           fontPath: '../fonts/',
-          glyphs: glyphs.map((glyph) => ({
+          glyphs: glyphs.map(glyph => ({
             name: glyph.name,
             codepoint: glyph.unicode[0].charCodeAt(0),
           })),
@@ -46,13 +46,15 @@ gulp.task(
           .src(`templates/${template}.css`)
           .pipe(consolidate('lodash', options))
           .pipe(rename({ basename: fontName }))
-          .pipe(gulp.dest('dist/css/'));
+          .pipe(gulp.dest('dist/css/'))
+          .pipe(gulp.dest('www/css/'));
 
         gulp
           .src(`templates/${template}.scss`)
           .pipe(consolidate('lodash', options))
           .pipe(rename({ basename: fontName }))
-          .pipe(gulp.dest('dist/scss/'));
+          .pipe(gulp.dest('dist/scss/'))
+          .pipe(gulp.dest('www/scss/'));
 
         gulp
           .src(`templates/${template}.html`)
@@ -67,5 +69,6 @@ gulp.task(
           .pipe(gulp.dest('dist/'));
       })
       .pipe(gulp.dest('dist/fonts/'))
-  )
+      .pipe(gulp.dest('www/fonts/')),
+  ),
 );
