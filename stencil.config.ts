@@ -32,6 +32,10 @@ export const config: Config = {
       ],
     },
     {
+      type: 'dist-custom-elements',
+      dir: 'dist/collection/components',
+    },
+    {
       type: 'www',
       serviceWorker: null, // disable service workers
       copy: [
