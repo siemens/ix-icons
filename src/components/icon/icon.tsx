@@ -7,12 +7,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, h, Host, Prop } from '@stencil/core';
+import { Component, getAssetPath, h, Host, Prop, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ix-icon',
   styleUrl: 'icon.scss',
   shadow: true,
+  assetsDirs: ['svg'],
 })
 export class Icon {
   /**
@@ -29,6 +30,26 @@ export class Icon {
    * Use one of our defined icon names e.g. `copy`.
    */
   @Prop({ reflect: true }) name: string;
+
+  /**
+   * Path to the svg
+   */
+  @Prop() src?: string;
+
+  @State() svgContent?: string;
+
+  connectedCallback() {
+    this.fetchIcon();
+  }
+
+  @Watch('src')
+  @Watch('name')
+  async fetchIcon() {
+    const response = await fetch(getAssetPath('svg/rocket.svg'));
+    if (response.ok) {
+      console.log(await response.text());
+    }
+  }
 
   render() {
     const style: {
@@ -48,20 +69,32 @@ export class Icon {
           ['size-24']: this.size === '24',
           ['size-32']: this.size === '32',
         }}
-      >
-        <i
-          class={{
-            'glyph': true,
-            [`glyph-${this.name}`]: true,
-            'glyph-12': this.size === '12',
-            'glyph-16': this.size === '16',
-            'glyph-24': this.size === '24',
-            'glyph-32': this.size === '32',
-          }}
-        >
-          <slot></slot>
-        </i>
-      </Host>
+      ></Host>
     );
+
+    // return (
+    //   <Host
+    //     style={style}
+    //     class={{
+    //       ['size-12']: this.size === '12',
+    //       ['size-16']: this.size === '16',
+    //       ['size-24']: this.size === '24',
+    //       ['size-32']: this.size === '32',
+    //     }}
+    //   >
+    //     <i
+    //       class={{
+    //         'glyph': true,
+    //         [`glyph-${this.name}`]: true,
+    //         'glyph-12': this.size === '12',
+    //         'glyph-16': this.size === '16',
+    //         'glyph-24': this.size === '24',
+    //         'glyph-32': this.size === '32',
+    //       }}
+    //     >
+    //       <slot></slot>
+    //     </i>
+    //   </Host>
+    // );
   }
 }

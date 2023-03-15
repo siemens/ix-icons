@@ -35,3 +35,6 @@ dist-css/
 .DS_Store
 test-results
 playwright-report
+
+src/components/icon/svg/*
+components/

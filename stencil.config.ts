@@ -33,7 +33,7 @@ export const config: Config = {
     },
     {
       type: 'dist-custom-elements',
-      dir: 'dist/collection/components',
+      dir: 'components',
     },
     {
       type: 'www',

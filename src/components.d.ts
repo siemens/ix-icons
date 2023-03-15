@@ -19,6 +19,10 @@ export namespace Components {
           * Size of the icon
          */
         "size": '12' | '16' | '24' | '32';
+        /**
+          * Path to the svg
+         */
+        "src"?: string;
     }
 }
 declare global {
@@ -46,6 +50,10 @@ declare namespace LocalJSX {
           * Size of the icon
          */
         "size"?: '12' | '16' | '24' | '32';
+        /**
+          * Path to the svg
+         */
+        "src"?: string;
     }
     interface IntrinsicElements {
         "ix-icon": IxIcon;
