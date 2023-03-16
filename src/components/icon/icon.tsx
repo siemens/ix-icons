@@ -8,7 +8,7 @@
  */
 
 import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
-import { fetchIconResource, resolveIcon } from './utils';
+import { resolveIcon } from './utils';
 
 @Component({
   tag: 'ix-icon',
@@ -51,19 +51,7 @@ export class Icon {
   @Watch('name')
   @Watch('icon')
   async loadIconContent() {
-    if (this.name || this.icon) {
-      this.svgContent = resolveIcon(this.name ?? this.icon)?.unsafeHtml;
-      return;
-    }
-
-    if (this.src) {
-      this.svgContent = await fetchIconResource(this.src);
-      return;
-    }
-  }
-
-  private shouldRenderWebFont() {
-    return !this.svgContent && (this.icon || this.name);
+    this.svgContent = await resolveIcon(this);
   }
 
   render() {
@@ -75,7 +63,7 @@ export class Icon {
       style['color'] = `var(--theme-${this.color})`;
     }
 
-    if (this.shouldRenderWebFont()) {
+    if (!this.svgContent) {
       const iconName = this.name ?? this.icon;
       return (
         <Host
