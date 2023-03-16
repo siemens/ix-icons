@@ -11,17 +11,34 @@ import path from 'path';
 import rimraf from 'rimraf';
 import { optimize } from 'svgo';
 
-const rootPath = path.join(__dirname, '..');
+const __dirname = path.resolve();
+
+const rootPath = path.join(__dirname);
 const svgSrcPath = path.join(rootPath, 'svg');
+const pkgPath = path.join(rootPath, 'package.json');
 
 const iconsDestPath = path.join(__dirname, 'icons');
 const iconsEsmPath = path.join(iconsDestPath, 'index.mjs');
+const iconsCjsPath = path.join(iconsDestPath, 'index.js');
+const iconsDtsPath = path.join(iconsDestPath, 'index.d.ts');
+const iconsPkgPath = path.join(iconsDestPath, 'package.json');
 
 interface BuildIconData {
   name: string;
   esm: string;
   cjs: string;
   dts: string;
+}
+
+interface JavaScriptBuildData {
+  name: string;
+  code: string;
+}
+
+function getPkgVersion() {
+  const pkg = JSON.parse(fs.readFileSync(pkgPath).toString());
+
+  return pkg.version;
 }
 
 function convertToCamelCase(value: string) {
@@ -45,14 +62,15 @@ function convertToCamelCase(value: string) {
 
 function optimizeSvgData(svgData: string) {
   return optimize(svgData, {
-    plugins: ['preset-default'],
+    plugins: [],
   }).data;
 }
 
 async function buildIcons() {
-  rimraf(iconsDestPath);
+  await rimraf(iconsDestPath);
   fs.ensureDirSync(iconsDestPath);
 
+  const version = getPkgVersion();
   const svgIcons = fs.readdirSync(svgSrcPath);
   const iconCollection: BuildIconData[] = [];
 
@@ -67,8 +85,6 @@ async function buildIcons() {
       // throw new Error(`Svg icon name ${iconName} is a reserved keyword.`);
     }
 
-    console.log(iconName);
-
     iconCollection.push({
       name: iconName,
       cjs: `exports.${iconName} = ${getDataUrl(svgDataOptimized)}`,
@@ -77,22 +93,61 @@ async function buildIcons() {
     });
   });
 
-  await Promise.all([writeESMIcons(iconCollection)]);
+  await Promise.all([
+    writeJSFile(
+      iconCollection.map(i => ({
+        name: i.name,
+        code: i.esm,
+      })),
+      iconsEsmPath,
+      version,
+    ),
+
+    writeJSFile(
+      iconCollection.map(i => ({
+        name: i.name,
+        code: i.cjs,
+      })),
+      iconsCjsPath,
+      version,
+    ),
+
+    writeJSFile(
+      iconCollection.map(i => ({
+        name: i.name,
+        code: i.dts,
+      })),
+      iconsDtsPath,
+      version,
+    ),
+
+    fs.writeFile(
+      iconsPkgPath,
+      JSON.stringify(
+        {
+          name: '@siemens/ix/icons',
+          version: version,
+          module: 'index.mjs',
+          main: 'index.js',
+          typings: 'index.d.ts',
+          private: true,
+        },
+        null,
+        2,
+      ),
+    ),
+  ]);
 }
 
-async function writeESMIcons(icons: BuildIconData[]) {
-  const esmIcons = icons.map(icon => ({
-    name: icon.name,
-    esm: icon.esm,
-  }));
-
-  const headline = '/* Siemens iX ESM Icons */\n\n';
+async function writeJSFile(icons: JavaScriptBuildData[], path: string, version: string) {
+  const headline = `/* Siemens iX Icons (${version}) */\n\n`;
   const content: string[] = [];
-  esmIcons.forEach(icon => {
-    content.push(`${icon.esm}\n`);
+  icons.forEach(icon => {
+    content.push(`${icon.code}\n`);
   });
 
-  return fs.writeFile(iconsEsmPath, [headline, content].join(''));
+  console.log('Write file to:', path);
+  return fs.writeFile(path, [headline, content.join('')].join(''));
 }
 
 function getDataUrl(svgData: string) {
@@ -160,4 +215,4 @@ const reservedKeywords = new Set([
   'constructor',
 ]);
 
-buildIcons();
+buildIcons().then();

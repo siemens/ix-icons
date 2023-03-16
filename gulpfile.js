@@ -25,7 +25,6 @@ gulp.task(
     gulp
       .src('./svg/*.svg')
       .pipe(gulp.dest('dist-css/svg'))
-      .pipe(gulp.dest('src/components/icon/svg'))
       .pipe(
         iconfont({
           fontName,

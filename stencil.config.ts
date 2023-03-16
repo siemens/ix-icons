@@ -4,6 +4,9 @@ import { sass } from '@stencil/sass';
 export const config: Config = {
   namespace: 'ix-icons',
   plugins: [sass()],
+  extras: {
+    experimentalImportInjection: true,
+  },
   outputTargets: [
     {
       type: 'dist',
@@ -33,7 +36,6 @@ export const config: Config = {
     },
     {
       type: 'dist-custom-elements',
-      dir: 'components',
     },
     {
       type: 'www',
@@ -46,6 +48,10 @@ export const config: Config = {
         {
           src: '../dist-css/fonts',
           dest: 'build/fonts  ',
+        },
+        {
+          src: '../svg',
+          dest: 'build/svg  ',
         },
       ],
     },

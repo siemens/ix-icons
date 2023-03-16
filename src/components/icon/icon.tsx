@@ -7,13 +7,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, getAssetPath, h, Host, Prop, State, Watch } from '@stencil/core';
+import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
+import { fetchIconResource, resolveIcon } from './utils';
 
 @Component({
   tag: 'ix-icon',
   styleUrl: 'icon.scss',
   shadow: true,
-  assetsDirs: ['svg'],
 })
 export class Icon {
   /**
@@ -36,19 +36,34 @@ export class Icon {
    */
   @Prop() src?: string;
 
+  /**
+   * Icon
+   */
+  @Prop() icon?: string;
+
   @State() svgContent?: string;
 
   connectedCallback() {
-    this.fetchIcon();
+    this.loadIconContent();
   }
 
   @Watch('src')
   @Watch('name')
-  async fetchIcon() {
-    const response = await fetch(getAssetPath('svg/rocket.svg'));
-    if (response.ok) {
-      console.log(await response.text());
+  @Watch('icon')
+  async loadIconContent() {
+    if (this.name || this.icon) {
+      this.svgContent = resolveIcon(this.name ?? this.icon)?.unsafeHtml;
+      return;
     }
+
+    if (this.src) {
+      this.svgContent = await fetchIconResource(this.src);
+      return;
+    }
+  }
+
+  private shouldRenderWebFont() {
+    return !this.svgContent && (this.icon || this.name);
   }
 
   render() {
@@ -60,6 +75,32 @@ export class Icon {
       style['color'] = `var(--theme-${this.color})`;
     }
 
+    if (this.shouldRenderWebFont()) {
+      const iconName = this.name ?? this.icon;
+      return (
+        <Host
+          style={style}
+          class={{
+            ['size-12']: this.size === '12',
+            ['size-16']: this.size === '16',
+            ['size-24']: this.size === '24',
+            ['size-32']: this.size === '32',
+          }}
+        >
+          <i
+            class={{
+              'glyph': true,
+              [`glyph-${iconName}`]: true,
+              'glyph-12': this.size === '12',
+              'glyph-16': this.size === '16',
+              'glyph-24': this.size === '24',
+              'glyph-32': this.size === '32',
+            }}
+          ></i>
+        </Host>
+      );
+    }
+
     return (
       <Host
         style={style}
@@ -69,32 +110,19 @@ export class Icon {
           ['size-24']: this.size === '24',
           ['size-32']: this.size === '32',
         }}
-      ></Host>
+      >
+        {this.svgContent ? (
+          <div class={'svg-container'} innerHTML={this.svgContent}></div>
+        ) : (
+          <span
+            class="skeleton-box"
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+          ></span>
+        )}
+      </Host>
     );
-
-    // return (
-    //   <Host
-    //     style={style}
-    //     class={{
-    //       ['size-12']: this.size === '12',
-    //       ['size-16']: this.size === '16',
-    //       ['size-24']: this.size === '24',
-    //       ['size-32']: this.size === '32',
-    //     }}
-    //   >
-    //     <i
-    //       class={{
-    //         'glyph': true,
-    //         [`glyph-${this.name}`]: true,
-    //         'glyph-12': this.size === '12',
-    //         'glyph-16': this.size === '16',
-    //         'glyph-24': this.size === '24',
-    //         'glyph-32': this.size === '32',
-    //       }}
-    //     >
-    //       <slot></slot>
-    //     </i>
-    //   </Host>
-    // );
   }
 }
