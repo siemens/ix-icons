@@ -9,7 +9,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import rimraf from 'rimraf';
-import { optimize } from 'svgo';
+import { CustomPlugin, optimize } from 'svgo';
 
 const __dirname = path.resolve();
 
@@ -60,9 +60,36 @@ function convertToCamelCase(value: string) {
   return normalized.charAt(0).toLowerCase() + normalized.slice(1);
 }
 
+const pluginTest: CustomPlugin = {
+  name: 'replaceFillColors',
+  fn: (() => {
+    return {
+      element: {
+        exit: node => {
+          const { attributes } = node;
+          if (!attributes) {
+            return;
+          }
+
+          const { fill, stroke } = attributes;
+
+          // Remove fill and stoke colors to avoid multicolor SVGs
+          if (fill && fill !== undefined && fill !== 'none') {
+            delete node['attributes']['fill'];
+          }
+
+          if (stroke && stroke !== undefined && stroke !== 'none') {
+            delete node['attributes']['stroke'];
+          }
+        },
+      },
+    };
+  }) as any,
+};
+
 function optimizeSvgData(svgData: string) {
   return optimize(svgData, {
-    plugins: [],
+    plugins: [pluginTest],
   }).data;
 }
 
