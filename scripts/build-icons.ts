@@ -8,7 +8,7 @@
  */
 import fs from 'fs-extra';
 import path from 'path';
-import rimraf from 'rimraf';
+import { rimraf } from 'rimraf';
 import { CustomPlugin, optimize } from 'svgo';
 
 const __dirname = path.resolve();

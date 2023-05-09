@@ -45,10 +45,7 @@ export class Icon {
   @Watch('src')
   @Watch('name')
   async loadIconContent() {
-    if (this.name) {
-      return;
-    }
-    this.svgContent = await resolveIcon(this.src);
+    this.svgContent = await resolveIcon(this);
   }
 
   render() {
