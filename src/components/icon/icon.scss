@@ -30,6 +30,11 @@
     height: 1.5rem;
     width: 1.5rem;
   }
+
+  .svg-container > svg [fill] {
+    fill: var(--theme-color-std-text);
+  }
+
   .skeleton-box {
     display: inline-block;
     height: 1em;

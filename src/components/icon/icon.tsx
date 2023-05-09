@@ -8,7 +8,7 @@
  */
 
 import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
-import { resolveIcon } from './utils';
+import { resolveIcon } from './resolveIcon';
 
 @Component({
   tag: 'ix-icon',
@@ -36,11 +36,6 @@ export class Icon {
    */
   @Prop() src?: string;
 
-  /**
-   * Icon
-   */
-  @Prop() icon?: string;
-
   @State() svgContent?: string;
 
   connectedCallback() {
@@ -49,9 +44,11 @@ export class Icon {
 
   @Watch('src')
   @Watch('name')
-  @Watch('icon')
   async loadIconContent() {
-    this.svgContent = await resolveIcon(this);
+    if (this.name) {
+      return;
+    }
+    this.svgContent = await resolveIcon(this.src);
   }
 
   render() {
@@ -64,7 +61,7 @@ export class Icon {
     }
 
     if (!this.svgContent) {
-      const iconName = this.name ?? this.icon;
+      const iconName = this.name;
       return (
         <Host
           style={style}

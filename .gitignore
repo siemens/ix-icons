@@ -36,6 +36,5 @@ dist-css/
 test-results
 playwright-report
 
-src/components/icon/svg/*
 components/
 icons/

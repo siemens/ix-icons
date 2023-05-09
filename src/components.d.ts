@@ -12,10 +12,6 @@ export namespace Components {
          */
         "color": string;
         /**
-          * Icon
-         */
-        "icon"?: string;
-        /**
           * Use one of our defined icon names e.g. `copy`.
          */
         "name": string;
@@ -46,10 +42,6 @@ declare namespace LocalJSX {
           * Color of the icon
          */
         "color"?: string;
-        /**
-          * Icon
-         */
-        "icon"?: string;
         /**
           * Use one of our defined icon names e.g. `copy`.
          */
