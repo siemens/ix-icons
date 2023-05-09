@@ -21,9 +21,14 @@ function parseSVGDataContent(content: string) {
 
 async function fetchSVG(url: string) {
   const response = await fetch(url);
-  const svgContent = await response.text();
+  const responseText = await response.text();
 
-  return svgContent;
+  if (!response.ok) {
+    console.error(responseText);
+    return '';
+  }
+
+  return responseText;
 }
 
 export async function resolveIcon(icon: Icon) {

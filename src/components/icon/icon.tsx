@@ -57,7 +57,7 @@ export class Icon {
       style['color'] = `var(--theme-${this.color})`;
     }
 
-    if (!this.svgContent) {
+    if (this.name && !this.svgContent) {
       const iconName = this.name;
       return (
         <Host
