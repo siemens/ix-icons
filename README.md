@@ -26,6 +26,45 @@ Using icons within your project. You need to:
 @import '@siemens/ix-icons/dist/scss/ix-icons.css';
 ```
 
+## Usage without `@siemens/ix`
+
+Using icons within your project. You need to:
+
+- Install `@siemens/ix-icons` e.g `npm install --save @siemens/ix-icons`
+- Load styling `@siemens/ix-icons/dist/scss/ix-icons.css` e.g
+
+```javascript
+import { defineCustomElements } from '@siemens/ix-icons/loader';
+
+(async () => {
+  await defineCustomElements();
+})();
+```
+
+### Use icon via string name
+
+In this case the `ix-icon` component is using the web font. Which requires the import of the css file in some of your style files:
+
+`styles.css`
+```scss
+@import '@siemens/ix-icons/dist/scss/ix-icons.css';
+```
+
+`demo.html`
+```html
+<ix-icon name="rocket"></ix-icon>
+```
+
+### Use icon via import
+
+```tsx
+import { rocket } from '@siemens/ix-icons/icons';
+
+// render your template code
+<ix-icon name={rocket}></ix-icon>
+
+```
+
 ## Development
 
 ### Installation
