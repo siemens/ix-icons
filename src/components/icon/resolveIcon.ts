@@ -5,10 +5,17 @@
 import { Icon } from './icon';
 
 export const isSvgDataUrl = (url: string) => url.startsWith('data:image/svg+xml');
-
-const parser = new DOMParser();
-
+let parser;
 function parseSVGDataContent(content: string) {
+  if (typeof window['DOMParser'] === 'undefined') {
+    console.warn('DOMParser not supported by your browser.');
+    return;
+  }
+
+  if (parser === null) {
+    parser = new window['DOMParser']();
+  }
+
   const svgDocument = parser.parseFromString(content, 'text/html');
   const svgElement = svgDocument.querySelector('svg');
 
