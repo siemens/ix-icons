@@ -42,11 +42,11 @@
     "host": "http-server -a 127.0.0.1 -p 8080 ./dist"
   },
   "dependencies": {
-    "@stencil/core": "^3.0.0",
-    "@stencil/sass": "^3.0.0"
+    "@stencil/core": "^3.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.26.1",
+    "@stencil/sass": "^3.0.0",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.11",
