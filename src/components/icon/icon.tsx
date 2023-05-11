@@ -33,6 +33,8 @@ export class Icon {
 
   /**
    * Path to the svg
+   *
+   * @internal
    */
   @Prop() src?: string;
 
