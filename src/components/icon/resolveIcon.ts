@@ -52,6 +52,10 @@ export async function resolveIcon(icon: Icon) {
     return;
   }
 
+  if (!src) {
+    return '';
+  }
+
   if (isSvgDataUrl(src)) {
     return parseSVGDataContent(src);
   }
