@@ -7,12 +7,55 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { expect, test } from '@playwright/test';
+import { ConsoleMessage, expect, test } from '@playwright/test';
 import * as iconsFile from './../dist/sample.json';
+import * as icons from './../icons';
 
-iconsFile.icons.forEach(iconName => {
-  test(`should show ${iconName}`, async ({ page }) => {
-    await page.goto(`http://127.0.0.1:8080/e2e/icon-by-name.html?icon=${iconName}`);
-    expect(await page.locator('ix-icon').screenshot()).toMatchSnapshot();
+import { reservedKeywords } from './../scripts/reserved-keywords';
+
+function toCamel(snakeCaseString: string): string {
+  const words = snakeCaseString.split('-');
+  const camelCaseString =
+    words[0] +
+    words
+      .slice(1)
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('');
+  return camelCaseString;
+}
+
+iconsFile.icons
+  .map(iconName => {
+    if (reservedKeywords.has(iconName)) {
+      return {
+        iconName: iconName,
+        esImportName: `_${iconName}`,
+      };
+    }
+
+    return {
+      iconName: iconName,
+      esImportName: iconName,
+    };
+  })
+  .forEach(({ iconName, esImportName }) => {
+    test(`should show ${iconName}`, async ({ page }) => {
+      const dataUrlSvg = icons[toCamel(esImportName)];
+      await page.goto(`http://127.0.0.1:8080/e2e/icon-by-name.html?icon=${iconName}`);
+
+      await page.evaluate(
+        ([url]) => {
+          (window as any).__SVG_DATA__ = url;
+        },
+        [dataUrlSvg],
+      );
+
+      await page.waitForEvent('console', {
+        predicate: (message: ConsoleMessage) => {
+          return message.text() === 'icon-loaded-success';
+        },
+      });
+
+      expect(await page.locator('#mount').screenshot()).toMatchSnapshot();
+    });
   });
-});
