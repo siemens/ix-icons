@@ -26,6 +26,8 @@ jobs:
           key: build-${{ runner.os }}-${{ github.sha }}
           path: |
             dist
+            loader
+            www
 
   visual-test:
     needs: [build]
@@ -68,6 +70,8 @@ jobs:
           key: build-${{ runner.os }}-${{ github.sha }}
           path: |
             dist
+            loader
+            www
 
       - name: Install Playwright Browsers
         run: yarn playwright install chromium
