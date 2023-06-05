@@ -35,17 +35,17 @@
     "build": "rimraf dist-css  && yarn build:js-icons && yarn build:icons && stencil build",
     "start": "rimraf dist-css  && yarn build:js-icons && yarn build:icons && stencil build --dev --watch --serve",
     "test": "stencil test --spec",
-    "test.watch": "stencil test --spec --watchAll",
+    "test:watch": "stencil test --spec --watchAll",
+    "test:e2e": "playwright test --reporter html",
     "generate": "stencil generate",
     "build:icons": "gulp symbols",
-    "test:icons": "node ./tests/is-icon-generated.mjs",
-    "host": "http-server -a 127.0.0.1 -p 8080 ./dist"
+    "host:root": "http-server -a 127.0.0.1 -p 8080 ./"
   },
   "dependencies": {
     "@stencil/core": "^3.0.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.26.1",
+    "@playwright/test": "^1.34.3",
     "@stencil/sass": "^3.0.0",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.5.2",

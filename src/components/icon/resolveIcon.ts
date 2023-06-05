@@ -1,7 +1,11 @@
 /*
- * COPYRIGHT (c) Siemens AG 2018-2023 ALL RIGHTS RESERVED.
+ * SPDX-FileCopyrightText: 2023 Siemens AG
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
-
 import { Icon } from './icon';
 
 export const isSvgDataUrl = (url: string) => url.startsWith('data:image/svg+xml');
@@ -19,7 +23,7 @@ function parseSVGDataContent(content: string) {
   }
 
   const svgDocument = parser.parseFromString(content, 'text/html');
-  const svgElement = svgDocument.querySelector('svg');
+  const svgElement = svgDocument.querySelector('svg') as HTMLElement;
 
   if (!svgElement) {
     throw Error('No valid svg data provided');

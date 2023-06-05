@@ -14,7 +14,7 @@ import { devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  testMatch: '*.e2e.js',
+  testMatch: '*.e2e.ts',
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
   expect: {
@@ -54,7 +54,7 @@ const config: PlaywrightTestConfig = {
     },
   ],
   webServer: {
-    command: 'npm run host',
+    command: 'npm run host:root',
     port: 8080,
   },
 };
