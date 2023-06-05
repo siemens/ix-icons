@@ -37,6 +37,7 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
     steps:
       - uses: actions/checkout@v3
+
       - name: Remove .npmrc
         run: rm .npmrc
 
@@ -72,7 +73,7 @@ jobs:
         run: yarn playwright install chromium
 
       - name: test
-        run: yarn test
+        run: yarn test:e2e
 
       - uses: actions/upload-artifact@v2
         if: always()
