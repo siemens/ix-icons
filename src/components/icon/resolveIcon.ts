@@ -37,7 +37,7 @@ async function fetchSVG(url: string) {
     return '';
   }
 
-  return responseText;
+  return parseSVGDataContent(responseText);
 }
 
 export async function resolveIcon(icon: Icon) {
