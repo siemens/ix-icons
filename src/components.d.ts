@@ -12,7 +12,7 @@ export namespace Components {
          */
         "color": string;
         /**
-          * Use one of our defined icon names e.g. `copy`.  https://ix.siemens.io/docs/icon-library/icons  or the import variant  ``` import { rocket } from '@siemens/ix-icons/icons';  <ix-icon name={rocket}></ix-icon> ```
+          * Use one of our defined icon names e.g. `copy`  https://ix.siemens.io/docs/icon-library/icons  or the import variant  ``` import { rocket } from '@siemens/ix-icons/icons';  <ix-icon name={rocket}></ix-icon> ```
          */
         "name": string;
         /**
@@ -20,7 +20,7 @@ export namespace Components {
          */
         "size": '12' | '16' | '24' | '32';
         /**
-          * Path to load external svg. All color properties will be overwritten by `--theme-color-std-text`  https://ix.siemens.io/docs/theming/colors
+          * Path to load external SVG. All color properties will be overwritten by `--theme-color-std-text`  https://ix.siemens.io/docs/theming/colors
          */
         "src"?: string;
     }
@@ -43,7 +43,7 @@ declare namespace LocalJSX {
          */
         "color"?: string;
         /**
-          * Use one of our defined icon names e.g. `copy`.  https://ix.siemens.io/docs/icon-library/icons  or the import variant  ``` import { rocket } from '@siemens/ix-icons/icons';  <ix-icon name={rocket}></ix-icon> ```
+          * Use one of our defined icon names e.g. `copy`  https://ix.siemens.io/docs/icon-library/icons  or the import variant  ``` import { rocket } from '@siemens/ix-icons/icons';  <ix-icon name={rocket}></ix-icon> ```
          */
         "name"?: string;
         /**
@@ -51,7 +51,7 @@ declare namespace LocalJSX {
          */
         "size"?: '12' | '16' | '24' | '32';
         /**
-          * Path to load external svg. All color properties will be overwritten by `--theme-color-std-text`  https://ix.siemens.io/docs/theming/colors
+          * Path to load external SVG. All color properties will be overwritten by `--theme-color-std-text`  https://ix.siemens.io/docs/theming/colors
          */
         "src"?: string;
     }
