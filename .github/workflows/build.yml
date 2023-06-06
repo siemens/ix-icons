@@ -37,6 +37,7 @@ jobs:
             dist
             loader
             www
+            icons
 
   visual-test:
     needs: [build]
@@ -81,6 +82,7 @@ jobs:
             dist
             loader
             www
+            icons
 
       - name: Install Playwright Browsers
         run: yarn playwright install chromium
