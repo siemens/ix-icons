@@ -27,7 +27,7 @@ export class Icon {
   @Prop() color: string;
 
   /**
-   * Use one of our defined icon names e.g. `copy`.
+   * Use one of our defined icon names e.g. `copy`
    *
    * https://ix.siemens.io/docs/icon-library/icons
    *
@@ -42,7 +42,7 @@ export class Icon {
   @Prop({ reflect: true }) name: string;
 
   /**
-   * Path to load external svg. All color properties
+   * Path to load external SVG. All color properties
    * will be overwritten by `--theme-color-std-text`
    *
    * https://ix.siemens.io/docs/theming/colors
