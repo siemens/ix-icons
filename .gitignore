@@ -36,3 +36,6 @@ test-results
 playwright-report
 
 icons/
+/test-results/
+/playwright-report/
+/playwright/.cache/

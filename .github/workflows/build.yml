@@ -1,6 +1,15 @@
 name: build
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches:
+      - 'main'
+      - 'release/*'
+  pull_request:
+    branches:
+      - '**'
+  workflow_dispatch:
+  workflow_call:
 
 concurrency:
   group: ci-${{ github.sha }}
@@ -26,3 +35,64 @@ jobs:
           key: build-${{ runner.os }}-${{ github.sha }}
           path: |
             dist
+            loader
+            www
+            icons
+
+  visual-test:
+    needs: [build]
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.32.1-focal
+      env:
+        DEBIAN_FRONTEND: noninteractive
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Remove .npmrc
+        run: rm .npmrc
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@siemens'
+
+      - name: configure yarnrc
+        run: |
+          echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
+          echo 'yarn-offline-mirror-pruning true' >> .yarnrc
+
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: ./node_modules
+          key: yarn-${{ runner.os }}-modules-${{ hashFiles('yarn.lock') }}
+
+      - name: install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile --no-progress
+
+      - uses: actions/cache@v2
+        id: build
+        with:
+          key: build-${{ runner.os }}-${{ github.sha }}
+          path: |
+            dist
+            loader
+            www
+            icons
+
+      - name: Install Playwright Browsers
+        run: yarn playwright install chromium
+
+      - name: test
+        run: yarn test:e2e
+
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 1

@@ -10,6 +10,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import { rimraf } from 'rimraf';
 import { CustomPlugin, optimize } from 'svgo';
+import { reservedKeywords } from './reserved-keywords';
 
 const __dirname = path.resolve();
 
@@ -104,12 +105,12 @@ async function buildIcons() {
   svgIcons.forEach(iconPath => {
     const svgData = fs.readFileSync(path.join(svgSrcPath, iconPath)).toString();
     const svgDataOptimized = optimizeSvgData(svgData);
-    const iconName = convertToCamelCase(iconPath.substring(0, iconPath.lastIndexOf('.svg')));
+    let iconName = convertToCamelCase(iconPath.substring(0, iconPath.lastIndexOf('.svg')));
 
     if (reservedKeywords.has(iconName)) {
       console.log(`Svg icon name ${iconName} is a reserved keyword.`);
-      return;
-      // throw new Error(`Svg icon name ${iconName} is a reserved keyword.`);
+      console.log(`Will be renamed to _${iconName}`);
+      iconName = `_${iconName}`;
     }
 
     iconCollection.push({
@@ -188,58 +189,5 @@ function getDataUrl(svgData: string) {
   svg = svg.replace(/"/g, "'");
   return `"data:image/svg+xml;utf8,${svg}"`;
 }
-
-// https://mathiasbynens.be/notes/reserved-keywords
-const reservedKeywords = new Set([
-  'do',
-  'if',
-  'in',
-  'for',
-  'let',
-  'new',
-  'try',
-  'var',
-  'case',
-  'else',
-  'enum',
-  'eval',
-  'null',
-  'this',
-  'true',
-  'void',
-  'with',
-  'await',
-  'break',
-  'catch',
-  'class',
-  'const',
-  'false',
-  'super',
-  'throw',
-  'while',
-  'yield',
-  'delete',
-  'export',
-  'import',
-  'public',
-  'return',
-  'static',
-  'switch',
-  'typeof',
-  'default',
-  'extends',
-  'finally',
-  'package',
-  'private',
-  'continue',
-  'debugger',
-  'function',
-  'arguments',
-  'interface',
-  'protected',
-  'implements',
-  'instanceof',
-  'constructor',
-]);
 
 buildIcons().then();
