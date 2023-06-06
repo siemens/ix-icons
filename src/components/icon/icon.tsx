@@ -28,11 +28,24 @@ export class Icon {
 
   /**
    * Use one of our defined icon names e.g. `copy`.
+   *
+   * https://ix.siemens.io/docs/icon-library/icons
+   *
+   * or the import variant
+   *
+   * ```
+   * import { rocket } from '@siemens/ix-icons/icons';
+   *
+   * <ix-icon name={rocket}></ix-icon>
+   * ```
    */
   @Prop({ reflect: true }) name: string;
 
   /**
-   * Path to the svg
+   * Path to load external svg. All color properties
+   * will be overwritten by `--theme-color-std-text`
+   *
+   * https://ix.siemens.io/docs/theming/colors
    *
    * @internal
    */
