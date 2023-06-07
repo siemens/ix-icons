@@ -8,7 +8,17 @@
  */
 import { Icon } from './icon';
 
-export const isSvgDataUrl = (url: string) => url.startsWith('data:image/svg+xml');
+export const isSvgDataUrl = (url: string) => {
+  if (!url) {
+    return false;
+  }
+
+  if (typeof url !== 'string') {
+    return false;
+  }
+
+  return url.startsWith('data:image/svg+xml');
+};
 
 let parser = null;
 
