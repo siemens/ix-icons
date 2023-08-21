@@ -1,6 +1,6 @@
 {
   "name": "@siemens/ix-icons",
-  "version": "1.0.4",
+  "version": "1.1.2",
   "license": "MIT",
   "description": "Siemens ix icon library",
   "author": "Siemens AG",
@@ -17,31 +17,53 @@
     "npm": ">=8.x.x",
     "node": ">=16.16.x"
   },
-  "scripts": {
-    "start": "gulp watch",
-    "build": "rimraf dist && gulp symbols",
-    "test": "node ./tests/is-icon-generated.mjs && playwright test",
-    "host": "http-server -a 127.0.0.1 -p 8080 ./dist"
-  },
-  "private": false,
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/types/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/ix-icons/ix-icons.esm.js",
   "files": [
-    "dist/css/",
-    "dist/svg/",
-    "dist/scss/",
-    "dist/fonts/",
-    "dist/sample.html",
-    "dist/sample.json"
+    "dist/",
+    "loader/",
+    "icons/"
   ],
+  "scripts": {
+    "build:js-icons": "ts-node -P ./scripts/tsconfig.json ./scripts/build-icons",
+    "build": "rimraf dist-css  && yarn build:js-icons && yarn build:icons && stencil build",
+    "start": "rimraf dist-css  && yarn build:js-icons && yarn build:icons && stencil build --dev --watch --serve",
+    "test": "stencil test --spec",
+    "test:watch": "stencil test --spec --watchAll",
+    "test:e2e": "playwright test --reporter html",
+    "generate": "stencil generate",
+    "build:icons": "gulp symbols",
+    "host:root": "http-server -a 127.0.0.1 -p 8080 ./"
+  },
+  "dependencies": {
+    "@stencil/core": "^3.0.0"
+  },
   "devDependencies": {
-    "@playwright/test": "^1.26.1",
+    "@playwright/test": "^1.34.3",
+    "@stencil/sass": "^3.0.0",
     "@types/fs-extra": "^9.0.13",
-    "fs-extra": "^10.1.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.11",
+    "@types/rimraf": "^4.0.5",
+    "fs-extra": "^11.1.0",
     "gulp": "^4.0.2",
     "gulp-consolidate": "^0.2.0",
     "gulp-iconfont": "^11.0.0",
     "gulp-rename": "^2.0.0",
     "http-server": "^14.1.1",
+    "jest": "^27.5.1",
+    "jest-cli": "^27.5.1",
     "lodash": "^4.17.2",
-    "rimraf": "^3.0.2"
+    "puppeteer": "^19.5.2",
+    "rimraf": "^5.0.0",
+    "svgo": "^3.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
   }
 }
