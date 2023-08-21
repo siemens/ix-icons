@@ -22,7 +22,7 @@ export const isSvgDataUrl = (url: string) => {
 
 let parser = null;
 
-function parseSVGDataContent(content: string) {
+export function parseSVGDataContent(content: string) {
   if (typeof window['DOMParser'] === 'undefined') {
     console.warn('DOMParser not supported by your browser.');
     return;
@@ -48,31 +48,36 @@ async function fetchSVG(url: string) {
 
   if (!response.ok) {
     console.error(responseText);
-    return '';
+    throw Error(responseText);
   }
 
   return parseSVGDataContent(responseText);
 }
+const urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:\S+(?::\S*)?@)?(?:www\.)?(?:\S+\.\S+)(?:\S*)$/i;
+
+function isValidUrl(url: string) {
+  return urlRegex.test(url);
+}
 
 export async function resolveIcon(icon: Icon) {
-  const { src, name } = icon;
+  const { name } = icon;
 
-  if (name) {
-    if (isSvgDataUrl(name)) {
-      return parseSVGDataContent(name);
-    }
-
-    //Fallback return undefined to render web font icon
+  if (!name) {
     return;
   }
 
-  if (!src) {
-    return '';
+  if (isSvgDataUrl(name)) {
+    return parseSVGDataContent(name);
   }
 
-  if (isSvgDataUrl(src)) {
-    return parseSVGDataContent(src);
+  if (isValidUrl(name)) {
+    try {
+      return await fetchSVG(name);
+    } catch (error) {
+      throw error;
+    }
   }
 
-  return fetchSVG(src);
+  //Fallback return undefined to render web font icon
+  return;
 }

@@ -3,7 +3,6 @@
  */
 import { Icon } from '../icon';
 import { resolveIcon } from '../resolveIcon';
-import { rocket } from './rocker-example';
 
 const exampleSvg = `
 <?xml version="1.0" encoding="UTF-8"?>
@@ -36,20 +35,9 @@ describe('resolve icon', () => {
     fetch.mockClear();
   });
 
-  it('should resolve font name from name', async () => {
-    const icon = new Icon();
-    icon.name = 'rocket';
-    icon.src = 'http://localhost/test.svg';
-
-    const expectedName = await resolveIcon(icon);
-
-    expect(expectedName).toBeUndefined();
-  });
-
   it('should resolve svg from name', async () => {
     const icon = new Icon();
-    icon.name = rocket;
-    icon.src = 'http://localhost/test.svg';
+    icon.name = 'http://localhost/test.svg';
 
     const expectedName: string = await resolveIcon(icon);
 
@@ -59,7 +47,7 @@ describe('resolve icon', () => {
 
   it('should resolve svg from src', async () => {
     const icon = new Icon();
-    icon.src = 'http://localhost/test.svg';
+    icon.name = 'http://localhost/test.svg';
 
     const expectedName = await resolveIcon(icon);
 
@@ -77,7 +65,7 @@ describe('resolve icon', () => {
     ) as jest.Mock;
 
     const icon = new Icon();
-    icon.src = 'http://localhost/test.svg';
+    icon.name = 'http://localhost/test.svg';
 
     await expect(resolveIcon(icon)).rejects.toThrow('No valid svg data provided');
   });

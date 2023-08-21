@@ -19,10 +19,6 @@ export namespace Components {
           * Size of the icon
          */
         "size": '12' | '16' | '24' | '32';
-        /**
-          * Path to load external SVG. All color properties will be overwritten by `--theme-color-std-text`  https://ix.siemens.io/docs/theming/colors
-         */
-        "src"?: string;
     }
 }
 declare global {
@@ -50,10 +46,6 @@ declare namespace LocalJSX {
           * Size of the icon
          */
         "size"?: '12' | '16' | '24' | '32';
-        /**
-          * Path to load external SVG. All color properties will be overwritten by `--theme-color-std-text`  https://ix.siemens.io/docs/theming/colors
-         */
-        "src"?: string;
     }
     interface IntrinsicElements {
         "ix-icon": IxIcon;

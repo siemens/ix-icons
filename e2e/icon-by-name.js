@@ -33,7 +33,7 @@ function waitForVariable(variableName) {
   webFontIcon.name = iconName;
 
   const srcIcon = document.createElement('ix-icon');
-  srcIcon.src = svgUrl;
+  srcIcon.name = svgUrl;
 
   await waitForVariable('__SVG_DATA__');
 
