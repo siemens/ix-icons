@@ -8,7 +8,8 @@
  */
 
 import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
-import { resolveIcon } from './resolveIcon';
+import { question } from '../../../icons';
+import { parseSVGDataContent, resolveIcon } from './resolveIcon';
 
 @Component({
   tag: 'ix-icon',
@@ -39,17 +40,7 @@ export class Icon {
    * <ix-icon name={rocket}></ix-icon>
    * ```
    */
-  @Prop({ reflect: true }) name: string;
-
-  /**
-   * Path to load external SVG. All color properties
-   * will be overwritten by `--theme-color-std-text`
-   *
-   * https://ix.siemens.io/docs/theming/colors
-   *
-   * @internal
-   */
-  @Prop() src?: string;
+  @Prop() name: string;
 
   @State() svgContent?: string;
 
@@ -57,10 +48,13 @@ export class Icon {
     this.loadIconContent();
   }
 
-  @Watch('src')
   @Watch('name')
   async loadIconContent() {
-    this.svgContent = await resolveIcon(this);
+    try {
+      this.svgContent = await resolveIcon(this);
+    } catch (error) {
+      this.svgContent = parseSVGDataContent(question);
+    }
   }
 
   render() {
@@ -108,17 +102,7 @@ export class Icon {
           ['size-32']: this.size === '32',
         }}
       >
-        {this.svgContent ? (
-          <div class={'svg-container'} innerHTML={this.svgContent}></div>
-        ) : (
-          <span
-            class="skeleton-box"
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
-          ></span>
-        )}
+        <div class={'svg-container'} innerHTML={this.svgContent}></div>
       </Host>
     );
   }
