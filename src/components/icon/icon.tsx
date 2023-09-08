@@ -6,9 +6,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
 import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
-import { question } from '../../../icons';
+import { question } from './question';
 import { parseSVGDataContent, resolveIcon } from './resolveIcon';
 
 @Component({
