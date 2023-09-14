@@ -19,6 +19,14 @@ const templateInternal = 'ix-style-internal';
 
 const timestamp = Math.round(Date.now() / 1000);
 
+function toHex(str) {
+  var result = '';
+  for (var i = 0; i < str.length; i++) {
+    result += str.charCodeAt(i).toString(16);
+  }
+  return result;
+}
+
 gulp.task(
   'symbols',
   gulp.series(() =>
@@ -38,10 +46,12 @@ gulp.task(
           className,
           fontName,
           fontPath: '../fonts/',
-          glyphs: glyphs.map(glyph => ({
-            name: glyph.name,
-            codepoint: glyph.unicode[0].charCodeAt(0),
-          })),
+          glyphs: glyphs.map(glyph => {
+            return {
+              name: glyph.name,
+              codepoint: `\\${glyph.unicode[0].charCodeAt(0).toString(16)}`.substring(1),
+            };
+          }),
         };
         gulp
           .src(`templates/${template}.css`)
