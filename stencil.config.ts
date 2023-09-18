@@ -17,6 +17,10 @@ export const config: Config = {
           dest: '../../dist/svg',
         },
         {
+          src: '../dist-css/css',
+          dest: '../../dist/css',
+        },
+        {
           src: '../dist-css/sample.json',
           dest: '../../dist/sample.json',
         },

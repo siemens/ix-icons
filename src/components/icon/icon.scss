@@ -7,62 +7,45 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// @import './generated/ix-icons';
+@mixin size($size) {
+  height: $size;
+  width: $size;
+  min-height: $size;
+  min-width: $size;
+}
 
 :host {
   display: inline-flex;
-  height: 1.5rem;
-  width: 1.5rem;
-
-  i {
-    color: inherit;
-    transition: color 150ms;
-  }
+  @include size(1.5rem);
+  color: inherit;
 
   .svg-container {
     display: block;
     position: relative;
     width: 100%;
     height: 100%;
-  }
 
-  .svg-container > svg {
-    height: 1.5rem;
-    width: 1.5rem;
-  }
+    svg {
+      height: 100%;
+      width: 100%;
+    }
 
-  .svg-container > svg[fill],
-  .svg-container > svg [fill] {
-    fill: currentColor;
+    svg,
+    svg[fill],
+    svg [fill] {
+      fill: currentColor !important;
+    }
   }
 }
 
 :host(.size-12) {
-  height: 0.75rem;
-  width: 0.75rem;
-
-  .svg-container > svg {
-    height: 0.75rem;
-    width: 0.75rem;
-  }
+  @include size(0.75rem);
 }
 
 :host(.size-16) {
-  height: 1rem;
-  width: 1rem;
-
-  .svg-container > svg {
-    height: 1rem;
-    width: 1rem;
-  }
+  @include size(1rem);
 }
 
 :host(.size-32) {
-  height: 2rem;
-  width: 2rem;
-
-  .svg-container > svg {
-    height: 2rem;
-    width: 2rem;
-  }
+  @include size(2rem);
 }
