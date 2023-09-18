@@ -8,7 +8,7 @@
  */
 import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
 import type { IxIcons } from './icons';
-import { iconQuestion } from './icons';
+import { iconMissingSymbol, iconQuestion } from './icons';
 import { parseSVGDataContent, resolveIcon } from './resolveIcon';
 
 @Component({
@@ -53,7 +53,7 @@ export class Icon {
     try {
       this.svgContent = await resolveIcon(this);
     } catch (error) {
-      this.svgContent = parseSVGDataContent(iconQuestion);
+      this.svgContent = parseSVGDataContent(iconMissingSymbol);
     }
   }
 
