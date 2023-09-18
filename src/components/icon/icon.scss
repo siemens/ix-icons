@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@import './generated/ix-icons';
+// @import './generated/ix-icons';
 
 :host {
   display: inline-flex;
@@ -33,7 +33,7 @@
 
   .svg-container > svg[fill],
   .svg-container > svg [fill] {
-    fill: var(--ix-icon-color, var(--theme-color-std-text));
+    fill: currentColor;
   }
 }
 
