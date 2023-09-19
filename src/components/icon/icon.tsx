@@ -8,7 +8,7 @@
  */
 import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
 import type { IxIcons } from './icons';
-import { iconMissingSymbol, iconQuestion } from './icons';
+import { iconMissingSymbol } from './icons';
 import { parseSVGDataContent, resolveIcon } from './resolveIcon';
 
 @Component({
