@@ -29,7 +29,7 @@ const config: PlaywrightTestConfig = {
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: 3,
+  retries: process.env.CI ? 3 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? undefined : 10,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -55,7 +55,7 @@ const config: PlaywrightTestConfig = {
     },
   ],
   webServer: {
-    command: 'npm run host:root',
+    command: 'npm run host-root',
     port: 8080,
   },
 };

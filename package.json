@@ -39,7 +39,7 @@
     "test:e2e": "playwright test --reporter html",
     "generate": "stencil generate",
     "build:icons": "gulp symbols",
-    "host:root": "http-server -a 127.0.0.1 -p 8080 ./"
+    "host-root": "http-server -a 127.0.0.1 -p 8080 ./"
   },
   "dependencies": {
     "@stencil/core": "3.2.1"

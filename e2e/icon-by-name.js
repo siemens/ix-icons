@@ -24,13 +24,12 @@ function waitForVariable(variableName) {
 
 (async function () {
   await window.customElements.whenDefined('ix-icon');
-
   const searchParams = new URLSearchParams(location.search);
   const iconName = searchParams.get('icon');
   const svgUrl = `/www/build/svg/${iconName}.svg`;
 
-  const webFontIcon = document.createElement('ix-icon');
-  webFontIcon.name = iconName;
+  const nameIcon = document.createElement('ix-icon');
+  nameIcon.name = iconName;
 
   const srcIcon = document.createElement('ix-icon');
   srcIcon.name = svgUrl;
@@ -40,7 +39,7 @@ function waitForVariable(variableName) {
   const dataUrlIcon = document.createElement('ix-icon');
   dataUrlIcon.name = window.__SVG_DATA__;
 
-  document.getElementById('mount').appendChild(webFontIcon);
+  document.getElementById('mount').appendChild(nameIcon);
   document.getElementById('mount').appendChild(dataUrlIcon);
   document.getElementById('mount').appendChild(srcIcon);
 
