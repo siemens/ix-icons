@@ -29,6 +29,7 @@ interface BuildIconData {
   esm: string;
   cjs: string;
   dts: string;
+  symbol: string;
 }
 
 interface JavaScriptBuildData {
@@ -68,6 +69,11 @@ const pluginTest: CustomPlugin = {
     return {
       element: {
         exit: node => {
+          if (node.type === 'element' && node.name === 'svg') {
+            delete node['attributes']['width'];
+            delete node['attributes']['height'];
+          }
+
           const { attributes } = node;
           if (!attributes) {
             return;
@@ -77,11 +83,11 @@ const pluginTest: CustomPlugin = {
 
           // Remove fill and stoke colors to avoid multicolor SVGs
           if (fill && fill !== undefined && fill !== 'none') {
-            delete node['attributes']['fill'];
+            node['attributes']['fill'] = 'currentColor';
           }
 
           if (stroke && stroke !== undefined && stroke !== 'none') {
-            delete node['attributes']['stroke'];
+            node['attributes']['stroke'] = 'currentColor';
           }
         },
       },
@@ -106,8 +112,12 @@ async function buildIcons() {
   svgIcons.forEach(iconPath => {
     const svgData = fs.readFileSync(path.join(svgSrcPath, iconPath)).toString();
     const svgDataOptimized = optimizeSvgData(svgData);
+
     const originalIconName = iconPath.substring(0, iconPath.lastIndexOf('.svg'));
     let iconName = convertToCamelCase(originalIconName);
+
+    const svgoDataWithoutType = svgDataOptimized.substring(svgDataOptimized.indexOf('<svg '));
+    const svgAsSymbol = svgoDataWithoutType.replace(/<svg/, `<symbol id="${originalIconName}"`).replace(/<\/svg>/, '</symbol>');
 
     const upperCaseIconName = iconName.charAt(0).toUpperCase() + iconName.slice(1);
 
@@ -117,10 +127,13 @@ async function buildIcons() {
       cjs: `exports.icon${upperCaseIconName} = ${getDataUrl(svgDataOptimized)}`,
       esm: `export const icon${upperCaseIconName} = ${getDataUrl(svgDataOptimized)}`,
       dts: `export declare var icon${upperCaseIconName}: string;`,
+      symbol: svgAsSymbol,
     });
   });
 
   await Promise.all([
+    writeSvgSpriteFile(iconCollection, path.join(rootPath, 'src', 'components', 'icon', 'icons-sprite.ts')),
+
     writeIconCollectionFile(
       iconCollection.map(i => ({
         name: i.name,
@@ -181,6 +194,28 @@ async function buildIcons() {
       ),
     ),
   ]);
+}
+
+async function writeSvgSpriteFile(icons: BuildIconData[], targetPath: string) {
+  fs.ensureDirSync(path.join(targetPath, '..'));
+
+  const sprite = `
+  <defs>
+      ${icons
+        .map(icon => {
+          return icon.symbol;
+        })
+        .join('\n')}
+  </defs>
+  `;
+
+  return fs.writeFile(
+    targetPath,
+    `
+        const svgSprite = \`${sprite}\`;
+        export default svgSprite;
+  `,
+  );
 }
 
 async function writeGlobalCSSFile(targetPath: string) {

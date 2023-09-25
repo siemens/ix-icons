@@ -9,12 +9,16 @@
 import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
 import type { IxIcons } from './icons';
 import { iconMissingSymbol } from './icons';
+import svgSprite from './icons-sprite';
 import { parseSVGDataContent, resolveIcon } from './resolveIcon';
+
+let spriteInjected = false;
 
 @Component({
   tag: 'ix-icon',
   styleUrl: 'icon.scss',
-  shadow: true,
+  shadow: false,
+  scoped: true,
 })
 export class Icon {
   /**
@@ -45,6 +49,17 @@ export class Icon {
   @State() svgContent?: string;
 
   connectedCallback() {
+    new Promise(() => {
+      if (!spriteInjected) {
+        console.log('inject sprite to DOM');
+        const svg = parseSVGDataContent(`<svg display="none">${svgSprite}</svg>`);
+        const div = document.createElement('DIV');
+        div.innerHTML = svg;
+        document.body.insertBefore(div.children[0], document.body.firstChild);
+        spriteInjected = true;
+      }
+    });
+
     this.loadIconContent();
   }
 
@@ -76,7 +91,9 @@ export class Icon {
           ['size-32']: this.size === '32',
         }}
       >
-        <div class={'svg-container'} innerHTML={this.svgContent}></div>
+        <svg class={'svg-container'}>
+          <use href="#rocket" />
+        </svg>
       </Host>
     );
   }
