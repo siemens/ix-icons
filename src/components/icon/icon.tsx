@@ -7,7 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
-import { question } from './question';
+import type { IxIcons } from './icons';
+import { iconMissingSymbol } from './icons';
 import { parseSVGDataContent, resolveIcon } from './resolveIcon';
 
 @Component({
@@ -39,7 +40,7 @@ export class Icon {
    * <ix-icon name={rocket}></ix-icon>
    * ```
    */
-  @Prop() name: string;
+  @Prop() name: IxIcons;
 
   @State() svgContent?: string;
 
@@ -52,7 +53,7 @@ export class Icon {
     try {
       this.svgContent = await resolveIcon(this);
     } catch (error) {
-      this.svgContent = parseSVGDataContent(question);
+      this.svgContent = parseSVGDataContent(iconMissingSymbol);
     }
   }
 
@@ -63,32 +64,6 @@ export class Icon {
 
     if (this.color) {
       style['color'] = `var(--theme-${this.color})`;
-    }
-
-    if (this.name && !this.svgContent) {
-      const iconName = this.name;
-      return (
-        <Host
-          style={style}
-          class={{
-            ['size-12']: this.size === '12',
-            ['size-16']: this.size === '16',
-            ['size-24']: this.size === '24',
-            ['size-32']: this.size === '32',
-          }}
-        >
-          <i
-            class={{
-              'glyph': true,
-              [`glyph-${iconName}`]: true,
-              'glyph-12': this.size === '12',
-              'glyph-16': this.size === '16',
-              'glyph-24': this.size === '24',
-              'glyph-32': this.size === '32',
-            }}
-          ></i>
-        </Host>
-      );
     }
 
     return (

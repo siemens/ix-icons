@@ -13,20 +13,7 @@ SPDX-License-Identifier: MIT
 ![yarn](https://img.shields.io/badge/yarn->=1.x.x-blue.svg)
 [![License: SEE LICENSE IN <LICENSE.md>](https://img.shields.io/badge/License-SEE%20LICENSE%20IN%20LICENSE.md-yellow.svg)](./LICENSE.md)
 
-Icon web font library for `@siemens/ix`
-
 ## Usage
-
-Using icons within your project. You need to:
-
-- Install `@siemens/ix-icons` e.g. `npm install --save @siemens/ix-icons`
-- Load styling e.g. `@siemens/ix-icons/dist/scss/ix-icons.css`
-
-```scss
-@import '@siemens/ix-icons/dist/scss/ix-icons.css';
-```
-
-## Usage without `@siemens/ix`
 
 Using icons within your project. You need to:
 
@@ -43,16 +30,6 @@ import { defineCustomElements } from '@siemens/ix-icons/loader';
 
 ### Use icon via string name
 
-In this case the `ix-icon` component is using the web font. Which requires the import of the css file in some of your style files:
-
-`styles.css`
-
-```scss
-@import '@siemens/ix-icons/dist/scss/ix-icons.css';
-```
-
-`demo.html`
-
 ```html
 <ix-icon name="rocket"></ix-icon>
 ```
@@ -62,8 +39,13 @@ In this case the `ix-icon` component is using the web font. Which requires the i
 ```tsx
 import { rocket } from '@siemens/ix-icons/icons';
 
-// render your template code
 <ix-icon name={rocket}></ix-icon>;
+```
+
+### Use `ix-icon` component with custom svg's
+
+```tsx
+<ix-icon name="/your/asset/path/my-icon.svg"></ix-icon>;
 ```
 
 ## Development
@@ -83,13 +65,6 @@ yarn build
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!
-
-## 👨‍💻 Contributors
-
-- Daniel Leroux <daniel.leroux@siemens.com>
-- Lukas Maurer <lukas.maurer@siemens.com>
-- Carlos Leandro Cruz Ferrer <carlos.cruz_ferrer@siemens.com>
-- Gonçalo Ferreira <goncalo.alves-ferreira@siemens.com>
 
 ## 📝 License
 

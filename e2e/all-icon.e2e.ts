@@ -11,51 +11,43 @@ import { ConsoleMessage, expect, test } from '@playwright/test';
 import * as iconsFile from './../dist/sample.json';
 import * as icons from './../icons';
 
-import { reservedKeywords } from './../scripts/reserved-keywords';
-
-function toCamel(snakeCaseString: string): string {
-  const words = snakeCaseString.split('-');
-  const camelCaseString =
-    words[0] +
-    words
-      .slice(1)
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join('');
-  return camelCaseString;
+function convertToCamelCase(value: string) {
+  value = value.replace(/[\(\)\[\]\{\}\=\?\!\.\:,\-_\+\\\"#~\/]/g, ' ');
+  let returnValue = '';
+  let makeNextUppercase = true;
+  value = value.toLowerCase();
+  for (let i = 0; value.length > i; i++) {
+    let c = value.charAt(i);
+    if (c.match(/^\s+$/g) || c.match(/[\(\)\[\]\{\}\\\/]/g)) {
+      makeNextUppercase = true;
+    } else if (makeNextUppercase) {
+      c = c.toUpperCase();
+      makeNextUppercase = false;
+    }
+    returnValue += c;
+  }
+  const normalized = returnValue.replace(/\s+/g, '');
+  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 }
 
-iconsFile.icons
-  .map(iconName => {
-    if (reservedKeywords.has(iconName)) {
-      return {
-        iconName: iconName,
-        esImportName: `_${iconName}`,
-      };
-    }
+iconsFile.icons.forEach(iconName => {
+  test(`should show ${iconName}`, async ({ page }) => {
+    const dataUrlSvg = icons[`icon${convertToCamelCase(iconName)}`];
+    await page.goto(`http://127.0.0.1:8080/e2e/icon-by-name.html?icon=${iconName}`);
 
-    return {
-      iconName: iconName,
-      esImportName: iconName,
-    };
-  })
-  .forEach(({ iconName, esImportName }) => {
-    test(`should show ${iconName}`, async ({ page }) => {
-      const dataUrlSvg = icons[toCamel(esImportName)];
-      await page.goto(`http://127.0.0.1:8080/e2e/icon-by-name.html?icon=${iconName}`);
+    await page.evaluate(
+      ([url]) => {
+        (window as any).__SVG_DATA__ = url;
+      },
+      [dataUrlSvg],
+    );
 
-      await page.evaluate(
-        ([url]) => {
-          (window as any).__SVG_DATA__ = url;
-        },
-        [dataUrlSvg],
-      );
-
-      await page.waitForEvent('console', {
-        predicate: (message: ConsoleMessage) => {
-          return message.text() === 'icon-loaded-success';
-        },
-      });
-
-      expect(await page.locator('#mount').screenshot()).toMatchSnapshot();
+    await page.waitForEvent('console', {
+      predicate: (message: ConsoleMessage) => {
+        return message.text() === 'icon-loaded-success';
+      },
     });
+
+    expect(await page.locator('#mount').screenshot()).toMatchSnapshot();
   });
+});

@@ -8,6 +8,25 @@
  */
 import { Icon } from './icon';
 
+function toCamelCase(value: string) {
+  value = value.replace(/[\(\)\[\]\{\}\=\?\!\.\:,\-_\+\\\"#~\/]/g, ' ');
+  let returnValue = '';
+  let makeNextUppercase = true;
+  value = value.toLowerCase();
+  for (let i = 0; value.length > i; i++) {
+    let c = value.charAt(i);
+    if (c.match(/^\s+$/g) || c.match(/[\(\)\[\]\{\}\\\/]/g)) {
+      makeNextUppercase = true;
+    } else if (makeNextUppercase) {
+      c = c.toUpperCase();
+      makeNextUppercase = false;
+    }
+    returnValue += c;
+  }
+  const normalized = returnValue.replace(/\s+/g, '');
+  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+}
+
 export const isSvgDataUrl = (url: string) => {
   if (!url) {
     return false;
@@ -59,11 +78,19 @@ function isValidUrl(url: string) {
   return urlRegex.test(url);
 }
 
+async function getESMIcon(name: string) {
+  const esmIcon = await import('./icons');
+  let iconName = toCamelCase(name);
+  iconName = `icon${iconName}`;
+
+  return parseSVGDataContent(esmIcon[iconName]);
+}
+
 export async function resolveIcon(icon: Icon) {
   const { name } = icon;
 
   if (!name) {
-    return;
+    throw Error('no icon name provided');
   }
 
   if (isSvgDataUrl(name)) {
@@ -78,6 +105,5 @@ export async function resolveIcon(icon: Icon) {
     }
   }
 
-  //Fallback return undefined to render web font icon
-  return;
+  return getESMIcon(name);
 }

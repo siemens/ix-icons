@@ -16,13 +16,8 @@ function loadResources() {
   ixIconsJs.setAttribute('nomodule', '');
   ixIconsJs.setAttribute('src', 'http://127.0.0.1:8080/www/build/ix-icons.js');
 
-  var ixIconsCss = document.createElement('link');
-  ixIconsCss.setAttribute('rel', 'stylesheet');
-  ixIconsCss.setAttribute('href', 'http://127.0.0.1:8080/www/build/css/ix-icons.css');
-
   document.getElementsByTagName('head')[0].appendChild(ixIconsJsEsm);
   document.getElementsByTagName('head')[0].appendChild(ixIconsJs);
-  document.getElementsByTagName('head')[0].appendChild(ixIconsCss);
 }
 
 function detectThemeSwitching() {
