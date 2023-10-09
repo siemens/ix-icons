@@ -62,36 +62,44 @@ function convertToCamelCase(value: string) {
   return normalized.charAt(0).toLowerCase() + normalized.slice(1);
 }
 
-const pluginTest: CustomPlugin = {
-  name: 'replaceFillColors',
-  fn: (() => {
-    return {
-      element: {
-        exit: node => {
-          const { attributes } = node;
-          if (!attributes) {
-            return;
-          }
+const pluginTest = (iconName: string): CustomPlugin => {
+  return {
+    name: 'replaceFillColors',
+    fn: (() => {
+      return {
+        element: {
+          exit: node => {
+            const { attributes } = node;
 
-          const { fill, stroke } = attributes;
+            if (node.name === 'svg' && attributes.viewBox === undefined) {
+              const errorMessage = `Missing viewBox for svg ${iconName}`;
+              throw Error(errorMessage);
+            }
 
-          // Remove fill and stoke colors to avoid multicolor SVGs
-          if (fill && fill !== undefined && fill !== 'none') {
-            delete node['attributes']['fill'];
-          }
+            if (!attributes) {
+              return;
+            }
 
-          if (stroke && stroke !== undefined && stroke !== 'none') {
-            delete node['attributes']['stroke'];
-          }
+            const { fill, stroke } = attributes;
+
+            // Remove fill and stoke colors to avoid multicolor SVGs
+            if (fill && fill !== undefined && fill !== 'none') {
+              delete node['attributes']['fill'];
+            }
+
+            if (stroke && stroke !== undefined && stroke !== 'none') {
+              delete node['attributes']['stroke'];
+            }
+          },
         },
-      },
-    };
-  }) as any,
+      };
+    }) as any,
+  };
 };
 
-function optimizeSvgData(svgData: string) {
+function optimizeSvgData(svgData: string, iconName: string) {
   return optimize(svgData, {
-    plugins: [pluginTest],
+    plugins: [pluginTest(iconName)],
   }).data;
 }
 
@@ -105,8 +113,8 @@ async function buildIcons() {
 
   svgIcons.forEach(iconPath => {
     const svgData = fs.readFileSync(path.join(svgSrcPath, iconPath)).toString();
-    const svgDataOptimized = optimizeSvgData(svgData);
     const originalIconName = iconPath.substring(0, iconPath.lastIndexOf('.svg'));
+    const svgDataOptimized = optimizeSvgData(svgData, originalIconName);
     let iconName = convertToCamelCase(originalIconName);
 
     const upperCaseIconName = iconName.charAt(0).toUpperCase() + iconName.slice(1);
