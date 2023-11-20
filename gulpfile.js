@@ -8,8 +8,14 @@
  */
 
 const gulp = require('gulp');
+const svgo = require('gulp-svgo');
 
 gulp.task(
   'symbols',
-  gulp.series(() => gulp.src('./svg/*.svg').pipe(gulp.dest('dist-css/svg'))),
+  gulp.series(() => 
+    gulp
+      .src('./svg/*.svg')
+      .pipe(svgo())
+      .pipe(gulp.dest('dist-css/svg'))
+  )
 );
