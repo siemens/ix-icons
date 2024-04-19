@@ -164,7 +164,7 @@ async function buildIcons() {
       version,
     ),
 
-    writeIconSampleJson(iconCollection, path.join(rootPath, 'dist', 'sample.json'), version),
+    writeIconSampleJson(iconCollection, path.join(rootPath, 'build-dist'), version),
 
     fs.writeFile(
       iconsPkgPath,
@@ -215,6 +215,7 @@ async function writeIconCollectionFile(icons: JavaScriptBuildData[], targetPath:
 }
 
 async function writeIconSampleJson(icons: BuildIconData[], targetPath: string, version: string) {
+  fs.ensureDirSync(targetPath);
   const content = JSON.stringify(
     {
       icons: icons.map(icon => icon.originalIconName),
@@ -223,8 +224,7 @@ async function writeIconSampleJson(icons: BuildIconData[], targetPath: string, v
     2,
   );
 
-  fs.ensureDirSync(path.join(targetPath, '..'));
-  return fs.writeFile(targetPath, content);
+  return fs.writeFile(path.join(targetPath, 'sample.json'), content);
 }
 
 function getDataUrl(svgData: string) {

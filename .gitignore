@@ -27,7 +27,7 @@ UserInterfaceState.xcuserstate
 
 node_modules/
 dist/
-dist-css/
+build-dist/
 .yarn-cache/
 /.idea/
 *.log
