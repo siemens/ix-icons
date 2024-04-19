@@ -164,8 +164,7 @@ async function buildIcons() {
       version,
     ),
 
-    writeIconSampleJson(iconCollection, path.join(rootPath, 'dist-css', 'sample.json'), version),
-    writeGlobalCSSFile(path.join(rootPath, 'dist-css', 'css', 'ix-icons.css')),
+    writeIconSampleJson(iconCollection, path.join(rootPath, 'dist', 'sample.json'), version),
 
     fs.writeFile(
       iconsPkgPath,
@@ -185,31 +184,8 @@ async function buildIcons() {
   ]);
 }
 
-async function writeGlobalCSSFile(targetPath: string) {
-  // Write the global css file to keep the application compiling after update to 2.0.0
-  fs.ensureDirSync(path.join(targetPath, '..'));
-
-  return fs.writeFile(
-    targetPath,
-    `
-/*
-* SPDX-FileCopyrightText: 2023 Siemens AG
-*
-* SPDX-License-Identifier: MIT
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-
-/*
-* Deprecated since 2.0.0 no global css file is necessary.
-*/
-    `,
-  );
-}
-
 function writeOptimizedSvg(icons: BuildIconData[], targetPath: string) {
-  fs.pathExistsSync(targetPath);
+  fs.ensureDirSync(targetPath);
   return icons.map(icon => {
     const iconPath = path.join(targetPath, `${icon.originalIconName}.svg`);
     return fs.writeFile(iconPath, icon.rawSvgOptimized);
