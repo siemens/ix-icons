@@ -74,11 +74,15 @@ export async function resolveIcon(iconName: string) {
 
   if (isValidUrl(iconName)) {
     try {
-      return await fetchSVG(getAssetUrl(iconName));
+      return fetchSVG(iconName);
     } catch (error) {
       throw error;
     }
   }
 
-  throw Error('Cannot resolve any icon');
+  try {
+    return fetchSVG(getAssetUrl(iconName));
+  } catch (error) {
+    throw Error('Cannot resolve any icon');
+  }
 }

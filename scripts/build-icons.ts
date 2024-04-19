@@ -29,37 +29,13 @@ interface BuildIconData {
   esm: string;
   cjs: string;
   dts: string;
+  rawSvgOptimized: string;
 }
 
 interface JavaScriptBuildData {
   name: string;
   originalIconName: string;
   code: string;
-}
-
-function getPkgVersion() {
-  const pkg = JSON.parse(fs.readFileSync(pkgPath).toString());
-
-  return pkg.version;
-}
-
-function convertToCamelCase(value: string) {
-  value = value.replace(/[\(\)\[\]\{\}\=\?\!\.\:,\-_\+\\\"#~\/]/g, ' ');
-  let returnValue = '';
-  let makeNextUppercase = true;
-  value = value.toLowerCase();
-  for (let i = 0; value.length > i; i++) {
-    let c = value.charAt(i);
-    if (c.match(/^\s+$/g) || c.match(/[\(\)\[\]\{\}\\\/]/g)) {
-      makeNextUppercase = true;
-    } else if (makeNextUppercase) {
-      c = c.toUpperCase();
-      makeNextUppercase = false;
-    }
-    returnValue += c;
-  }
-  const normalized = returnValue.replace(/\s+/g, '');
-  return normalized.charAt(0).toLowerCase() + normalized.slice(1);
 }
 
 const pluginTest = (iconName: string): CustomPlugin => {
@@ -97,6 +73,31 @@ const pluginTest = (iconName: string): CustomPlugin => {
   };
 };
 
+function getPkgVersion() {
+  const pkg = JSON.parse(fs.readFileSync(pkgPath).toString());
+
+  return pkg.version;
+}
+
+function convertToCamelCase(value: string) {
+  value = value.replace(/[\(\)\[\]\{\}\=\?\!\.\:,\-_\+\\\"#~\/]/g, ' ');
+  let returnValue = '';
+  let makeNextUppercase = true;
+  value = value.toLowerCase();
+  for (let i = 0; value.length > i; i++) {
+    let c = value.charAt(i);
+    if (c.match(/^\s+$/g) || c.match(/[\(\)\[\]\{\}\\\/]/g)) {
+      makeNextUppercase = true;
+    } else if (makeNextUppercase) {
+      c = c.toUpperCase();
+      makeNextUppercase = false;
+    }
+    returnValue += c;
+  }
+  const normalized = returnValue.replace(/\s+/g, '');
+  return normalized.charAt(0).toLowerCase() + normalized.slice(1);
+}
+
 function optimizeSvgData(svgData: string, iconName: string) {
   return optimize(svgData, {
     plugins: [pluginTest(iconName)],
@@ -111,9 +112,10 @@ async function buildIcons() {
   const svgIcons = fs.readdirSync(svgSrcPath);
   const iconCollection: BuildIconData[] = [];
 
-  svgIcons.forEach(iconPath => {
-    const svgData = fs.readFileSync(path.join(svgSrcPath, iconPath)).toString();
-    const originalIconName = iconPath.substring(0, iconPath.lastIndexOf('.svg'));
+  svgIcons.forEach(iconFileName => {
+    const iconPath = path.join(svgSrcPath, iconFileName);
+    const svgData = fs.readFileSync(iconPath).toString();
+    const originalIconName = iconFileName.substring(0, iconFileName.lastIndexOf('.svg'));
     const svgDataOptimized = optimizeSvgData(svgData, originalIconName);
     let iconName = convertToCamelCase(originalIconName);
 
@@ -125,10 +127,13 @@ async function buildIcons() {
       cjs: `exports.icon${upperCaseIconName} = ${getDataUrl(svgDataOptimized)}`,
       esm: `export const icon${upperCaseIconName} = ${getDataUrl(svgDataOptimized)}`,
       dts: `export declare var icon${upperCaseIconName}: string;`,
+      rawSvgOptimized: svgDataOptimized,
     });
   });
 
   await Promise.all([
+    ...writeOptimizedSvg(iconCollection, path.join(rootPath, 'svg')),
+
     writeIconCollectionFile(
       iconCollection.map(i => ({
         name: i.name,
@@ -201,6 +206,14 @@ async function writeGlobalCSSFile(targetPath: string) {
 */
     `,
   );
+}
+
+function writeOptimizedSvg(icons: BuildIconData[], targetPath: string) {
+  fs.pathExistsSync(targetPath);
+  return icons.map(icon => {
+    const iconPath = path.join(targetPath, `${icon.originalIconName}.svg`);
+    return fs.writeFile(iconPath, icon.rawSvgOptimized);
+  });
 }
 
 async function writeIconCollectionFile(icons: JavaScriptBuildData[], targetPath: string, version: string, includeTypings = false) {

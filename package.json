@@ -32,13 +32,12 @@
   ],
   "scripts": {
     "build:js-icons": "ts-node -P ./scripts/tsconfig.json ./scripts/build-icons",
-    "build": "rimraf dist-css  && yarn build:js-icons && yarn build:icons && stencil build",
-    "start": "rimraf dist-css  && yarn build:js-icons && yarn build:icons && stencil build --dev --watch --serve",
+    "build": "rimraf dist-css svg && yarn build:js-icons && stencil build",
+    "start": "rimraf dist-css svg && yarn build:js-icons && stencil build --dev --watch --serve",
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
     "test:e2e": "playwright test --reporter html",
     "generate": "stencil generate",
-    "build:icons": "gulp symbols",
     "host-root": "http-server -a 127.0.0.1 -p 8080 ./"
   },
   "dependencies": {
