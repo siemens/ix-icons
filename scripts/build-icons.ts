@@ -14,7 +14,7 @@ import { CustomPlugin, optimize } from 'svgo';
 const __dirname = path.resolve();
 
 const rootPath = path.join(__dirname);
-const svgSrcPath = path.join(rootPath, 'svg');
+const svgSrcPath = path.join(rootPath, 'raw-svg');
 const pkgPath = path.join(rootPath, 'package.json');
 
 const iconsDestPath = path.join(__dirname, 'icons');
@@ -129,17 +129,6 @@ async function buildIcons() {
   });
 
   await Promise.all([
-    writeIconCollectionFile(
-      iconCollection.map(i => ({
-        name: i.name,
-        originalIconName: i.originalIconName,
-        code: i.esm,
-      })),
-      path.join(rootPath, 'src', 'components', 'icon', 'icons.ts'),
-      version,
-      true,
-    ),
-
     writeIconCollectionFile(
       iconCollection.map(i => ({
         name: i.name,
@@ -261,4 +250,4 @@ function getDataUrl(svgData: string) {
   return `"data:image/svg+xml;utf8,${svg}"`;
 }
 
-buildIcons().then();
+buildIcons();

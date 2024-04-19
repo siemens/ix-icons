@@ -5,7 +5,7 @@ export const config: Config = {
   namespace: 'ix-icons',
   plugins: [sass()],
   extras: {
-    experimentalImportInjection: true,
+    enableImportInjection: true,
   },
   outputTargets: [
     {

@@ -5,8 +5,6 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { IxIcons } from "./components/icon/icons";
-export { IxIcons } from "./components/icon/icons";
 export namespace Components {
     interface IxIcon {
         /**
@@ -16,7 +14,7 @@ export namespace Components {
         /**
           * Use one of our defined icon names e.g. `copy`  https://ix.siemens.io/docs/icon-library/icons  or the import variant  ``` import { rocket } from '@siemens/ix-icons/icons';  <ix-icon name={rocket}></ix-icon> ```
          */
-        "name": IxIcons;
+        "name": string;
         /**
           * Size of the icon
          */
@@ -43,7 +41,7 @@ declare namespace LocalJSX {
         /**
           * Use one of our defined icon names e.g. `copy`  https://ix.siemens.io/docs/icon-library/icons  or the import variant  ``` import { rocket } from '@siemens/ix-icons/icons';  <ix-icon name={rocket}></ix-icon> ```
          */
-        "name"?: IxIcons;
+        "name"?: string;
         /**
           * Size of the icon
          */
