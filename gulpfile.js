@@ -14,7 +14,7 @@ gulp.task(
   'symbols',
   gulp.series(() =>
     gulp
-      .src('./svg/*.svg')
+      .src('./raw-svg/*.svg')
       .pipe(svgo())
       .pipe(gulp.dest('dist-css/svg'))
       .pipe(gulp.dest('svg'))

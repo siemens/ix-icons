@@ -39,4 +39,4 @@ icons/
 /test-results/
 /playwright-report/
 /playwright/.cache/
-./svg/
+/svg
