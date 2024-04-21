@@ -11,6 +11,7 @@ export namespace Components {
           * Color of the icon
          */
         "color": string;
+        "lazyLoading": boolean;
         /**
           * Use one of our defined icon names e.g. `copy`  https://ix.siemens.io/docs/icon-library/icons  or the import variant  ``` import { rocket } from '@siemens/ix-icons/icons';  <ix-icon name={rocket}></ix-icon> ```
          */
@@ -38,6 +39,7 @@ declare namespace LocalJSX {
           * Color of the icon
          */
         "color"?: string;
+        "lazyLoading"?: boolean;
         /**
           * Use one of our defined icon names e.g. `copy`  https://ix.siemens.io/docs/icon-library/icons  or the import variant  ``` import { rocket } from '@siemens/ix-icons/icons';  <ix-icon name={rocket}></ix-icon> ```
          */

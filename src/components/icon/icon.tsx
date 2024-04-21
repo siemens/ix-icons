@@ -6,7 +6,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
+import { Component, h, Host, Prop, State, Watch, Element, Build } from '@stencil/core';
 import { parseSVGDataContent, resolveIcon } from './resolveIcon';
 
 const iconMissingSymbol =
@@ -19,6 +19,8 @@ const iconMissingSymbol =
   assetsDirs: ['svg'],
 })
 export class Icon {
+  @Element() hostElement: HTMLIxIconElement;
+
   /**
    * Size of the icon
    */
@@ -44,10 +46,16 @@ export class Icon {
    */
   @Prop() name: string;
 
+  @Prop() lazyLoading = false;
+
   @State() svgContent?: string;
+  @State() isVisible = false;
 
   connectedCallback() {
-    this.loadIconContent();
+    this.waitForRendering(() => {
+      this.isVisible = true;
+      this.loadIconContent();
+    });
   }
 
   @Watch('name')
@@ -56,6 +64,28 @@ export class Icon {
       this.svgContent = await resolveIcon(this.name);
     } catch (error) {
       this.svgContent = parseSVGDataContent(iconMissingSymbol);
+    }
+  }
+
+  private waitForRendering(onRender: () => void) {
+    if (Build.isBrowser && this.lazyLoading && typeof window !== 'undefined' && (window as any).IntersectionObserver) {
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              onRender();
+              observer.disconnect();
+            }
+          });
+        },
+        {
+          rootMargin: '25px',
+        },
+      );
+
+      observer.observe(this.hostElement);
+    } else {
+      onRender();
     }
   }
 

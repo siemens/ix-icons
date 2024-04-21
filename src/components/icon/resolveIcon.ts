@@ -8,6 +8,29 @@
  */
 import { getAssetPath } from '@stencil/core';
 
+declare global {
+  interface Window {
+    IxIcons: any;
+  }
+}
+
+let fetchCatch: Map<string, string>;
+const requests = new Map<string, Promise<string>>();
+
+export const getIconCacheMap = (): Map<string, string> => {
+  if (typeof window === 'undefined') {
+    return new Map();
+  }
+
+  if (!fetchCatch) {
+    window.IxIcons = window.IxIcons || {};
+    fetchCatch = window.IxIcons.map = window.IxIcons.map || new Map();
+  }
+  return fetchCatch;
+};
+
+let parser = null;
+
 export const isSvgDataUrl = (url: string) => {
   if (!url) {
     return false;
@@ -19,8 +42,6 @@ export const isSvgDataUrl = (url: string) => {
 
   return url.startsWith('data:image/svg+xml');
 };
-
-let parser = null;
 
 export function parseSVGDataContent(content: string) {
   if (typeof window['DOMParser'] === 'undefined') {
@@ -43,6 +64,12 @@ export function parseSVGDataContent(content: string) {
 }
 
 async function fetchSVG(url: string) {
+  const cache = getIconCacheMap();
+
+  if (cache.has(url)) {
+    return cache.get(url);
+  }
+
   const response = await fetch(url);
   const responseText = await response.text();
 
@@ -51,7 +78,9 @@ async function fetchSVG(url: string) {
     throw Error(responseText);
   }
 
-  return parseSVGDataContent(responseText);
+  const svgContent = parseSVGDataContent(responseText);
+  cache.set(url, svgContent);
+  return svgContent;
 }
 const urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:\S+(?::\S*)?@)?(?:www\.)?(?:\S+\.\S+)(?:\S*)$/i;
 
@@ -60,7 +89,27 @@ function isValidUrl(url: string) {
 }
 
 function getAssetUrl(name: string) {
+  const customAssetUrl = getCustomAssetUrl();
+  if (customAssetUrl) {
+    return `${customAssetUrl}/${name}.svg`;
+  }
+
   return getAssetPath(`svg/${name}.svg`);
+}
+
+function getCustomAssetUrl() {
+  /**
+   * Provide meta tag with custom path to the svg assets
+   *
+   * <meta name="ix-icons:path" content="/build/svg" />
+   */
+  const assetPath = document.querySelector("meta[name='ix-icons:path']");
+  if (assetPath) {
+    const path = assetPath.getAttribute('content');
+    return path;
+  }
+
+  return false;
 }
 
 export async function resolveIcon(iconName: string) {
@@ -81,7 +130,15 @@ export async function resolveIcon(iconName: string) {
   }
 
   try {
-    return fetchSVG(getAssetUrl(iconName));
+    const request = requests.get(iconName);
+
+    if (!request) {
+      const fetching = fetchSVG(getAssetUrl(iconName));
+      requests.set(iconName, fetching);
+      return fetching;
+    }
+
+    return request;
   } catch (error) {
     throw Error('Cannot resolve any icon');
   }
