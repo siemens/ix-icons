@@ -37,9 +37,11 @@
     "start": "rimraf build-dist svg && pnpm build:js-icons && stencil build --dev --watch --serve",
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
-    "test:e2e": "playwright test --reporter html",
+    "visual-regression": "playwright test --reporter html",
     "generate": "stencil generate",
-    "host-root": "http-server -a 127.0.0.1 -p 8080 ./"
+    "host-root": "http-server -a 127.0.0.1 -p 8080 ./",
+    "ci:version": "pnpm changeset version && pnpm i --lockfile-only",
+    "ci:publish": "pnpm publish"
   },
   "dependencies": {
     "@stencil/core": "^4.12.6"

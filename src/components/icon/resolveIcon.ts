@@ -158,7 +158,5 @@ export async function resolveIcon(iconName: string) {
     }
   }
 
-  console.log('old');
-
   return getESMIcon(iconName);
 }
