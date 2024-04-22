@@ -14,7 +14,7 @@ import { CustomPlugin, optimize } from 'svgo';
 const __dirname = path.resolve();
 
 const rootPath = path.join(__dirname);
-const svgSrcPath = path.join(rootPath, 'raw-svg');
+const svgSrcPath = path.join(rootPath, 'incoming-svg');
 const pkgPath = path.join(rootPath, 'package.json');
 
 const iconsDestPath = path.join(__dirname, 'icons');

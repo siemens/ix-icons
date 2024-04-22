@@ -28,12 +28,13 @@
   "files": [
     "dist/",
     "loader/",
-    "icons/"
+    "icons/",
+    "svg/"
   ],
   "scripts": {
     "build:js-icons": "ts-node -P ./scripts/tsconfig.json ./scripts/build-icons",
-    "build": "rimraf dist-css svg && yarn build:js-icons && stencil build",
-    "start": "rimraf dist-css svg && yarn build:js-icons && stencil build --dev --watch --serve",
+    "build": "rimraf build-dist svg && yarn build:js-icons && stencil build",
+    "start": "rimraf build-dist svg && yarn build:js-icons && stencil build --dev --watch --serve",
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
     "test:e2e": "playwright test --reporter html",
