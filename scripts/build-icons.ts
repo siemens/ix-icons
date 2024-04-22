@@ -140,6 +140,17 @@ async function buildIcons() {
         originalIconName: i.originalIconName,
         code: i.esm,
       })),
+      path.join(rootPath, 'src', 'components', 'icon', 'icons.ts'),
+      version,
+      true,
+    ),
+
+    writeIconCollectionFile(
+      iconCollection.map(i => ({
+        name: i.name,
+        originalIconName: i.originalIconName,
+        code: i.esm,
+      })),
       iconsEsmPath,
       version,
     ),

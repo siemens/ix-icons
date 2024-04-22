@@ -7,6 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { getAssetPath } from '@stencil/core';
+import { getCustomAssetUrl, isV3PreviewEnabled } from './meta-tag';
 
 declare global {
   interface Window {
@@ -16,6 +17,26 @@ declare global {
 
 let fetchCatch: Map<string, string>;
 const requests = new Map<string, Promise<string>>();
+let parser = null;
+
+function toCamelCase(value: string) {
+  value = value.replace(/[\(\)\[\]\{\}\=\?\!\.\:,\-_\+\\\"#~\/]/g, ' ');
+  let returnValue = '';
+  let makeNextUppercase = true;
+  value = value.toLowerCase();
+  for (let i = 0; value.length > i; i++) {
+    let c = value.charAt(i);
+    if (c.match(/^\s+$/g) || c.match(/[\(\)\[\]\{\}\\\/]/g)) {
+      makeNextUppercase = true;
+    } else if (makeNextUppercase) {
+      c = c.toUpperCase();
+      makeNextUppercase = false;
+    }
+    returnValue += c;
+  }
+  const normalized = returnValue.replace(/\s+/g, '');
+  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+}
 
 export const getIconCacheMap = (): Map<string, string> => {
   if (typeof window === 'undefined') {
@@ -28,8 +49,6 @@ export const getIconCacheMap = (): Map<string, string> => {
   }
   return fetchCatch;
 };
-
-let parser = null;
 
 export const isSvgDataUrl = (url: string) => {
   if (!url) {
@@ -97,19 +116,12 @@ function getAssetUrl(name: string) {
   return getAssetPath(`svg/${name}.svg`);
 }
 
-function getCustomAssetUrl() {
-  /**
-   * Provide meta tag with custom path to the svg assets
-   *
-   * <meta name="ix-icons:path" content="/build/svg" />
-   */
-  const assetPath = document.querySelector("meta[name='ix-icons:path']");
-  if (assetPath) {
-    const path = assetPath.getAttribute('content');
-    return path;
-  }
+async function getESMIcon(name: string) {
+  const esmIcon = await import('./icons');
+  let iconName = toCamelCase(name);
+  iconName = `icon${iconName}`;
 
-  return false;
+  return parseSVGDataContent(esmIcon[iconName]);
 }
 
 export async function resolveIcon(iconName: string) {
@@ -129,17 +141,24 @@ export async function resolveIcon(iconName: string) {
     }
   }
 
-  try {
-    const request = requests.get(iconName);
+  if (isV3PreviewEnabled()) {
+    console.warn('Using V3 preview feature for loading icons.');
+    try {
+      const request = requests.get(iconName);
 
-    if (!request) {
-      const fetching = fetchSVG(getAssetUrl(iconName));
-      requests.set(iconName, fetching);
-      return fetching;
+      if (!request) {
+        const fetching = fetchSVG(getAssetUrl(iconName));
+        requests.set(iconName, fetching);
+        return fetching;
+      }
+
+      return request;
+    } catch (error) {
+      throw Error('Cannot resolve any icon');
     }
-
-    return request;
-  } catch (error) {
-    throw Error('Cannot resolve any icon');
   }
+
+  console.log('old');
+
+  return getESMIcon(iconName);
 }
