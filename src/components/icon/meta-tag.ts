@@ -16,7 +16,7 @@ function getV3PreviewMetaContent() {
 }
 
 /**
- * Provide meta tag with custom path to the svg assets
+ * Provide custom svg path for icons
  *
  * <meta name="ix-icons:path" content="/build/svg" />
  */
@@ -31,9 +31,9 @@ export function getCustomAssetUrl() {
 }
 
 /**
- * Provide meta tag with custom preview features enabled
+ * Enable v3 preview features
  *
- * <meta name="ix-icons:path" content="/build/svg" />
+ * <meta name="ix-icons:v3-preview" content="svg-path-loading;" />
  */
 export function isV3PreviewEnabled() {
   const features = getV3PreviewMetaContent();
