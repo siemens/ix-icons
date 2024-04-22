@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://www.github.com/siemens/ix/issues"
   },
-  "packageManager": "yarn@1.22.15",
+  "packageManager": "pnpm@9.0.0",
   "engines": {
     "npm": ">=8.x.x",
     "node": ">=16.16.x"
@@ -33,8 +33,8 @@
   ],
   "scripts": {
     "build:js-icons": "ts-node -P ./scripts/tsconfig.json ./scripts/build-icons",
-    "build": "rimraf build-dist svg && yarn build:js-icons && stencil build",
-    "start": "rimraf build-dist svg && yarn build:js-icons && stencil build --dev --watch --serve",
+    "build": "rimraf build-dist svg && pnpm build:js-icons && stencil build",
+    "start": "rimraf build-dist svg && pnpm build:js-icons && stencil build --dev --watch --serve",
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
     "test:e2e": "playwright test --reporter html",
