@@ -25,17 +25,17 @@ jobs:
         run: pnpm test
 
   visual-test:
-    needs: [build]
     timeout-minutes: 10
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.39.0-jammy
     steps:
       - uses: actions/checkout@v3
+
       - uses: ./.github/workflows/actions/build
 
       - name: Visual Regression
-        run: pnpm run visual-regression
+        run: pnpm visual-regression
 
       - uses: actions/upload-artifact@v3
         if: failure()
