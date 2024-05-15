@@ -83,23 +83,34 @@ export function parseSVGDataContent(content: string) {
 }
 
 async function fetchSVG(url: string) {
+  const request = requests.get(url);
+
+  if (request) {
+    return request;
+  }
+
   const cache = getIconCacheMap();
 
   if (cache.has(url)) {
     return cache.get(url);
   }
 
-  const response = await fetch(url);
-  const responseText = await response.text();
+  const fetching = fetch(url).then(async response => {
+    const responseText = await response.text();
 
-  if (!response.ok) {
-    console.error(responseText);
-    throw Error(responseText);
-  }
+    if (!response.ok) {
+      console.error(responseText);
+      throw Error(responseText);
+    }
 
-  const svgContent = parseSVGDataContent(responseText);
-  cache.set(url, svgContent);
-  return svgContent;
+    const svgContent = parseSVGDataContent(responseText);
+    cache.set(url, svgContent);
+
+    return svgContent;
+  });
+
+  requests.set(url, fetching);
+  return fetching;
 }
 const urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:\S+(?::\S*)?@)?(?:www\.)?(?:\S+\.\S+)(?:\S*)$/i;
 
@@ -144,15 +155,7 @@ export async function resolveIcon(iconName: string) {
   if (isV3PreviewEnabled()) {
     console.warn('Using V3 preview feature for loading icons.');
     try {
-      const request = requests.get(iconName);
-
-      if (!request) {
-        const fetching = fetchSVG(getAssetUrl(iconName));
-        requests.set(iconName, fetching);
-        return fetching;
-      }
-
-      return request;
+      return fetchSVG(getAssetUrl(iconName));
     } catch (error) {
       throw Error('Cannot resolve any icon');
     }
