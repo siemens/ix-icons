@@ -13,8 +13,8 @@
     "url": "https://www.github.com/siemens/ix/issues"
   },
   "engines": {
-    "npm": ">=8.x.x",
-    "node": ">=16.16.x"
+    "pnpm": ">=9.x.x",
+    "node": ">=18.x.x"
   },
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
