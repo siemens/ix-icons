@@ -15,7 +15,7 @@ declare global {
   }
 }
 
-let fetchCatch: Map<string, string>;
+let fetchCache: Map<string, string>;
 const requests = new Map<string, Promise<string>>();
 let parser = null;
 
@@ -43,11 +43,11 @@ export const getIconCacheMap = (): Map<string, string> => {
     return new Map();
   }
 
-  if (!fetchCatch) {
+  if (!fetchCache) {
     window.IxIcons = window.IxIcons || {};
-    fetchCatch = window.IxIcons.map = window.IxIcons.map || new Map();
+    fetchCache = window.IxIcons.map = window.IxIcons.map || new Map();
   }
-  return fetchCatch;
+  return fetchCache;
 };
 
 export const isSvgDataUrl = (url: string) => {

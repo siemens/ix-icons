@@ -16,7 +16,7 @@ function getV3PreviewMetaContent() {
 }
 
 /**
- * Provide custom svg path for icons
+ * Provide custom SVG path for icons
  *
  * <meta name="ix-icons:path" content="/build/svg" />
  */

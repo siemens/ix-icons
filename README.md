@@ -24,7 +24,7 @@ import { defineCustomElements } from '@siemens/ix-icons/loader';
 })();
 ```
 
-### Angular / Web Component
+### Angular / Web Components
 
 ```html
 <ix-icon name="rocket"></ix-icon>
