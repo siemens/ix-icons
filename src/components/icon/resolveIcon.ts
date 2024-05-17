@@ -83,16 +83,14 @@ export function parseSVGDataContent(content: string) {
 }
 
 async function fetchSVG(url: string) {
-  const request = requests.get(url);
-
-  if (request) {
-    return request;
-  }
-
   const cache = getIconCacheMap();
 
   if (cache.has(url)) {
     return cache.get(url);
+  }
+
+  if (requests.has(url)) {
+    return requests.get(url);
   }
 
   const fetching = fetch(url).then(async response => {
