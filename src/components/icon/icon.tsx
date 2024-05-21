@@ -6,17 +6,21 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
-import type { IxIcons } from './icons';
-import { iconMissingSymbol } from './icons';
+import { Component, h, Host, Prop, State, Watch, Element, Build } from '@stencil/core';
 import { parseSVGDataContent, resolveIcon } from './resolveIcon';
+
+const iconMissingSymbol =
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'><path fill-rule='evenodd' d='M384,0 L384,384 L0,384 L0,0 L384,0 Z M192,207.085 L57.751,341.333 L326.248,341.333 L192,207.085 Z M42.666,57.751 L42.666,326.248 L176.915,192 L42.666,57.751 Z M341.333,57.751 L207.085,192 L341.333,326.248 L341.333,57.751 Z M326.248,42.666 L57.751,42.666 L192,176.915 L326.248,42.666 Z' transform='translate(64 64)'/></svg>";
 
 @Component({
   tag: 'ix-icon',
   styleUrl: 'icon.scss',
   shadow: true,
+  assetsDirs: ['svg'],
 })
 export class Icon {
+  @Element() hostElement: HTMLIxIconElement;
+
   /**
    * Size of the icon
    */
@@ -40,20 +44,48 @@ export class Icon {
    * <ix-icon name={rocket}></ix-icon>
    * ```
    */
-  @Prop() name: IxIcons;
+  @Prop() name: string;
+
+  @Prop() lazyLoading = false;
 
   @State() svgContent?: string;
+  @State() isVisible = false;
 
   connectedCallback() {
-    this.loadIconContent();
+    this.waitForRendering(() => {
+      this.isVisible = true;
+      this.loadIconContent();
+    });
   }
 
   @Watch('name')
   async loadIconContent() {
     try {
-      this.svgContent = await resolveIcon(this);
+      this.svgContent = await resolveIcon(this.name);
     } catch (error) {
       this.svgContent = parseSVGDataContent(iconMissingSymbol);
+    }
+  }
+
+  private waitForRendering(onRender: () => void) {
+    if (Build.isBrowser && this.lazyLoading && typeof window !== 'undefined' && (window as any).IntersectionObserver) {
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              onRender();
+              observer.disconnect();
+            }
+          });
+        },
+        {
+          rootMargin: '25px',
+        },
+      );
+
+      observer.observe(this.hostElement);
+    } else {
+      onRender();
     }
   }
 

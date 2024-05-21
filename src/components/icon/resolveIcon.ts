@@ -6,7 +6,18 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { Icon } from './icon';
+import { getAssetPath } from '@stencil/core';
+import { getCustomAssetUrl, isV3PreviewEnabled } from './meta-tag';
+
+declare global {
+  interface Window {
+    IxIcons: any;
+  }
+}
+
+let fetchCache: Map<string, string>;
+const requests = new Map<string, Promise<string>>();
+let parser = null;
 
 function toCamelCase(value: string) {
   value = value.replace(/[\(\)\[\]\{\}\=\?\!\.\:,\-_\+\\\"#~\/]/g, ' ');
@@ -27,6 +38,18 @@ function toCamelCase(value: string) {
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 }
 
+export const getIconCacheMap = (): Map<string, string> => {
+  if (typeof window === 'undefined') {
+    return new Map();
+  }
+
+  if (!fetchCache) {
+    window.IxIcons = window.IxIcons || {};
+    fetchCache = window.IxIcons.map = window.IxIcons.map || new Map();
+  }
+  return fetchCache;
+};
+
 export const isSvgDataUrl = (url: string) => {
   if (!url) {
     return false;
@@ -38,8 +61,6 @@ export const isSvgDataUrl = (url: string) => {
 
   return url.startsWith('data:image/svg+xml');
 };
-
-let parser = null;
 
 export function parseSVGDataContent(content: string) {
   if (typeof window['DOMParser'] === 'undefined') {
@@ -62,20 +83,46 @@ export function parseSVGDataContent(content: string) {
 }
 
 async function fetchSVG(url: string) {
-  const response = await fetch(url);
-  const responseText = await response.text();
+  const cache = getIconCacheMap();
 
-  if (!response.ok) {
-    console.error(responseText);
-    throw Error(responseText);
+  if (cache.has(url)) {
+    return cache.get(url);
   }
 
-  return parseSVGDataContent(responseText);
+  if (requests.has(url)) {
+    return requests.get(url);
+  }
+
+  const fetching = fetch(url).then(async response => {
+    const responseText = await response.text();
+
+    if (!response.ok) {
+      console.error(responseText);
+      throw Error(responseText);
+    }
+
+    const svgContent = parseSVGDataContent(responseText);
+    cache.set(url, svgContent);
+
+    return svgContent;
+  });
+
+  requests.set(url, fetching);
+  return fetching;
 }
 const urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:\S+(?::\S*)?@)?(?:www\.)?(?:\S+\.\S+)(?:\S*)$/i;
 
 function isValidUrl(url: string) {
   return urlRegex.test(url);
+}
+
+function getAssetUrl(name: string) {
+  const customAssetUrl = getCustomAssetUrl();
+  if (customAssetUrl) {
+    return `${customAssetUrl}/${name}.svg`;
+  }
+
+  return getAssetPath(`svg/${name}.svg`);
 }
 
 async function getESMIcon(name: string) {
@@ -86,24 +133,31 @@ async function getESMIcon(name: string) {
   return parseSVGDataContent(esmIcon[iconName]);
 }
 
-export async function resolveIcon(icon: Icon) {
-  const { name } = icon;
-
-  if (!name) {
-    throw Error('no icon name provided');
+export async function resolveIcon(iconName: string) {
+  if (!iconName) {
+    throw Error('No icon name provided');
   }
 
-  if (isSvgDataUrl(name)) {
-    return parseSVGDataContent(name);
+  if (isSvgDataUrl(iconName)) {
+    return parseSVGDataContent(iconName);
   }
 
-  if (isValidUrl(name)) {
+  if (isValidUrl(iconName)) {
     try {
-      return await fetchSVG(name);
+      return fetchSVG(iconName);
     } catch (error) {
       throw error;
     }
   }
 
-  return getESMIcon(name);
+  if (isV3PreviewEnabled()) {
+    console.warn('Using V3 preview feature for loading icons.');
+    try {
+      return fetchSVG(getAssetUrl(iconName));
+    } catch (error) {
+      throw Error('Cannot resolve any icon');
+    }
+  }
+
+  return getESMIcon(iconName);
 }

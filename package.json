@@ -12,10 +12,9 @@
   "bugs": {
     "url": "https://www.github.com/siemens/ix/issues"
   },
-  "packageManager": "yarn@1.22.15",
   "engines": {
-    "npm": ">=8.x.x",
-    "node": ">=16.16.x"
+    "pnpm": ">=9.x.x",
+    "node": ">=18.x.x"
   },
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -28,23 +27,27 @@
   "files": [
     "dist/",
     "loader/",
-    "icons/"
+    "icons/",
+    "svg/"
   ],
   "scripts": {
     "build:js-icons": "ts-node -P ./scripts/tsconfig.json ./scripts/build-icons",
-    "build": "rimraf dist-css  && yarn build:js-icons && yarn build:icons && stencil build",
-    "start": "rimraf dist-css  && yarn build:js-icons && yarn build:icons && stencil build --dev --watch --serve",
+    "build": "rimraf build-dist svg && pnpm build:js-icons && stencil build",
+    "start": "rimraf build-dist svg && pnpm build:js-icons && stencil build --dev --watch --serve",
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
-    "test:e2e": "playwright test --reporter html",
+    "visual-regression": "playwright test --reporter html",
     "generate": "stencil generate",
-    "build:icons": "gulp symbols",
-    "host-root": "http-server -a 127.0.0.1 -p 8080 ./"
+    "host-root": "http-server -a 127.0.0.1 -p 8080 ./",
+    "ci:version": "pnpm changeset version && pnpm i --lockfile-only",
+    "ci:publish": "pnpm changeset publish"
   },
   "dependencies": {
     "@stencil/core": "^4.12.6"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.1",
     "@playwright/test": "^1.34.3",
     "@stencil/sass": "^3.0.10",
     "@types/fs-extra": "^9.0.13",

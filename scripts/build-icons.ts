@@ -14,7 +14,7 @@ import { CustomPlugin, optimize } from 'svgo';
 const __dirname = path.resolve();
 
 const rootPath = path.join(__dirname);
-const svgSrcPath = path.join(rootPath, 'svg');
+const svgSrcPath = path.join(rootPath, 'incoming-svg');
 const pkgPath = path.join(rootPath, 'package.json');
 
 const iconsDestPath = path.join(__dirname, 'icons');
@@ -29,37 +29,13 @@ interface BuildIconData {
   esm: string;
   cjs: string;
   dts: string;
+  rawSvgOptimized: string;
 }
 
 interface JavaScriptBuildData {
   name: string;
   originalIconName: string;
   code: string;
-}
-
-function getPkgVersion() {
-  const pkg = JSON.parse(fs.readFileSync(pkgPath).toString());
-
-  return pkg.version;
-}
-
-function convertToCamelCase(value: string) {
-  value = value.replace(/[\(\)\[\]\{\}\=\?\!\.\:,\-_\+\\\"#~\/]/g, ' ');
-  let returnValue = '';
-  let makeNextUppercase = true;
-  value = value.toLowerCase();
-  for (let i = 0; value.length > i; i++) {
-    let c = value.charAt(i);
-    if (c.match(/^\s+$/g) || c.match(/[\(\)\[\]\{\}\\\/]/g)) {
-      makeNextUppercase = true;
-    } else if (makeNextUppercase) {
-      c = c.toUpperCase();
-      makeNextUppercase = false;
-    }
-    returnValue += c;
-  }
-  const normalized = returnValue.replace(/\s+/g, '');
-  return normalized.charAt(0).toLowerCase() + normalized.slice(1);
 }
 
 const pluginTest = (iconName: string): CustomPlugin => {
@@ -97,6 +73,31 @@ const pluginTest = (iconName: string): CustomPlugin => {
   };
 };
 
+function getPkgVersion() {
+  const pkg = JSON.parse(fs.readFileSync(pkgPath).toString());
+
+  return pkg.version;
+}
+
+function convertToCamelCase(value: string) {
+  value = value.replace(/[\(\)\[\]\{\}\=\?\!\.\:,\-_\+\\\"#~\/]/g, ' ');
+  let returnValue = '';
+  let makeNextUppercase = true;
+  value = value.toLowerCase();
+  for (let i = 0; value.length > i; i++) {
+    let c = value.charAt(i);
+    if (c.match(/^\s+$/g) || c.match(/[\(\)\[\]\{\}\\\/]/g)) {
+      makeNextUppercase = true;
+    } else if (makeNextUppercase) {
+      c = c.toUpperCase();
+      makeNextUppercase = false;
+    }
+    returnValue += c;
+  }
+  const normalized = returnValue.replace(/\s+/g, '');
+  return normalized.charAt(0).toLowerCase() + normalized.slice(1);
+}
+
 function optimizeSvgData(svgData: string, iconName: string) {
   return optimize(svgData, {
     plugins: [pluginTest(iconName)],
@@ -111,9 +112,10 @@ async function buildIcons() {
   const svgIcons = fs.readdirSync(svgSrcPath);
   const iconCollection: BuildIconData[] = [];
 
-  svgIcons.forEach(iconPath => {
-    const svgData = fs.readFileSync(path.join(svgSrcPath, iconPath)).toString();
-    const originalIconName = iconPath.substring(0, iconPath.lastIndexOf('.svg'));
+  svgIcons.forEach(iconFileName => {
+    const iconPath = path.join(svgSrcPath, iconFileName);
+    const svgData = fs.readFileSync(iconPath).toString();
+    const originalIconName = iconFileName.substring(0, iconFileName.lastIndexOf('.svg'));
     const svgDataOptimized = optimizeSvgData(svgData, originalIconName);
     let iconName = convertToCamelCase(originalIconName);
 
@@ -125,10 +127,13 @@ async function buildIcons() {
       cjs: `exports.icon${upperCaseIconName} = ${getDataUrl(svgDataOptimized)}`,
       esm: `export const icon${upperCaseIconName} = ${getDataUrl(svgDataOptimized)}`,
       dts: `export declare var icon${upperCaseIconName}: string;`,
+      rawSvgOptimized: svgDataOptimized,
     });
   });
 
   await Promise.all([
+    ...writeOptimizedSvg(iconCollection, path.join(rootPath, 'svg')),
+
     writeIconCollectionFile(
       iconCollection.map(i => ({
         name: i.name,
@@ -170,9 +175,8 @@ async function buildIcons() {
       version,
     ),
 
-    writeIconSampleJson(iconCollection, path.join(rootPath, 'dist-css', 'sample.json'), version),
-    writeGlobalCSSFile(path.join(rootPath, 'dist-css', 'css', 'ix-icons.css')),
-
+    writeIconSampleJson(iconCollection, path.join(rootPath, 'build-dist'), version),
+    writeGlobalCSSFile(path.join(rootPath, 'build-dist', 'css', 'ix-icons.css')),
     fs.writeFile(
       iconsPkgPath,
       JSON.stringify(
@@ -191,27 +195,12 @@ async function buildIcons() {
   ]);
 }
 
-async function writeGlobalCSSFile(targetPath: string) {
-  // Write the global css file to keep the application compiling after update to 2.0.0
-  fs.ensureDirSync(path.join(targetPath, '..'));
-
-  return fs.writeFile(
-    targetPath,
-    `
-/*
-* SPDX-FileCopyrightText: 2023 Siemens AG
-*
-* SPDX-License-Identifier: MIT
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-
-/*
-* Deprecated since 2.0.0 no global css file is necessary.
-*/
-    `,
-  );
+function writeOptimizedSvg(icons: BuildIconData[], targetPath: string) {
+  fs.ensureDirSync(targetPath);
+  return icons.map(icon => {
+    const iconPath = path.join(targetPath, `${icon.originalIconName}.svg`);
+    return fs.writeFile(iconPath, icon.rawSvgOptimized);
+  });
 }
 
 async function writeIconCollectionFile(icons: JavaScriptBuildData[], targetPath: string, version: string, includeTypings = false) {
@@ -237,6 +226,7 @@ async function writeIconCollectionFile(icons: JavaScriptBuildData[], targetPath:
 }
 
 async function writeIconSampleJson(icons: BuildIconData[], targetPath: string, version: string) {
+  fs.ensureDirSync(targetPath);
   const content = JSON.stringify(
     {
       icons: icons.map(icon => icon.originalIconName),
@@ -245,8 +235,7 @@ async function writeIconSampleJson(icons: BuildIconData[], targetPath: string, v
     2,
   );
 
-  fs.ensureDirSync(path.join(targetPath, '..'));
-  return fs.writeFile(targetPath, content);
+  return fs.writeFile(path.join(targetPath, 'sample.json'), content);
 }
 
 function getDataUrl(svgData: string) {
@@ -261,4 +250,26 @@ function getDataUrl(svgData: string) {
   return `"data:image/svg+xml;utf8,${svg}"`;
 }
 
-buildIcons().then();
+async function writeGlobalCSSFile(targetPath: string) {
+  // Write the global css file to keep the application compiling after update to 2.0.0
+  fs.ensureDirSync(path.join(targetPath, '..'));
+
+  return fs.writeFile(
+    targetPath,
+    `
+/*
+* SPDX-FileCopyrightText: 2023 Siemens AG
+*
+* SPDX-License-Identifier: MIT
+*
+* This source code is licensed under the MIT license found in the
+* LICENSE file in the root directory of this source tree.
+*/
+/*
+* Deprecated since 2.0.0 no global css file is necessary.
+*/
+    `,
+  );
+}
+
+buildIcons();

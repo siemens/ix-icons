@@ -1,11 +1,12 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
+import path from 'path';
 
 export const config: Config = {
   namespace: 'ix-icons',
   plugins: [sass()],
   extras: {
-    experimentalImportInjection: true,
+    enableImportInjection: true,
   },
   outputTargets: [
     {
@@ -13,16 +14,8 @@ export const config: Config = {
       esmLoaderPath: '../loader',
       copy: [
         {
-          src: '../dist-css/svg',
-          dest: '../../dist/svg',
-        },
-        {
-          src: '../dist-css/css',
-          dest: '../../dist/css',
-        },
-        {
-          src: '../dist-css/sample.json',
-          dest: '../../dist/sample.json',
+          src: path.join(__dirname, 'build-dist'),
+          dest: path.join(__dirname, 'dist'),
         },
       ],
     },
@@ -34,7 +27,7 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
       copy: [
         {
-          src: '../svg',
+          src: path.join(__dirname, 'svg'),
           dest: 'build/svg  ',
         },
       ],
