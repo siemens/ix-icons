@@ -1,7 +1,6 @@
 /*
  * COPYRIGHT (c) Siemens AG 2018-2023 ALL RIGHTS RESERVED.
  */
-import { setAssetPath } from '../../../index';
 import { preloadIconMap } from '../../../legacy-support';
 import { iconStar } from '../icons';
 import { resolveIcon, getIconCacheMap, getAssetUrl, parseSVGDataContent } from '../resolveIcon';
