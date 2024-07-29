@@ -7,19 +7,6 @@ The downside of this implementation results in a increasing bundle size.
 
 With release of main library @siemens/ix and @siemens/ix-icons you have to provide the icons as a static resource. This makes the bundle size significant smaller.
 
-### Active legacy support
-
-If you are still depend on the preloaded icons you can still active this behavior by executing `preloadIconMap` function BEFORE any icon is loaded/displayed.
-
-```ts
-import { preloadIconMap } from '@siemens/ix-icons';
-
-preloadIconMap();
-
-// Bootstrap your application afterwards
-
-```
-
 # v2.0.0
 
 Icon web fonts are removed.
