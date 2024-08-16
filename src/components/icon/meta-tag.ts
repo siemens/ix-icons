@@ -1,6 +1,3 @@
-/*
- * COPYRIGHT (c) Siemens AG 2018-2024 ALL RIGHTS RESERVED.
- */
 /**
  * Provide custom SVG path for icons
  *
