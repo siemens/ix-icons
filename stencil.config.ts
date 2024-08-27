@@ -21,6 +21,7 @@ export const config: Config = {
     },
     {
       type: 'dist-custom-elements',
+      dir: './components',
     },
     {
       type: 'www',
