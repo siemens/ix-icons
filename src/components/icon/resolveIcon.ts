@@ -6,7 +6,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { getAssetPath } from '@stencil/core';
+import { getAssetPath, setAssetPath } from '@stencil/core';
 import { getCustomAssetUrl } from './meta-tag';
 
 declare global {
@@ -97,13 +97,22 @@ function isValidUrl(url: string) {
   return urlRegex.test(url);
 }
 
-export function getAssetUrl(name: string) {
+export function getIconUrl(name: string) {
   const customAssetUrl = getCustomAssetUrl();
   if (customAssetUrl) {
     return `${customAssetUrl}/${name}.svg`;
   }
 
-  return getAssetPath(`svg/${name}.svg`);
+  let url: string = `svg/${name}.svg`;
+  try {
+    url = getAssetPath(url);
+  } catch (error) {
+    console.warn(error);
+    setAssetPath(`${window.location.origin}/`);
+    url = getAssetPath(url);
+  }
+
+  return url;
 }
 
 export async function resolveIcon(iconName: string) {
@@ -124,7 +133,7 @@ export async function resolveIcon(iconName: string) {
   }
 
   try {
-    return fetchSVG(getAssetUrl(iconName));
+    return fetchSVG(getIconUrl(iconName));
   } catch (error) {
     throw Error('Cannot resolve any icon');
   }

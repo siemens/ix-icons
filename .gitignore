@@ -41,3 +41,4 @@ icons/
 /playwright/.cache/
 /svg
 /components
+src/components/icon/svg/*.svg

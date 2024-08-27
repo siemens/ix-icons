@@ -2,7 +2,7 @@
  * COPYRIGHT (c) Siemens AG 2018-2023 ALL RIGHTS RESERVED.
  */
 import { iconStar } from '../icons';
-import { resolveIcon, getIconCacheMap, getAssetUrl, parseSVGDataContent } from '../resolveIcon';
+import { resolveIcon, getIconCacheMap, getIconUrl, parseSVGDataContent } from '../resolveIcon';
 const exampleSvg = `
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="512px" height="512px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -97,7 +97,7 @@ test('fill cache map if not loaded', async () => {
   const data = await resolveIcon('star');
 
   expect(data).toBe(parseSVGDataContent(iconStar));
-  expect(cacheMap.get(getAssetUrl('star'))).toBe(parseSVGDataContent(iconStar));
+  expect(cacheMap.get(getIconUrl('star'))).toBe(parseSVGDataContent(iconStar));
 });
 
 test('preload custom icon', async () => {
@@ -106,7 +106,7 @@ test('preload custom icon', async () => {
   const cacheMap = getIconCacheMap();
   cacheMap.clear();
 
-  cacheMap.set(getAssetUrl('star'), '<svg>Test</svg>');
+  cacheMap.set(getIconUrl('star'), '<svg>Test</svg>');
 
   const data = await resolveIcon('star');
   expect(data).toBe('<svg>Test</svg>');
