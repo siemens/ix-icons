@@ -8,7 +8,7 @@
  */
 
 import { ConsoleMessage, expect, test } from '@playwright/test';
-import * as iconsFile from './../dist/sample.json';
+import * as iconsFile from './sample.json';
 import * as icons from './../icons';
 
 function convertToCamelCase(value: string) {

@@ -41,4 +41,5 @@ icons/
 /playwright/.cache/
 /svg
 /components
+/e2e/sample.json
 src/components/icon/svg/*.svg
