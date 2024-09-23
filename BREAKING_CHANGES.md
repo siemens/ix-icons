@@ -2,10 +2,9 @@
 
 ## Loading icon svg as external resource
 
-Previously all icons were bundled inside the icon package itself. We choose this way to provide a easy setup without any additional configurations.
-The downside of this implementation results in a increasing bundle size.
+Previously, all icons were included within the icon package itself. This approach was chosen to simplify setup and eliminate the need for additional configurations. However, this implementation has led to an increase in bundle size.
 
-With release of main library @siemens/ix and @siemens/ix-icons you have to provide the icons as a static resource. This makes the bundle size significant smaller.
+With the release of the main libraries @siemens/ix and @siemens/ix-icons, you now need to provide the icons as a static resource. This significantly reduces the bundle size.
 
 # v2.0.0
 
