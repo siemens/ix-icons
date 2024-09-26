@@ -6,8 +6,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { getAssetPath } from '@stencil/core';
-import { getCustomAssetUrl, isV3PreviewEnabled } from './meta-tag';
+import { getAssetPath, setAssetPath } from '@stencil/core';
+import { getCustomAssetUrl } from './meta-tag';
 
 declare global {
   interface Window {
@@ -18,25 +18,6 @@ declare global {
 let fetchCache: Map<string, string>;
 const requests = new Map<string, Promise<string>>();
 let parser = null;
-
-function toCamelCase(value: string) {
-  value = value.replace(/[\(\)\[\]\{\}\=\?\!\.\:,\-_\+\\\"#~\/]/g, ' ');
-  let returnValue = '';
-  let makeNextUppercase = true;
-  value = value.toLowerCase();
-  for (let i = 0; value.length > i; i++) {
-    let c = value.charAt(i);
-    if (c.match(/^\s+$/g) || c.match(/[\(\)\[\]\{\}\\\/]/g)) {
-      makeNextUppercase = true;
-    } else if (makeNextUppercase) {
-      c = c.toUpperCase();
-      makeNextUppercase = false;
-    }
-    returnValue += c;
-  }
-  const normalized = returnValue.replace(/\s+/g, '');
-  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
-}
 
 export const getIconCacheMap = (): Map<string, string> => {
   if (typeof window === 'undefined') {
@@ -116,21 +97,22 @@ function isValidUrl(url: string) {
   return urlRegex.test(url);
 }
 
-function getAssetUrl(name: string) {
+export function getIconUrl(name: string) {
   const customAssetUrl = getCustomAssetUrl();
   if (customAssetUrl) {
     return `${customAssetUrl}/${name}.svg`;
   }
 
-  return getAssetPath(`svg/${name}.svg`);
-}
+  let url: string = `svg/${name}.svg`;
+  try {
+    url = getAssetPath(url);
+  } catch (error) {
+    console.warn(error);
+    setAssetPath(`${window.location.origin}/`);
+    url = getAssetPath(url);
+  }
 
-async function getESMIcon(name: string) {
-  const esmIcon = await import('./icons');
-  let iconName = toCamelCase(name);
-  iconName = `icon${iconName}`;
-
-  return parseSVGDataContent(esmIcon[iconName]);
+  return url;
 }
 
 export async function resolveIcon(iconName: string) {
@@ -150,14 +132,9 @@ export async function resolveIcon(iconName: string) {
     }
   }
 
-  if (isV3PreviewEnabled()) {
-    console.warn('Using V3 preview feature for loading icons.');
-    try {
-      return fetchSVG(getAssetUrl(iconName));
-    } catch (error) {
-      throw Error('Cannot resolve any icon');
-    }
+  try {
+    return fetchSVG(getIconUrl(iconName));
+  } catch (error) {
+    throw Error('Cannot resolve any icon');
   }
-
-  return getESMIcon(iconName);
 }
