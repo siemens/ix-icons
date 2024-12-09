@@ -85,12 +85,15 @@ async function fetchSVG(url: string) {
     const svgContent = parseSVGDataContent(responseText);
     cache.set(url, svgContent);
 
+    requests.delete(url);
+
     return svgContent;
   });
 
   requests.set(url, fetching);
   return fetching;
 }
+
 const urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:\S+(?::\S*)?@)?(?:www\.)?(?:\S+\.\S+)(?:\S*)$/i;
 
 function isValidUrl(url: string) {
@@ -99,11 +102,13 @@ function isValidUrl(url: string) {
 
 export function getIconUrl(name: string) {
   const customAssetUrl = getCustomAssetUrl();
+
   if (customAssetUrl) {
     return `${customAssetUrl}/${name}.svg`;
   }
 
   let url: string = `svg/${name}.svg`;
+
   try {
     url = getAssetPath(url);
   } catch (error) {
@@ -124,6 +129,10 @@ export async function resolveIcon(iconName: string) {
     return parseSVGDataContent(iconName);
   }
 
+  return await loadIcon(iconName);
+}
+
+async function loadIcon(iconName: string) {
   if (isValidUrl(iconName)) {
     try {
       return fetchSVG(iconName);
@@ -135,6 +144,10 @@ export async function resolveIcon(iconName: string) {
   try {
     return fetchSVG(getIconUrl(iconName));
   } catch (error) {
-    throw Error('Cannot resolve any icon');
+    throw Error(`Could not resolve ${iconName}`);
   }
+}
+
+export function loadIcons(icons: string[]) {
+  icons.map(icon => loadIcon(icon));
 }
