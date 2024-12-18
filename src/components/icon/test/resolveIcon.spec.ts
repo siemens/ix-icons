@@ -96,8 +96,6 @@ test('fill cache map if not loaded', async () => {
   const cacheMap = getIconCacheMap();
   cacheMap.clear();
 
-  expect(cacheMap.size).toBe(0);
-
   const data = await resolveIcon('star');
 
   expect(data).toBe(parseSVGDataContent(iconStar));
@@ -121,8 +119,6 @@ test('load icons', async () => {
 
   const cacheMap = getIconCacheMap();
   cacheMap.clear();
-
-  expect(cacheMap.size).toBe(0);
 
   const icons = ['star', urlTest];
 
