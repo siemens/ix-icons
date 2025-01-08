@@ -28,6 +28,7 @@ export const getIconCacheMap = (): Map<string, string> => {
     window.IxIcons = window.IxIcons || {};
     fetchCache = window.IxIcons.map = window.IxIcons.map || new Map();
   }
+
   return fetchCache;
 };
 
