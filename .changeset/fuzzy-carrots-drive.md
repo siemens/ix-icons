@@ -1,5 +1,5 @@
 ---
-"@siemens/ix-icons": patch
+"@siemens/ix-icons": minor
 ---
 
 Allow preloading of specific icons.
