@@ -20,11 +20,13 @@
   "module": "dist/index.js",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
+  "jsnext:main": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/ix-icons/ix-icons.esm.js",
   "files": [
+    "components/",
     "dist/",
     "loader/",
     "icons/",
@@ -43,7 +45,7 @@
     "ci:publish": "pnpm changeset publish"
   },
   "dependencies": {
-    "@stencil/core": "^4.12.6"
+    "@stencil/core": "^4.21.0"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",
