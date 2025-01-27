@@ -32,7 +32,7 @@ With the release of the main libraries @siemens/ix and @siemens/ix-icons, you no
 | tag-cirlce-arrow-down-filled | tag-circle-arrow-down-filled |
 | thumb-filled | thumb-down-filled |
 | user-reading-reading | user-reading-filled |
-| landing-page-logo | - |
+| landing-page-logo | *-- no replacement --* |
 
 # v2.0.0
 
