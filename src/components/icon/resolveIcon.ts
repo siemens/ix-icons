@@ -8,6 +8,7 @@
  */
 import { getAssetPath, setAssetPath } from '@stencil/core';
 import { getCustomAssetUrl } from './meta-tag';
+import { allIcons } from './icons';
 
 declare global {
   interface Window {
@@ -134,6 +135,12 @@ export async function resolveIcon(iconName: string) {
 }
 
 async function loadIcon(iconName: string) {
+  const cache = getIconCacheMap();
+
+  if (cache.has(iconName)) {
+    return cache.get(iconName);
+  }
+
   if (isValidUrl(iconName)) {
     try {
       return fetchSVG(iconName);
@@ -151,4 +158,28 @@ async function loadIcon(iconName: string) {
 
 export function loadIcons(icons: string[]) {
   icons.map(icon => loadIcon(icon));
+}
+
+export function addIconToCache(name: string, icon: string) {
+  const cache = getIconCacheMap();
+
+  if (cache.has(name)) {
+    console.warn(`Icon name '${name}' already in cache. Overwritting with new icon data.`);
+  }
+
+  const svg = parseSVGDataContent(icon);
+
+  cache.set(name, svg);
+
+  const toKebabCase = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z0-9])/g, "$1-$2").toLowerCase();
+
+  if (name != toKebabCase) {
+    cache.set(toKebabCase, svg);
+  }
+}
+
+export function cacheAllIcons() {
+  Object.keys(allIcons).map(name => {
+    addIconToCache(name, allIcons[name]);
+  });
 }
