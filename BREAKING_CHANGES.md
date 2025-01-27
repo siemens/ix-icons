@@ -1,10 +1,12 @@
-# v2.0.0
-
-Icon web fonts are removed.
-
 # v3.0.0
 
-Misspelled or deprecated icons have been removed. 
+## Loading icon svg as external resource
+
+Previously, all icons were included within the icon package itself. This approach was chosen to simplify setup and eliminate the need for additional configurations. However, this implementation has led to an increase in bundle size.
+
+With the release of the main libraries @siemens/ix and @siemens/ix-icons, you now need to provide the icons as a static resource. This significantly reduces the bundle size.
+
+## Remove misspelled and deprecated icons 
 
 | removed    | replaced by |
 | -------- | ------- |
@@ -28,3 +30,7 @@ Misspelled or deprecated icons have been removed.
 | thumb-filled | thumb-down-filled |
 | user-reading-reading | user-reading-filled |
 | landing-page-logo | - |
+
+# v2.0.0
+
+Icon web fonts are removed.

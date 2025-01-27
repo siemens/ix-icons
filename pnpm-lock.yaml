@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@stencil/core':
-        specifier: ^4.12.6
-        version: 4.16.0
+        specifier: ^4.21.0
+        version: 4.21.0
     devDependencies:
       '@changesets/changelog-github':
         specifier: ^0.5.0
@@ -23,7 +23,7 @@ importers:
         version: 1.43.1
       '@stencil/sass':
         specifier: ^3.0.10
-        version: 3.0.11(@stencil/core@4.16.0)
+        version: 3.0.11(@stencil/core@4.21.0)
       '@types/fs-extra':
         specifier: ^9.0.13
         version: 9.0.13
@@ -50,10 +50,10 @@ importers:
         version: 14.1.1
       jest:
         specifier: ^27.5.1
-        version: 27.5.1(ts-node@10.9.2)
+        version: 27.5.1(ts-node@10.9.2(@types/node@16.18.96)(typescript@4.9.5))
       jest-cli:
         specifier: ^27.5.1
-        version: 27.5.1(ts-node@10.9.2)
+        version: 27.5.1(ts-node@10.9.2(@types/node@16.18.96)(typescript@4.9.5))
       lodash:
         specifier: ^4.17.2
         version: 4.17.21
@@ -436,8 +436,8 @@ packages:
   '@sinonjs/fake-timers@8.1.0':
     resolution: {integrity: sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==}
 
-  '@stencil/core@4.16.0':
-    resolution: {integrity: sha512-gXaC5IrquV/Hw5JIZTCWkM5lJEbBQtnvHLhDebjar6A6+YBqxah04dardS+YUNVuRbnE6Hcja7KKiAXT3oVsvw==}
+  '@stencil/core@4.21.0':
+    resolution: {integrity: sha512-v50lnVbzS8mpMSnEVxR+G75XpvxHKtkJaQrNPE8+/fF6Ppr5z4bcdcBhcP8LPfEW+4BZcic6VifMXRwTopc+kw==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
@@ -4114,7 +4114,7 @@ snapshots:
       jest-util: 27.5.1
       slash: 3.0.0
 
-  '@jest/core@27.5.1(ts-node@10.9.2)':
+  '@jest/core@27.5.1(ts-node@10.9.2(@types/node@16.18.96)(typescript@4.9.5))':
     dependencies:
       '@jest/console': 27.5.1
       '@jest/reporters': 27.5.1
@@ -4128,7 +4128,7 @@ snapshots:
       exit: 0.1.2
       graceful-fs: 4.2.11
       jest-changed-files: 27.5.1
-      jest-config: 27.5.1(ts-node@10.9.2)
+      jest-config: 27.5.1(ts-node@10.9.2(@types/node@16.18.96)(typescript@4.9.5))
       jest-haste-map: 27.5.1
       jest-message-util: 27.5.1
       jest-regex-util: 27.5.1
@@ -4318,9 +4318,10 @@ snapshots:
       progress: 2.0.3
       proxy-from-env: 1.1.0
       tar-fs: 2.1.1
-      typescript: 4.9.5
       unbzip2-stream: 1.4.3
       yargs: 17.7.1
+    optionalDependencies:
+      typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
 
@@ -4332,11 +4333,11 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 1.8.6
 
-  '@stencil/core@4.16.0': {}
+  '@stencil/core@4.21.0': {}
 
-  '@stencil/sass@3.0.11(@stencil/core@4.16.0)':
+  '@stencil/sass@3.0.11(@stencil/core@4.21.0)':
     dependencies:
-      '@stencil/core': 4.16.0
+      '@stencil/core': 4.21.0
 
   '@tootallnate/once@1.1.2': {}
 
@@ -6183,16 +6184,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  jest-cli@27.5.1(ts-node@10.9.2):
+  jest-cli@27.5.1(ts-node@10.9.2(@types/node@16.18.96)(typescript@4.9.5)):
     dependencies:
-      '@jest/core': 27.5.1(ts-node@10.9.2)
+      '@jest/core': 27.5.1(ts-node@10.9.2(@types/node@16.18.96)(typescript@4.9.5))
       '@jest/test-result': 27.5.1
       '@jest/types': 27.5.1
       chalk: 4.1.2
       exit: 0.1.2
       graceful-fs: 4.2.11
       import-local: 3.1.0
-      jest-config: 27.5.1(ts-node@10.9.2)
+      jest-config: 27.5.1(ts-node@10.9.2(@types/node@16.18.96)(typescript@4.9.5))
       jest-util: 27.5.1
       jest-validate: 27.5.1
       prompts: 2.4.2
@@ -6204,7 +6205,7 @@ snapshots:
       - ts-node
       - utf-8-validate
 
-  jest-config@27.5.1(ts-node@10.9.2):
+  jest-config@27.5.1(ts-node@10.9.2(@types/node@16.18.96)(typescript@4.9.5)):
     dependencies:
       '@babel/core': 7.24.4
       '@jest/test-sequencer': 27.5.1
@@ -6230,6 +6231,7 @@ snapshots:
       pretty-format: 27.5.1
       slash: 3.0.0
       strip-json-comments: 3.1.1
+    optionalDependencies:
       ts-node: 10.9.2(@types/node@16.18.96)(typescript@4.9.5)
     transitivePeerDependencies:
       - bufferutil
@@ -6351,7 +6353,7 @@ snapshots:
       '@types/node': 16.18.96
 
   jest-pnp-resolver@1.2.3(jest-resolve@27.5.1):
-    dependencies:
+    optionalDependencies:
       jest-resolve: 27.5.1
 
   jest-regex-util@27.5.1: {}
@@ -6499,11 +6501,11 @@ snapshots:
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
-  jest@27.5.1(ts-node@10.9.2):
+  jest@27.5.1(ts-node@10.9.2(@types/node@16.18.96)(typescript@4.9.5)):
     dependencies:
-      '@jest/core': 27.5.1(ts-node@10.9.2)
+      '@jest/core': 27.5.1(ts-node@10.9.2(@types/node@16.18.96)(typescript@4.9.5))
       import-local: 3.1.0
-      jest-cli: 27.5.1(ts-node@10.9.2)
+      jest-cli: 27.5.1(ts-node@10.9.2(@types/node@16.18.96)(typescript@4.9.5))
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -7136,9 +7138,10 @@ snapshots:
       https-proxy-agent: 5.0.1
       proxy-from-env: 1.1.0
       tar-fs: 2.1.1
-      typescript: 4.9.5
       unbzip2-stream: 1.4.3
       ws: 8.13.0
+    optionalDependencies:
+      typescript: 4.9.5
     transitivePeerDependencies:
       - bufferutil
       - encoding
