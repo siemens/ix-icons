@@ -32,7 +32,13 @@ With the release of version 3 of the main libraries @siemens/ix and @siemens/ix-
 | tag-cirlce-arrow-down-filled | tag-circle-arrow-down-filled |
 | thumb-filled | thumb-down-filled |
 | user-reading-reading | user-reading-filled |
+| validate | checkbox |
+| checkbox-component-mixed | checkbox-mixed |
+| checkbox-component-unchecked | checkbox-empty |
 | landing-page-logo | *-- no replacement --* |
+
+
+
 
 # v2.0.0
 

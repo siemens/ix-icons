@@ -29,19 +29,29 @@ function convertToCamelCase(value: string) {
   const normalized = returnValue.replace(/\s+/g, '');
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 }
-test.describe.configure({ mode: 'serial' });
 
-const chunkSize = 100;
+function groupByStartingLetter(arr: string[]): { [key: string]: string[] } {
+  const result: { [key: string]: string[] } = {};
 
-for (let i = 0; i < iconsFile.icons.length; i += chunkSize) {
-  const chunk = iconsFile.icons.slice(i, i + chunkSize);
+  arr.forEach(item => {
+    const startingLetter = item.charAt(0).toLowerCase();
+    if (!result[startingLetter]) {
+      result[startingLetter] = [];
+    }
+    result[startingLetter].push(item);
+  });
 
-  test(`should match all icons ${i}`, async ({ page }) => {
+  return result;
+}
+
+const groupedItems = groupByStartingLetter(iconsFile.icons);
+Object.keys(groupedItems).forEach(key => {
+  test(`should match all icons starting with ${key}`, async ({ page }) => {
     await page.goto('http://127.0.0.1:8080/e2e/all-icons.html');
 
     const iconContentPage: string[] = [];
 
-    chunk.forEach(iconName => {
+    groupedItems[key].forEach(iconName => {
       iconContentPage.push(`<p>${iconName}</p>`);
       iconContentPage.push(`<ix-icon name="${iconName}"></ix-icon>`);
       iconContentPage.push(`<ix-icon name="/www/build/svg/${iconName}.svg"></ix-icon>`);
@@ -54,4 +64,4 @@ for (let i = 0; i < iconsFile.icons.length; i += chunkSize) {
       fullPage: true,
     });
   });
-}
+});
