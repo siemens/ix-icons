@@ -8,11 +8,11 @@
  */
 
 function loadResources() {
-  var ixIconsJsEsm = document.createElement('script');
+  const ixIconsJsEsm = document.createElement('script');
   ixIconsJsEsm.setAttribute('type', 'module');
   ixIconsJsEsm.setAttribute('src', 'http://127.0.0.1:8080/www/build/ix-icons.esm.js');
 
-  var ixIconsJs = document.createElement('script');
+  const ixIconsJs = document.createElement('script');
   ixIconsJs.setAttribute('nomodule', '');
   ixIconsJs.setAttribute('src', 'http://127.0.0.1:8080/www/build/ix-icons.js');
 
