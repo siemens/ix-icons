@@ -36,7 +36,7 @@ const chunkSize = 100;
 for (let i = 0; i < iconsFile.icons.length; i += chunkSize) {
   const chunk = iconsFile.icons.slice(i, i + chunkSize);
 
-  test(`should match all icons ${i}/${iconsFile.icons.length}`, async ({ page }) => {
+  test(`should match all icons ${i}`, async ({ page }) => {
     await page.goto('http://127.0.0.1:8080/e2e/all-icons.html');
 
     const iconContentPage: string[] = [];
