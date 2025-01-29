@@ -4,7 +4,7 @@
 
 Previously, all icons were included within the icon package itself. This approach was chosen to simplify setup and eliminate the need for additional configurations. However, this implementation has led to an increase in bundle size.
 
-With the release of the main libraries @siemens/ix and @siemens/ix-icons, you now need to provide the icons as a static resource. This significantly reduces the bundle size.
+With the release of version 3 of the main libraries @siemens/ix and @siemens/ix-icons, you now need to provide the icons as a static resource. This significantly reduces the bundle size.
 
 ## Remove misspelled and deprecated icons 
 
