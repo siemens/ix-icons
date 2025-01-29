@@ -29,9 +29,6 @@ function convertToCamelCase(value: string) {
   const normalized = returnValue.replace(/\s+/g, '');
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 }
-test.describe.configure({ mode: 'serial' });
-
-const chunkSize = 100;
 
 function groupByStartingLetter(arr: string[]): { [key: string]: string[] } {
   const result: { [key: string]: string[] } = {};
