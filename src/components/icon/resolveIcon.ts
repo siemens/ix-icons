@@ -8,7 +8,6 @@
  */
 import { getAssetPath, setAssetPath } from '@stencil/core';
 import { getCustomAssetUrl } from './meta-tag';
-import { allIcons } from './icons';
 
 declare global {
   interface Window {
@@ -160,6 +159,13 @@ export function loadIcons(icons: string[]) {
   icons.map(icon => loadIcon(icon));
 }
 
+export function addIcons(icons: { [name: string]: any }) {
+  Object.keys(icons).forEach(name => {
+    const icon = icons[name];
+    addIconToCache(name, icon);
+  });
+}
+
 export function addIconToCache(name: string, icon: string) {
   const cache = getIconCacheMap();
 
@@ -171,15 +177,9 @@ export function addIconToCache(name: string, icon: string) {
 
   cache.set(name, svg);
 
-  const toKebabCase = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z0-9])/g, "$1-$2").toLowerCase();
+  const toKebabCase = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z0-9])/g, '$1-$2').toLowerCase();
 
   if (name != toKebabCase) {
     cache.set(toKebabCase, svg);
   }
-}
-
-export function cacheAllIcons() {
-  Object.keys(allIcons).map(name => {
-    addIconToCache(name, allIcons[name]);
-  });
 }

@@ -220,18 +220,6 @@ async function writeIconCollectionFile(icons: JavaScriptBuildData[], targetPath:
     content.push(`| (string & {});`);
   }
 
-  if (includeTypings) {
-    content.push('\n');
-    content.push('\n');
-
-    content.push('export const allIcons: { [name: string]: string; } = {\n');
-    icons.forEach(icon => {
-      const codeName = `icon${icon.name.replace(/^(\w)/, (_match, p1) => p1.toUpperCase())}`;
-      content.push(`'${icon.originalIconName}': ${codeName},\n`);
-    });
-    content.push(`};`);
-  }
-
   console.log('Write file to:', targetPath);
   return fs.writeFile(targetPath, [headline, content.join('')].join(''));
 }
