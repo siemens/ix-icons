@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ConsoleMessage, expect, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import * as iconsFile from './sample.json';
 import * as icons from './../icons';
 
@@ -29,25 +29,29 @@ function convertToCamelCase(value: string) {
   const normalized = returnValue.replace(/\s+/g, '');
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 }
+test.describe.configure({ mode: 'serial' });
 
-iconsFile.icons.forEach(iconName => {
-  test(`should show ${iconName}`, async ({ page }) => {
-    const dataUrlSvg = icons[`icon${convertToCamelCase(iconName)}`];
-    await page.goto(`http://127.0.0.1:8080/e2e/icon-by-name.html?icon=${iconName}`);
+const chunkSize = 100;
 
-    await page.evaluate(
-      ([url]) => {
-        (window as any).__SVG_DATA__ = url;
-      },
-      [dataUrlSvg],
-    );
+for (let i = 0; i < iconsFile.icons.length; i += chunkSize) {
+  const chunk = iconsFile.icons.slice(i, i + chunkSize);
 
-    await page.waitForEvent('console', {
-      predicate: (message: ConsoleMessage) => {
-        return message.text() === 'icon-loaded-success';
-      },
+  test(`should match all icons ${i}/${iconsFile.icons.length}`, async ({ page }) => {
+    await page.goto('http://127.0.0.1:8080/e2e/all-icons.html');
+
+    const iconContentPage: string[] = [];
+
+    chunk.forEach(iconName => {
+      iconContentPage.push(`<p>${iconName}</p>`);
+      iconContentPage.push(`<ix-icon name="${iconName}"></ix-icon>`);
+      iconContentPage.push(`<ix-icon name="/www/build/svg/${iconName}.svg"></ix-icon>`);
+      iconContentPage.push(`<ix-icon name="${icons[`icon${convertToCamelCase(iconName)}`]}"></ix-icon>`);
     });
 
-    expect(await page.locator('#mount').screenshot()).toMatchSnapshot();
+    await page.setContent(iconContentPage.join('\n'));
+
+    await expect(page).toHaveScreenshot({
+      fullPage: true,
+    });
   });
-});
+}
