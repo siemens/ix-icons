@@ -2,4 +2,4 @@
 "@siemens/ix-icons": minor
 ---
 
-Allow preloading of specific icons.
+Allow users to put specific icons into the cache.
