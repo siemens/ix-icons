@@ -2,7 +2,7 @@
  * COPYRIGHT (c) Siemens AG 2018-2023 ALL RIGHTS RESERVED.
  */
 import { iconAdd, iconStar } from '../icons';
-import { resolveIcon, getIconCacheMap, getIconUrl, parseSVGDataContent, loadIcons, addIcons } from '../resolveIcon';
+import { resolveIcon, getIconCacheMap, getIconUrl, parseSVGDataContent, addIcons } from '../resolveIcon';
 
 const exampleSvg = `
 <?xml version="1.0" encoding="UTF-8"?>
@@ -112,21 +112,6 @@ test('preload custom icon', async () => {
 
   const data = await resolveIcon('star');
   expect(data).toBe('<svg>Test</svg>');
-});
-
-test('load icons', async () => {
-  fetch.mockClear();
-
-  const cacheMap = getIconCacheMap();
-  cacheMap.clear();
-
-  const icons = ['star', urlTest];
-
-  loadIcons(icons);
-
-  const urlStar = getIconUrl('star');
-
-  expect(fetch.mock.calls).toEqual([[urlStar], [urlTest]]);
 });
 
 test('add icons', async () => {
