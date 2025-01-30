@@ -155,13 +155,20 @@ async function loadIcon(iconName: string) {
   }
 }
 
-export function loadIcons(icons: string[]) {
-  icons.map(icon => loadIcon(icon));
+function removePrefix(name: string, prefix: string) {
+ if (name.startsWith(prefix)) {
+    name = name.slice(prefix.length);
+    return name.replace(/^(\w)/, (_match, p1) => p1.toLowerCase());
+  }
+
+  return name;
 }
 
 export function addIcons(icons: { [name: string]: any }) {
   Object.keys(icons).forEach(name => {
     const icon = icons[name];
+    name = removePrefix(name, 'icon');
+
     addIconToCache(name, icon);
   });
 }
