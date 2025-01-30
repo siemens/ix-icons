@@ -1,7 +1,7 @@
 /*
  * COPYRIGHT (c) Siemens AG 2018-2023 ALL RIGHTS RESERVED.
  */
-import { iconAdd, iconStar } from '../icons';
+import { iconStar, iconStarFilled } from '../icons';
 import { resolveIcon, getIconCacheMap, getIconUrl, parseSVGDataContent, addIcons } from '../resolveIcon';
 
 const exampleSvg = `
@@ -121,10 +121,10 @@ test('add icons', async () => {
   cacheMap.clear();
 
   addIcons({
-    iconAdd,
+    iconStarFilled,
   });
 
   expect(cacheMap.size).toBe(2);
-  expect(cacheMap.has('iconAdd')).toBeTruthy();
-  expect(cacheMap.has('add')).toBeTruthy();
+  expect(cacheMap.has('starFilled')).toBeTruthy();
+  expect(cacheMap.has('star-filled')).toBeTruthy();
 });
