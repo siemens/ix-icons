@@ -28,6 +28,7 @@ export const getIconCacheMap = (): Map<string, string> => {
     window.IxIcons = window.IxIcons || {};
     fetchCache = window.IxIcons.map = window.IxIcons.map || new Map();
   }
+
   return fetchCache;
 };
 
@@ -85,12 +86,15 @@ async function fetchSVG(url: string) {
     const svgContent = parseSVGDataContent(responseText);
     cache.set(url, svgContent);
 
+    requests.delete(url);
+
     return svgContent;
   });
 
   requests.set(url, fetching);
   return fetching;
 }
+
 const urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:\S+(?::\S*)?@)?(?:www\.)?(?:\S+\.\S+)(?:\S*)$/i;
 
 function isValidUrl(url: string) {
@@ -99,11 +103,13 @@ function isValidUrl(url: string) {
 
 export function getIconUrl(name: string) {
   const customAssetUrl = getCustomAssetUrl();
+
   if (customAssetUrl) {
     return `${customAssetUrl}/${name}.svg`;
   }
 
   let url: string = `svg/${name}.svg`;
+
   try {
     url = getAssetPath(url);
   } catch (error) {
@@ -124,6 +130,16 @@ export async function resolveIcon(iconName: string) {
     return parseSVGDataContent(iconName);
   }
 
+  return await loadIcon(iconName);
+}
+
+async function loadIcon(iconName: string) {
+  const cache = getIconCacheMap();
+
+  if (cache.has(iconName)) {
+    return cache.get(iconName);
+  }
+
   if (isValidUrl(iconName)) {
     try {
       return fetchSVG(iconName);
@@ -135,6 +151,42 @@ export async function resolveIcon(iconName: string) {
   try {
     return fetchSVG(getIconUrl(iconName));
   } catch (error) {
-    throw Error('Cannot resolve any icon');
+    throw Error(`Could not resolve ${iconName}`);
+  }
+}
+
+function removePrefix(name: string, prefix: string) {
+ if (name.startsWith(prefix)) {
+    name = name.slice(prefix.length);
+    return name.replace(/^(\w)/, (_match, p1) => p1.toLowerCase());
+  }
+
+  return name;
+}
+
+export function addIcons(icons: { [name: string]: any }) {
+  Object.keys(icons).forEach(name => {
+    const icon = icons[name];
+    name = removePrefix(name, 'icon');
+
+    addIconToCache(name, icon);
+  });
+}
+
+export function addIconToCache(name: string, icon: string) {
+  const cache = getIconCacheMap();
+
+  if (cache.has(name)) {
+    console.warn(`Icon name '${name}' already in cache. Overwritting with new icon data.`);
+  }
+
+  const svg = parseSVGDataContent(icon);
+
+  cache.set(name, svg);
+
+  const toKebabCase = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z0-9])/g, '$1-$2').toLowerCase();
+
+  if (name != toKebabCase) {
+    cache.set(toKebabCase, svg);
   }
 }

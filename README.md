@@ -12,9 +12,11 @@ SPDX-License-Identifier: MIT
 
 ## Usage
 
-Using icons within your project. You need to:
+### Installation
 
-- Install `@siemens/ix-icons` e.g. `npm install --save @siemens/ix-icons`
+First install the package `@siemens/ix-icons` in your project (e.g. `npm install --save @siemens/ix-icons`).
+
+Then load the icon component:
 
 ```javascript
 import { defineCustomElements } from '@siemens/ix-icons/loader';
@@ -22,6 +24,21 @@ import { defineCustomElements } from '@siemens/ix-icons/loader';
 (async () => {
   await defineCustomElements();
 })();
+```
+
+Icons are loaded once and then cached for the entire duration of the single-page application.
+Additionally, icons can be preloaded to ensure they are immediately available from the cache when needed later:
+
+```javascript
+import { loadIcons } from '@siemens/ix-icons';
+
+const icons = [
+  'star',
+  'star-filled',
+  // ...
+];
+
+loadIcons(icons)
 ```
 
 ### Angular / Web Components

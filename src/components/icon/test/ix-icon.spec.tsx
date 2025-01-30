@@ -3,7 +3,7 @@
  */
 import { newSpecPage } from '@stencil/core/testing';
 import { Icon } from '../icon';
-import { rocket } from './rocker-example';
+import { rocket } from './rocket-example';
 
 //@ts-ignore
 global.fetch = jest.fn(() =>
