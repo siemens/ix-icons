@@ -12,26 +12,30 @@ SPDX-License-Identifier: MIT
 
 ## Usage
 
-If you're using [Siemens Industrial Experience](https://github.com/siemens/ix/) library you don't have to setup your project this will be done via `@siemens/ix-angular`, `@siemens/ix-react` or `@siemens/ix-vue`, so no additional setup is necessary.
+### With Siemens Industrial Experience design system
 
-You want to use `@siemens/ix-icons` without `@siemens/ix` you need to follow these steps.
+If you are also using the library [Siemens Industrial Experience](https://github.com/siemens/ix/), no additional  project setup will be neccessary. The packages `@siemens/ix-angular`, `@siemens/ix-react` or `@siemens/ix-vue` will take care of setting up the icon library for you.
 
-### Using CDN
+### Without Siemens Industrial Experience design system
 
-Place the following `<script>` near the end of your page, right before the closing </body> tag, to enable them.
+If you want to use `@siemens/ix-icons` without `@siemens/ix` you need to follow these steps:
+
+#### Using CDN
+
+Place the following `<script>` near the end of your page, right before the closing </body> tag.
 
 ```html
 <script type="module" src="https://cdn.jsdelivr.net/npm/@siemens/ix-icons@%5E3.0.0/dist/ix-icons/ix-icons.esm.js"></script>
 <script nomodule src="https://cdn.jsdelivr.net/npm/@siemens/ix-icons@%5E3.0.0/dist/ix-icons/ix-icons.js"></script>
 ```
 
-Use the icon
+Now you can render icons in you applicaton:
 
 ```html
 <ix-icon name="star"></ix-icon>
 ```
 
-### Using package manager like `npm`/`pnpm`/`yarn`
+### Using a package manager like `npm`/`pnpm`/`yarn`
 
 First install the package `@siemens/ix-icons@latest` in your project (e.g. `npm install --save @siemens/ix-icons`).
 
@@ -63,9 +67,9 @@ defineCustomElements();
    <ix-icon name="star"></ix-icon>
    ```
 
-   You need only add the same icon once, additional calling `addIcons` will not add additional icons to the collection.
+   You only need to add the same icon once. Additional calls to `addIcons` will not add redundant copies of the same icons to the collection.
 
-### Use `ix-icon` component with custom svg's
+### Use the `ix-icon` component with custom SVG's
 
 ```tsx
 <ix-icon name="/your/asset/path/my-icon.svg"></ix-icon>
@@ -91,6 +95,6 @@ Contributions, issues and feature requests are welcome!
 
 ## 📝 License
 
-Copyright © 2019–2023 [Siemens AG](https://www.siemens.com/).
+Copyright © 2019–2025 [Siemens AG](https://www.siemens.com/).
 
 This project is MIT licensed.
