@@ -15,6 +15,7 @@ const __dirname = path.resolve();
 
 const rootPath = path.join(__dirname);
 const svgSrcPath = path.join(rootPath, 'incoming-svg');
+const buildDistPath = path.join(rootPath, 'build-dist');
 const pkgPath = path.join(rootPath, 'package.json');
 
 const iconsDestPath = path.join(__dirname, 'icons');
@@ -176,6 +177,7 @@ async function buildIcons() {
     ),
 
     writeIconSampleJson(iconCollection, path.join(rootPath, 'e2e'), version),
+    writeIconSampleJson(iconCollection, buildDistPath, version),
     fs.writeFile(
       iconsPkgPath,
       JSON.stringify(
