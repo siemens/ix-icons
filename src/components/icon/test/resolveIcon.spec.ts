@@ -32,9 +32,7 @@ const urlInvalid = 'http://localhost/invalid.svg';
 const urlTest = 'http://localhost/test.svg';
 
 jest.mock('../meta-tag');
-jest.mock('../icons', () => ({
-  iconStar: exampleSvg,
-}));
+
 let fetch = (global.fetch = jest.fn((url: string) => {
   if (url === '/svg/star.svg') {
     return Promise.resolve({
