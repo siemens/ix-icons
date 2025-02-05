@@ -51,7 +51,7 @@ export class Icon {
   @State() svgContent?: string;
   @State() isVisible = false;
 
-  connectedCallback() {
+  componentWillLoad() {
     this.waitForRendering(() => {
       this.isVisible = true;
       this.loadIconContent();

@@ -7,8 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ConsoleMessage, expect, test } from '@playwright/test';
-import * as iconsFile from './../dist/sample.json';
+import { expect, test } from '@playwright/test';
+import * as iconsFile from './sample.json';
 import * as icons from './../icons';
 
 function convertToCamelCase(value: string) {
@@ -30,24 +30,38 @@ function convertToCamelCase(value: string) {
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 }
 
-iconsFile.icons.forEach(iconName => {
-  test(`should show ${iconName}`, async ({ page }) => {
-    const dataUrlSvg = icons[`icon${convertToCamelCase(iconName)}`];
-    await page.goto(`http://127.0.0.1:8080/e2e/icon-by-name.html?icon=${iconName}`);
+function groupByStartingLetter(arr: string[]): { [key: string]: string[] } {
+  const result: { [key: string]: string[] } = {};
 
-    await page.evaluate(
-      ([url]) => {
-        (window as any).__SVG_DATA__ = url;
-      },
-      [dataUrlSvg],
-    );
+  arr.forEach(item => {
+    const startingLetter = item.charAt(0).toLowerCase();
+    if (!result[startingLetter]) {
+      result[startingLetter] = [];
+    }
+    result[startingLetter].push(item);
+  });
 
-    await page.waitForEvent('console', {
-      predicate: (message: ConsoleMessage) => {
-        return message.text() === 'icon-loaded-success';
-      },
+  return result;
+}
+
+const groupedItems = groupByStartingLetter(iconsFile.icons);
+Object.keys(groupedItems).forEach(key => {
+  test(`should match all icons starting with ${key}`, async ({ page }) => {
+    await page.goto('http://127.0.0.1:8080/e2e/all-icons.html');
+
+    const iconContentPage: string[] = [];
+
+    groupedItems[key].forEach(iconName => {
+      iconContentPage.push(`<p>${iconName}</p>`);
+      iconContentPage.push(`<ix-icon name="${iconName}"></ix-icon>`);
+      iconContentPage.push(`<ix-icon name="/www/build/svg/${iconName}.svg"></ix-icon>`);
+      iconContentPage.push(`<ix-icon name="${icons[`icon${convertToCamelCase(iconName)}`]}"></ix-icon>`);
     });
 
-    expect(await page.locator('#mount').screenshot()).toMatchSnapshot();
+    await page.setContent(iconContentPage.join('\n'));
+
+    await expect(page).toHaveScreenshot({
+      fullPage: true,
+    });
   });
 });
