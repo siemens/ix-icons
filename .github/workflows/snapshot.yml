@@ -114,7 +114,7 @@ jobs:
       - name: Get released version
         if: ${{ steps.added-files.outputs.changesets != '' }}
         id: get-version
-        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
 
       - name: Create comment
         if: ${{ steps.added-files.outputs.changesets != '' }}
