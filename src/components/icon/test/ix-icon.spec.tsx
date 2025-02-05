@@ -3,7 +3,7 @@
  */
 import { newSpecPage } from '@stencil/core/testing';
 import { Icon } from '../icon';
-import { rocket } from './rocker-example';
+import { rocket } from './rocket-example';
 
 //@ts-ignore
 global.fetch = jest.fn(() =>
@@ -33,7 +33,7 @@ describe('ix-icon', () => {
       components: [Icon],
       html: `<ix-icon name="${rocket}"></ix-icon>`,
     });
-    expect(page.root.shadowRoot).toEqualHtml(`
+    expect(page.root!.shadowRoot).toEqualHtml(`
     <div class="svg-container">
       <svg height="512px" version="1.1" viewBox="0 0 512 512" width="512px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
         <g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
@@ -51,7 +51,8 @@ describe('ix-icon', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: false,
-        text: () => Promise.resolve(`ERROR!`),
+        text: () => 'error',
+        status: '500',
       }),
     );
 
@@ -60,7 +61,7 @@ describe('ix-icon', () => {
       html: `<ix-icon name="/data/not-existing.svg"></ix-icon>`,
     });
 
-    expect(page.root.shadowRoot).toEqualHtml(`
+    expect(page.root!.shadowRoot).toEqualHtml(`
     <div class=\"svg-container\">
       <svg height=\"512\" viewBox=\"0 0 512 512\" width=\"512\" xmlns=\"http://www.w3.org/2000/svg\">
         <path d=\"M384,0 L384,384 L0,384 L0,0 L384,0 Z M192,207.085 L57.751,341.333 L326.248,341.333 L192,207.085 Z M42.666,57.751 L42.666,326.248 L176.915,192 L42.666,57.751 Z M341.333,57.751 L207.085,192 L341.333,326.248 L341.333,57.751 Z M326.248,42.666 L57.751,42.666 L192,176.915 L326.248,42.666 Z\" fill-rule=\"evenodd\" transform=\"translate(64 64)\"></path>
