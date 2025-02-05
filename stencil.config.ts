@@ -26,6 +26,7 @@ export const config: Config = {
     {
       type: 'dist-custom-elements',
       dir: './components',
+      externalRuntime: false,
     },
     {
       type: 'www',
