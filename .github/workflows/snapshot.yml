@@ -114,7 +114,7 @@ jobs:
       - name: Get released version
         if: ${{ steps.added-files.outputs.changesets != '' }}
         id: get-version
-        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+        run: echo "snapshot_version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Create comment
         if: ${{ steps.added-files.outputs.changesets != '' }}
@@ -125,5 +125,5 @@ jobs:
             A new release has been made for this PR. You can install it with:
 
             ```
-            npm i @siemens/ix-icons@${{ steps.get-version.outputs.version }}
+            npm i @siemens/ix-icons@${{ steps.get-version.outputs.snapshot_version }}
             ```
