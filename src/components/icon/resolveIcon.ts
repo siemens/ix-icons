@@ -129,7 +129,13 @@ async function loadIcon(iconName: string): Promise<string> {
     return fetchSVG(iconName);
   }
 
-  return fetchSVG(getIconUrl(iconName));
+  const iconUrl = getIconUrl(iconName);
+
+  if (!iconUrl) {
+    return '';
+  }
+
+  return fetchSVG(iconUrl);
 }
 
 function removePrefix(name: string, prefix: string) {
