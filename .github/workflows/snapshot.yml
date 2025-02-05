@@ -77,7 +77,7 @@ jobs:
           echo "$(git diff --name-only --diff-filter=A ${{ steps.comment-branch.outputs.base_sha }} ${{ steps.parse-sha.outputs.sha }} .changeset/*.md)" >> "${GITHUB_OUTPUT}"
           echo "${delimiter}" >> "${GITHUB_OUTPUT}"
 
-      - uses: ./.github/workflows/actions/turbo
+      - uses: ./.github/workflows/actions/build
 
       - name: Check for pre.json file existence
         id: check_files
@@ -114,7 +114,7 @@ jobs:
       - name: Get released version
         if: ${{ steps.added-files.outputs.changesets != '' }}
         id: get-version
-        run: echo "version=$(node -p "require('./packages/core/package.json').version")" >> "$GITHUB_OUTPUT"
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
 
       - name: Create comment
         if: ${{ steps.added-files.outputs.changesets != '' }}
