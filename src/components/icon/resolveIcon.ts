@@ -99,7 +99,7 @@ export function getIconUrl(name: string) {
   try {
     url = getAssetPath(url);
   } catch (error) {
-    console.warn(`Could not load icon with name "${name}". Ensure that the icon is registered using addIcons or that the icon SVG data is passed directly to property.`);
+    console.warn(`Could not load icon with name "${name}". Ensure that the icon is registered using addIcons or that the icon SVG data is passed directly to the property.`);
   }
 
   return url;
