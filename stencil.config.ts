@@ -17,11 +17,16 @@ export const config: Config = {
           src: path.join(__dirname, 'svg'),
           dest: path.join(__dirname, 'dist', 'ix-icons', 'svg'),
         },
+        {
+          src: path.join(__dirname, 'build-dist'),
+          dest: path.join(__dirname, 'dist'),
+        },
       ],
     },
     {
       type: 'dist-custom-elements',
       dir: './components',
+      externalRuntime: false,
     },
     {
       type: 'www',
