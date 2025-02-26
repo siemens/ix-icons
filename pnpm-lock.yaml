@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@stencil/core':
-        specifier: ^4.25.1
-        version: 4.25.1
+        specifier: ^4.27.1
+        version: 4.27.1
     devDependencies:
       '@changesets/changelog-github':
         specifier: ^0.5.0
@@ -23,7 +23,7 @@ importers:
         version: 1.50.0
       '@stencil/sass':
         specifier: ^3.0.10
-        version: 3.0.11(@stencil/core@4.25.1)
+        version: 3.0.11(@stencil/core@4.27.1)
       '@types/fs-extra':
         specifier: ^9.0.13
         version: 9.0.13
@@ -436,8 +436,8 @@ packages:
   '@sinonjs/fake-timers@8.1.0':
     resolution: {integrity: sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==}
 
-  '@stencil/core@4.25.1':
-    resolution: {integrity: sha512-SJhAAN6nHj7l2n2F7H6NoOUFhXC5tYXSvOpAaNFi5As6c2jOvaDOvAH+om4OKmw8U2kHI9yihEqpZrtY1J20dQ==}
+  '@stencil/core@4.27.1':
+    resolution: {integrity: sha512-wJ+U3yJ9xSrME1PheHh8DnZrgFhjTlvF54mkA0tzTDXYdrEAYXIEAAeWbXx3munYX2Lqj3oDBEDsbsJNxDkwzA==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
@@ -4333,11 +4333,11 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 1.8.6
 
-  '@stencil/core@4.25.1': {}
+  '@stencil/core@4.27.1': {}
 
-  '@stencil/sass@3.0.11(@stencil/core@4.25.1)':
+  '@stencil/sass@3.0.11(@stencil/core@4.27.1)':
     dependencies:
-      '@stencil/core': 4.25.1
+      '@stencil/core': 4.27.1
 
   '@tootallnate/once@1.1.2': {}
 
