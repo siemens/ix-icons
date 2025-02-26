@@ -105,7 +105,7 @@ test('fill cache map if not loaded', async () => {
   const data = await resolveIcon(element, 'star');
 
   expect(data).toBe(parseSVGDataContent(iconStar));
-  expect(cacheMap.get(getIconUrl('star'))).toBe(parseSVGDataContent(iconStar));
+  expect(cacheMap.get(getIconUrl('star', element))).toBe(parseSVGDataContent(iconStar));
 });
 
 test('preload custom icon', async () => {
@@ -115,7 +115,7 @@ test('preload custom icon', async () => {
   const cacheMap = getIconCacheMap();
   cacheMap.clear();
 
-  cacheMap.set(getIconUrl('star'), '<svg>Test</svg>');
+  cacheMap.set(getIconUrl('star', element), '<svg>Test</svg>');
 
   const data = await resolveIcon(element, 'star');
   expect(data).toBe('<svg>Test</svg>');

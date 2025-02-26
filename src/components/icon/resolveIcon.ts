@@ -44,7 +44,7 @@ export const isSvgDataUrl = (url: string) => {
   return url.startsWith('data:image/svg+xml');
 };
 
-async function fetchSVG(url: string) {
+async function fetchSVG(url: string, element: HTMLIxIconElement) {
   const cache = getIconCacheMap();
 
   if (cache.has(url)) {
@@ -64,13 +64,13 @@ async function fetchSVG(url: string) {
         svgContent = parseSVGDataContent(responseText);
         cache.set(url, svgContent);
       } else {
-        console.error('Failed to request svg data from', url, 'with status code', response.status);
+        console.error('Failed to request svg data from', url, 'with status code', response.status, element);
       }
 
       return svgContent;
     })
     .catch(() => {
-      console.error('Failed to fetch svg data:', url);
+      console.error('Failed to fetch svg data:', url, element);
       cache.set(url, '');
       return '';
     })
@@ -87,7 +87,7 @@ function isValidUrl(url: string) {
   return urlRegex.test(url);
 }
 
-export function getIconUrl(name: string) {
+export function getIconUrl(name: string, element: HTMLIxIconElement) {
   const customAssetUrl = getCustomAssetUrl();
 
   if (customAssetUrl) {
@@ -99,7 +99,7 @@ export function getIconUrl(name: string) {
   try {
     url = getAssetPath(url);
   } catch (error) {
-    console.warn(`Could not load icon with name "${name}". Ensure that the icon is registered using addIcons or that the icon SVG data is passed directly to property.`);
+    console.warn(`Could not load icon with name "${name}". Ensure that the icon is registered using addIcons or that the icon SVG data is passed directly to property.`, element);
   }
 
   return url;
@@ -112,13 +112,18 @@ export async function resolveIcon(element: HTMLIxIconElement, iconName?: string)
   }
 
   if (isSvgDataUrl(iconName)) {
-    return parseSVGDataContent(iconName);
+    const content = parseSVGDataContent(iconName);
+
+    if (!content) {
+      console.error('Failed to parse icon data', element);
+    }
+    return content;
   }
 
-  return loadIcon(iconName);
+  return loadIcon(iconName, element);
 }
 
-async function loadIcon(iconName: string): Promise<string> {
+async function loadIcon(iconName: string, element: HTMLIxIconElement): Promise<string> {
   const cache = getIconCacheMap();
 
   if (cache.has(iconName)) {
@@ -126,16 +131,16 @@ async function loadIcon(iconName: string): Promise<string> {
   }
 
   if (isValidUrl(iconName)) {
-    return fetchSVG(iconName);
+    return fetchSVG(iconName, element);
   }
 
-  const iconUrl = getIconUrl(iconName);
+  const iconUrl = getIconUrl(iconName, element);
 
   if (!iconUrl) {
     return '';
   }
 
-  return fetchSVG(iconUrl);
+  return fetchSVG(iconUrl, element);
 }
 
 function removePrefix(name: string, prefix: string) {

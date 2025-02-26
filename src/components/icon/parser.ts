@@ -21,7 +21,6 @@ export function parseSVGDataContent(content: string): string {
   const svgElement = svgDocument.querySelector('svg') as HTMLElement;
 
   if (!svgElement) {
-    console.error('No valid svg data provided');
     return '';
   }
 
