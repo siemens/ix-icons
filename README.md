@@ -12,11 +12,11 @@ SPDX-License-Identifier: MIT
 
 ## Usage
 
-### With Siemens Industrial Experience design system
+### Setting up with Siemens Industrial Experience design system
 
-If you are also using the library [Siemens Industrial Experience](https://github.com/siemens/ix/), no additional  project setup will be neccessary. The packages `@siemens/ix-angular`, `@siemens/ix-react` or `@siemens/ix-vue` will take care of setting up the icon library for you.
+If you are also using the library [Siemens Industrial Experience](https://github.com/siemens/ix/), no additional project setup will be necessary. The packages `@siemens/ix-angular`, `@siemens/ix-react` or `@siemens/ix-vue` will take care of setting up the icon library for you.
 
-### Without Siemens Industrial Experience design system
+### Setting up without Siemens Industrial Experience design system
 
 If you want to use `@siemens/ix-icons` without `@siemens/ix` you need to follow these steps:
 
@@ -29,7 +29,7 @@ Place the following `<script>` near the end of your page, right before the closi
 <script nomodule src="https://cdn.jsdelivr.net/npm/@siemens/ix-icons@%5E3.0.0/dist/ix-icons/ix-icons.js"></script>
 ```
 
-Now you can render icons in you applicaton:
+Now you can render icons in your applicaton:
 
 ```html
 <ix-icon name="star"></ix-icon>
