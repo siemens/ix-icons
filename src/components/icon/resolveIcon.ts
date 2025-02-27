@@ -61,7 +61,7 @@ async function fetchSVG(url: string, element: HTMLIxIconElement) {
 
       let svgContent = '';
       if (response.ok) {
-        svgContent = parseSVGDataContent(responseText);
+        svgContent = parseSVGDataContent(responseText, element);
         cache.set(url, svgContent);
       } else {
         console.error('Failed to request svg data from', url, 'with status code', response.status, element);
@@ -112,7 +112,7 @@ export async function resolveIcon(element: HTMLIxIconElement, iconName?: string)
   }
 
   if (isSvgDataUrl(iconName)) {
-    const content = parseSVGDataContent(iconName);
+    const content = parseSVGDataContent(iconName, element);
 
     if (!content) {
       console.error('Failed to parse icon data', element);
