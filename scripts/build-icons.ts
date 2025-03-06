@@ -15,6 +15,7 @@ const __dirname = path.resolve();
 
 const rootPath = path.join(__dirname);
 const svgSrcPath = path.join(rootPath, 'incoming-svg');
+const buildDistPath = path.join(rootPath, 'build-dist');
 const pkgPath = path.join(rootPath, 'package.json');
 
 const iconsDestPath = path.join(__dirname, 'icons');
@@ -140,17 +141,6 @@ async function buildIcons() {
         originalIconName: i.originalIconName,
         code: i.esm,
       })),
-      path.join(rootPath, 'src', 'components', 'icon', 'icons.ts'),
-      version,
-      true,
-    ),
-
-    writeIconCollectionFile(
-      iconCollection.map(i => ({
-        name: i.name,
-        originalIconName: i.originalIconName,
-        code: i.esm,
-      })),
       iconsEsmPath,
       version,
     ),
@@ -175,8 +165,8 @@ async function buildIcons() {
       version,
     ),
 
-    writeIconSampleJson(iconCollection, path.join(rootPath, 'build-dist'), version),
-    writeGlobalCSSFile(path.join(rootPath, 'build-dist', 'css', 'ix-icons.css')),
+    writeIconSampleJson(iconCollection, path.join(rootPath, 'e2e'), version),
+    writeIconSampleJson(iconCollection, buildDistPath, version),
     fs.writeFile(
       iconsPkgPath,
       JSON.stringify(
@@ -248,28 +238,6 @@ function getDataUrl(svgData: string) {
   }
   svg = svg.replace(/"/g, "'");
   return `"data:image/svg+xml;utf8,${svg}"`;
-}
-
-async function writeGlobalCSSFile(targetPath: string) {
-  // Write the global css file to keep the application compiling after update to 2.0.0
-  fs.ensureDirSync(path.join(targetPath, '..'));
-
-  return fs.writeFile(
-    targetPath,
-    `
-/*
-* SPDX-FileCopyrightText: 2023 Siemens AG
-*
-* SPDX-License-Identifier: MIT
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-/*
-* Deprecated since 2.0.0 no global css file is necessary.
-*/
-    `,
-  );
 }
 
 buildIcons();

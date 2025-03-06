@@ -14,6 +14,10 @@ export const config: Config = {
       esmLoaderPath: '../loader',
       copy: [
         {
+          src: path.join(__dirname, 'svg'),
+          dest: path.join(__dirname, 'dist', 'ix-icons', 'svg'),
+        },
+        {
           src: path.join(__dirname, 'build-dist'),
           dest: path.join(__dirname, 'dist'),
         },
@@ -21,6 +25,8 @@ export const config: Config = {
     },
     {
       type: 'dist-custom-elements',
+      dir: './components',
+      externalRuntime: false,
     },
     {
       type: 'www',

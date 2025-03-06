@@ -10,12 +10,15 @@ export namespace Components {
         /**
           * Color of the icon
          */
-        "color": string;
+        "color"?: string;
+        /**
+          * Only fetch and parse svg data when icon is visible
+         */
         "lazyLoading": boolean;
         /**
           * Use one of our defined icon names e.g. `copy`  https://ix.siemens.io/docs/icon-library/icons  or the import variant  ``` import { rocket } from '@siemens/ix-icons/icons';  <ix-icon name={rocket}></ix-icon> ```
          */
-        "name": string;
+        "name"?: string;
         /**
           * Size of the icon
          */
@@ -39,6 +42,9 @@ declare namespace LocalJSX {
           * Color of the icon
          */
         "color"?: string;
+        /**
+          * Only fetch and parse svg data when icon is visible
+         */
         "lazyLoading"?: boolean;
         /**
           * Use one of our defined icon names e.g. `copy`  https://ix.siemens.io/docs/icon-library/icons  or the import variant  ``` import { rocket } from '@siemens/ix-icons/icons';  <ix-icon name={rocket}></ix-icon> ```

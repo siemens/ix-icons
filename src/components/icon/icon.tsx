@@ -7,10 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { Component, h, Host, Prop, State, Watch, Element, Build } from '@stencil/core';
-import { parseSVGDataContent, resolveIcon } from './resolveIcon';
-
-const iconMissingSymbol =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'><path fill-rule='evenodd' d='M384,0 L384,384 L0,384 L0,0 L384,0 Z M192,207.085 L57.751,341.333 L326.248,341.333 L192,207.085 Z M42.666,57.751 L42.666,326.248 L176.915,192 L42.666,57.751 Z M341.333,57.751 L207.085,192 L341.333,326.248 L341.333,57.751 Z M326.248,42.666 L57.751,42.666 L192,176.915 L326.248,42.666 Z' transform='translate(64 64)'/></svg>";
+import { resolveIcon } from './resolveIcon';
+import { errorSymbol, parseSVGDataContent } from './parser';
 
 @Component({
   tag: 'ix-icon',
@@ -19,17 +17,17 @@ const iconMissingSymbol =
   assetsDirs: ['svg'],
 })
 export class Icon {
-  @Element() hostElement: HTMLIxIconElement;
+  @Element() hostElement!: HTMLIxIconElement;
 
   /**
    * Size of the icon
    */
-  @Prop() size: '12' | '16' | '24' | '32';
+  @Prop() size: '12' | '16' | '24' | '32' = '24';
 
   /**
    * Color of the icon
    */
-  @Prop() color: string;
+  @Prop() color?: string;
 
   /**
    * Use one of our defined icon names e.g. `copy`
@@ -44,14 +42,17 @@ export class Icon {
    * <ix-icon name={rocket}></ix-icon>
    * ```
    */
-  @Prop() name: string;
+  @Prop() name?: string;
 
+  /**
+   * Only fetch and parse svg data when icon is visible
+   */
   @Prop() lazyLoading = false;
 
   @State() svgContent?: string;
   @State() isVisible = false;
 
-  connectedCallback() {
+  componentWillLoad() {
     this.waitForRendering(() => {
       this.isVisible = true;
       this.loadIconContent();
@@ -60,11 +61,14 @@ export class Icon {
 
   @Watch('name')
   async loadIconContent() {
-    try {
-      this.svgContent = await resolveIcon(this.name);
-    } catch (error) {
-      this.svgContent = parseSVGDataContent(iconMissingSymbol);
+    const content = await resolveIcon(this.hostElement, this.name);
+
+    if (!content) {
+      this.svgContent = parseSVGDataContent(errorSymbol);
+      return;
     }
+
+    this.svgContent = content;
   }
 
   private waitForRendering(onRender: () => void) {
