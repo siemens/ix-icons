@@ -12,9 +12,9 @@ SPDX-License-Identifier: MIT
 
 ## Usage
 
-### Settng up with Siemens Industrial Experience design system
+### Setting up with Siemens Industrial Experience design system
 
-If you are also using the library [Siemens Industrial Experience](https://github.com/siemens/ix/), no additional  project setup will be necessary. The packages `@siemens/ix-angular`, `@siemens/ix-react` or `@siemens/ix-vue` will take care of setting up the icon library for you.
+If you are also using the library [Siemens Industrial Experience](https://github.com/siemens/ix/), no additional project setup will be necessary. The packages `@siemens/ix-angular`, `@siemens/ix-react` or `@siemens/ix-vue` will take care of setting up the icon library for you.
 
 ### Setting up without Siemens Industrial Experience design system
 
