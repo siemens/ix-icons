@@ -16,10 +16,6 @@ export namespace Components {
          */
         "lazyLoading": boolean;
         /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "lazy-loading"?: boolean;
-        /**
           * Use one of our defined icon names e.g. `copy`  https://ix.siemens.io/docs/icon-library/icons  or the import variant  ``` import { rocket } from '@siemens/ix-icons/icons';  <ix-icon name={rocket}></ix-icon> ```
          */
         "name"?: string;
@@ -50,10 +46,6 @@ declare namespace LocalJSX {
           * Only fetch and parse svg data when icon is visible
          */
         "lazyLoading"?: boolean;
-        /**
-         * @deprecated use camelCase instead. Support for dash-casing will be removed in Stencil v5.
-         */
-        "lazy-loading"?: boolean;
         /**
           * Use one of our defined icon names e.g. `copy`  https://ix.siemens.io/docs/icon-library/icons  or the import variant  ``` import { rocket } from '@siemens/ix-icons/icons';  <ix-icon name={rocket}></ix-icon> ```
          */
