@@ -61,6 +61,8 @@ export class Icon {
 
   @Watch('name')
   async loadIconContent() {
+    if (!this.hostElement) return;
+
     const content = await resolveIcon(this.hostElement, this.name);
 
     if (!content) {
