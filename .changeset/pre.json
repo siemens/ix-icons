@@ -1,0 +1,8 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "@siemens/ix-icons": "2.2.0"
+  },
+  "changesets": []
+}
