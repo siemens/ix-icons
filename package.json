@@ -59,7 +59,8 @@
       "require": "./icons/index.js",
       "default": "./icons/index.mjs"
     },
-    "./svg/*.svg": "./svg/*.svg"
+    "./svg/*.svg": "./svg/*.svg",
+    "./dist/sample.json": "./dist/sample.json"
   },
   "scripts": {
     "build:js-icons": "tsx --tsconfig ./scripts/tsconfig.json ./scripts/build-icons.ts",
