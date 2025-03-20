@@ -4,5 +4,10 @@
   "initialVersions": {
     "@siemens/ix-icons": "2.2.0"
   },
-  "changesets": []
+  "changesets": [
+    "fuzzy-carrots-drive",
+    "honest-monkeys-smile",
+    "light-schools-buy",
+    "little-baboons-cry"
+  ]
 }
