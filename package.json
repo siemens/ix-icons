@@ -16,11 +16,9 @@
     "pnpm": ">=9.x.x",
     "node": ">=18.x.x"
   },
+  "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
-  "es2015": "dist/esm/index.mjs",
-  "es2017": "dist/esm/index.mjs",
-  "jsnext:main": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
@@ -32,8 +30,40 @@
     "icons/",
     "svg/"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    },
+    "./loader": {
+      "types": "./loader/index.d.ts",
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs.js",
+      "default": "./loader/index.js"
+    },
+    "./components/*.js": {
+      "types": "./dist/types/components/*.d.ts",
+      "import": "./components/*.js"
+    },
+    "./components": {
+      "types": "./dist/types/components.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    },
+    "./icons": {
+      "types": "./icons/index.d.ts",
+      "import": "./icons/index.mjs",
+      "require": "./icons/index.js",
+      "default": "./icons/index.mjs"
+    },
+    "./svg/*.svg": "./svg/*.svg",
+    "./dist/sample.json": "./dist/sample.json"
+  },
   "scripts": {
-    "build:js-icons": "ts-node -P ./scripts/tsconfig.json ./scripts/build-icons",
+    "build:js-icons": "tsx --tsconfig ./scripts/tsconfig.json ./scripts/build-icons.ts",
     "build": "rimraf build-dist svg && pnpm build:js-icons && stencil build",
     "start": "rimraf build-dist svg && pnpm build:js-icons && stencil build --dev --watch --serve",
     "test": "stencil test --spec",
@@ -66,7 +96,7 @@
     "puppeteer": "^19.5.2",
     "rimraf": "^5.0.0",
     "svgo": "^3.0.2",
-    "ts-node": "^10.9.1",
+    "tsx": "^4.19.3",
     "typescript": "^4.9.5"
   }
 }
