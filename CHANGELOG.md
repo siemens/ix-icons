@@ -1,5 +1,11 @@
 # @siemens/ix-icons
 
+## 3.0.0-alpha.1
+
+### Minor Changes
+
+- [#77](https://github.com/siemens/ix-icons/pull/77) [`1d49f19`](https://github.com/siemens/ix-icons/commit/1d49f19ef80b5f39e8500bec9b0a78e2984a240b) Thanks [@danielleroux](https://github.com/danielleroux)! - Convert package to type module
+
 ## 3.0.0-alpha.0
 
 ### Major Changes
