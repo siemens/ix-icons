@@ -68,6 +68,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - uses: ./.github/workflows/actions/build
+
       - name: Publish to npm + GitHub
         id: changesets
         # Only publish if we're still in pre mode and the last commit was
