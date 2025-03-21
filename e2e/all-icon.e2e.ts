@@ -53,12 +53,28 @@ Object.keys(groupedItems).forEach(key => {
 
     groupedItems[key].forEach(iconName => {
       iconContentPage.push(`<p>${iconName}</p>`);
-      iconContentPage.push(`<ix-icon name="${iconName}"></ix-icon>`);
-      iconContentPage.push(`<ix-icon name="/www/build/svg/${iconName}.svg"></ix-icon>`);
-      iconContentPage.push(`<ix-icon name="${icons[`icon${convertToCamelCase(iconName)}`]}"></ix-icon>`);
+      iconContentPage.push(`<ix-icon id="${iconName}-by-name" name="${iconName}"></ix-icon>`);
+      iconContentPage.push(`<ix-icon id="${iconName}-by-url" name="/www/build/svg/${iconName}.svg"></ix-icon>`);
+      iconContentPage.push(`<ix-icon id="${iconName}-by-data" name="${icons[`icon${convertToCamelCase(iconName)}`]}"></ix-icon>`);
     });
 
     await page.setContent(iconContentPage.join('\n'));
+
+    await Promise.all(
+      groupedItems[key].map(async iconName => {
+        const iconByName = page.locator(`#${iconName}-by-name`);
+        const iconByUrl = page.locator(`#${iconName}-by-url`);
+        const iconByData = page.locator(`#${iconName}-by-data`);
+
+        const svgByName = iconByName.locator('.svg-container svg');
+        const svgByUrl = iconByUrl.locator('.svg-container svg');
+        const svgByData = iconByData.locator('.svg-container svg');
+
+        await expect(svgByName).toBeVisible();
+        await expect(svgByUrl).toBeVisible();
+        await expect(svgByData).toBeVisible();
+      }),
+    );
 
     await expect(page).toHaveScreenshot({
       fullPage: true,
