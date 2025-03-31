@@ -8,8 +8,9 @@
  */
 
 import { expect, test } from '@playwright/test';
-import * as iconsFile from './sample.json';
-import * as icons from './../icons';
+import * as icons from './../icons/index';
+import { readdirSync, readFileSync } from 'fs';
+import path from 'path';
 
 function convertToCamelCase(value: string) {
   value = value.replace(/[\(\)\[\]\{\}\=\?\!\.\:,\-_\+\\\"#~\/]/g, ' ');
@@ -44,7 +45,14 @@ function groupByStartingLetter(arr: string[]): { [key: string]: string[] } {
   return result;
 }
 
-const groupedItems = groupByStartingLetter(iconsFile.icons);
+const __dirname = path.resolve();
+const rawSamples = readFileSync(path.join(__dirname, 'e2e', 'sample.json')).toString();
+const iconsSamples = JSON.parse(rawSamples);
+
+const groupedItems = groupByStartingLetter(iconsSamples.icons);
+
+test.describe.configure({ mode: 'serial' });
+
 Object.keys(groupedItems).forEach(key => {
   test(`should match all icons starting with ${key}`, async ({ page }) => {
     await page.goto('http://127.0.0.1:8080/e2e/all-icons.html');

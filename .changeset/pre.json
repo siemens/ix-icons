@@ -1,0 +1,13 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "@siemens/ix-icons": "2.2.0"
+  },
+  "changesets": [
+    "fuzzy-carrots-drive",
+    "honest-monkeys-smile",
+    "light-schools-buy",
+    "little-baboons-cry"
+  ]
+}
