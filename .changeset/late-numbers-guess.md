@@ -2,7 +2,7 @@
 '@siemens/ix-icons': minor
 ---
 
-- update shapes of battery icons, affected icons:
+- Update shapes of battery icons, affected icons:
   - battery-charge
   - battery-check
   - battery-empty-question
@@ -25,8 +25,8 @@
   - battery-upright-quarter
   - battery-upright-slash
   - battery-upright-three-quarter
-- update shape of cloud icons, affected icons
 
+- Update shape of cloud icons, affected icons:
   - cloud-download-add-filled
   - cloud-download-add
   - cloud-download-filled
@@ -54,8 +54,7 @@
   - sun-cloud-filled
   - sun-cloud
 
-- add new icons
-
+- Add new icons
   - error-multiple-filled
   - error-multiple
   - info-multiple-filled
@@ -111,4 +110,4 @@
   - user-management-settings-filled
   - user-management-settings
 
-- fix ending of thermometer-filled not rounded
+- Fix ending of thermometer-filled not rounded
