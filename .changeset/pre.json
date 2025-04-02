@@ -5,9 +5,12 @@
     "@siemens/ix-icons": "2.2.0"
   },
   "changesets": [
+    "famous-cars-collect",
     "fuzzy-carrots-drive",
     "green-cameras-walk",
     "honest-monkeys-smile",
+    "hungry-weeks-return",
+    "late-numbers-guess",
     "light-schools-buy",
     "little-baboons-cry"
   ]
