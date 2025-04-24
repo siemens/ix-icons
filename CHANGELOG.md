@@ -1,5 +1,177 @@
 # @siemens/ix-icons
 
+## 3.0.0
+
+### Major Changes
+
+- [#65](https://github.com/siemens/ix-icons/pull/65) [`0d271ac`](https://github.com/siemens/ix-icons/commit/0d271ac1791b007520cd00698ce2082a46a3f07d) Thanks [@danielleroux](https://github.com/danielleroux)! - - Add new set of icons
+
+  - Icon replacements:
+
+  | removed                      | replaced by                  |
+  | ---------------------------- | ---------------------------- |
+  | add-cirlce-small-filled      | add-circle-small-filled      |
+  | asset-network-1              | asset-network-filled         |
+  | battery-bolt                 | battery-charge               |
+  | battery-upright-bolt         | battery-upright-charge       |
+  | checkbox-component-checked   | checkbox                     |
+  | corner-arrow-up-left         | arrow-up-left                |
+  | draw-cirlce                  | draw-circle                  |
+  | filter-outline               | filter                       |
+  | folder-new-outline           | folder-new                   |
+  | folder-open-outline          | folder-open                  |
+  | folder-outline               | folder                       |
+  | full-screeen-exit            | full-screen-exit             |
+  | full-screeen                 | full-screen                  |
+  | location-outline             | location                     |
+  | new-indicator-filled         | add-circle-small-filled      |
+  | new-indicator                | add-circle-small             |
+  | no-anomaly                   | anomaly-none                 |
+  | plant-outline                | plant                        |
+  | tag-cirlce-arrow-down        | tag-circle-arrow-down        |
+  | tag-cirlce-arrow-down-filled | tag-circle-arrow-down-filled |
+  | thumb-filled                 | thumb-down-filled            |
+  | user-reading-reading         | user-reading-filled          |
+
+  - Icon `landing-page-logo` removed without an replacement
+
+- [#65](https://github.com/siemens/ix-icons/pull/65) [`0d271ac`](https://github.com/siemens/ix-icons/commit/0d271ac1791b007520cd00698ce2082a46a3f07d) Thanks [@danielleroux](https://github.com/danielleroux)! - feat: remove prebundled icons
+
+### Minor Changes
+
+- [#83](https://github.com/siemens/ix-icons/pull/83) [`e2bf758`](https://github.com/siemens/ix-icons/commit/e2bf758b0b837796c0cd22f25d6424f9523878af) Thanks [@danielleroux](https://github.com/danielleroux)! - add table specific icons
+
+  - table-add-column-right
+  - table-add-row-below
+  - table-insert-column-left
+  - table-insert-column-right
+  - table-insert-row-above
+  - table-insert-row-below
+
+- [#65](https://github.com/siemens/ix-icons/pull/65) [`0d271ac`](https://github.com/siemens/ix-icons/commit/0d271ac1791b007520cd00698ce2082a46a3f07d) Thanks [@danielleroux](https://github.com/danielleroux)! - Allow users to put specific icons into the cache.
+
+- [#83](https://github.com/siemens/ix-icons/pull/83) [`e2bf758`](https://github.com/siemens/ix-icons/commit/e2bf758b0b837796c0cd22f25d6424f9523878af) Thanks [@danielleroux](https://github.com/danielleroux)! - Convert package to type module
+
+- [#83](https://github.com/siemens/ix-icons/pull/83) [`e2bf758`](https://github.com/siemens/ix-icons/commit/e2bf758b0b837796c0cd22f25d6424f9523878af) Thanks [@danielleroux](https://github.com/danielleroux)! - - Update shapes of battery icons, affected icons:
+
+  - battery-charge
+  - battery-check
+  - battery-empty-question
+  - battery-exclamation
+  - battery-full-check
+  - battery-full
+  - battery-half
+  - battery-low
+  - battery-quarter
+  - battery-slash
+  - battery-three-quarter
+  - battery-upright-charge
+  - battery-upright-check
+  - battery-upright-empty-question
+  - battery-upright-exclamation
+  - battery-upright-full-check
+  - battery-upright-full
+  - battery-upright-half
+  - battery-upright-low
+  - battery-upright-quarter
+  - battery-upright-slash
+  - battery-upright-three-quarter
+
+  - Update shape of cloud icons, affected icons:
+
+    - cloud-download-add-filled
+    - cloud-download-add
+    - cloud-download-filled
+    - cloud-download-list-filled
+    - cloud-download-list
+    - cloud-download
+    - cloud-filled
+    - cloud-new-filled
+    - cloud-new
+    - cloud-upload-filled
+    - cloud-upload
+    - cloud
+    - cloud-cancelled-filled
+    - cloud-cancelled
+    - cloud-fail-filled
+    - cloud-fail
+    - cloud-rain-filled
+    - cloud-rain
+    - cloud-snow-filled
+    - cloud-snow
+    - cloud-success-filled
+    - cloud-success
+    - cloud-thunder-filled
+    - cloud-thunder
+    - sun-cloud-filled
+    - sun-cloud
+
+  - Add new icons
+
+    - error-multiple-filled
+    - error-multiple
+    - info-multiple-filled
+    - info-multiple
+    - success-multiple-filled
+    - success-multiple
+    - warning-multiple-filled
+    - warning-multiple
+    - warning-rhomb-multiple-filled
+    - warning-rhomb-multiple
+    - asset-indoor
+    - asset-outdoor
+    - bug-runtime-filled
+    - bug-runtime
+    - capacity-check-filled
+    - capacity-check
+    - capacity-locked-filled
+    - capacity-locked
+    - capacity-pen-filled
+    - capacity-pen
+    - clock-person
+    - communication-filled
+    - communication
+    - dashboard-pen-filled
+    - dashboard-pen
+    - device-manager
+    - document-plus-minus-filled
+    - document-plus-minus
+    - export-check
+    - export-failed
+    - export-progress
+    - extension
+    - eye-dropper
+    - folder-application-screen
+    - folder-tag
+    - grid-pen
+    - id-filled
+    - id
+    - java-script-connection
+    - list-percentage
+    - lock-check
+    - move-horizontally
+    - move-vertically
+    - pen-cancelled-filled
+    - pen-cancelled
+    - projects
+    - remote-access (closes https://github.com/siemens/ix/issues/1673)
+    - tag-connection-view
+    - tree-two-level
+    - trend-flat-curve
+    - user-lock-filled
+    - user-lock
+    - user-management-settings-filled
+    - user-management-settings
+
+  - Fix ending of thermometer-filled not rounded
+
+- [#65](https://github.com/siemens/ix-icons/pull/65) [`0d271ac`](https://github.com/siemens/ix-icons/commit/0d271ac1791b007520cd00698ce2082a46a3f07d) Thanks [@danielleroux](https://github.com/danielleroux)! - - Improve logging by including HTML element in output to identify the source component.
+  - Update stencil version to 4.27.1
+
+### Patch Changes
+
+- [#83](https://github.com/siemens/ix-icons/pull/83) [`e2bf758`](https://github.com/siemens/ix-icons/commit/e2bf758b0b837796c0cd22f25d6424f9523878af) Thanks [@danielleroux](https://github.com/danielleroux)! - **ix-icon** component can now handle encoded URI strings
+
 ## 3.0.0-alpha.1
 
 ### Minor Changes
