@@ -43,3 +43,5 @@ icons/
 /components
 /e2e/sample.json
 src/components/icon/svg/*.svg
+
+*.tgz
