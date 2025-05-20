@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@stencil/core':
-        specifier: ^4.27.2
-        version: 4.27.2
     devDependencies:
       '@changesets/changelog-github':
         specifier: ^0.5.0
@@ -21,6 +17,9 @@ importers:
       '@playwright/test':
         specifier: ^1.50.0
         version: 1.50.0
+      '@stencil/core':
+        specifier: ^4.27.2
+        version: 4.27.2
       '@stencil/sass':
         specifier: ^3.0.10
         version: 3.0.11(@stencil/core@4.27.2)
