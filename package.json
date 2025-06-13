@@ -24,6 +24,9 @@
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/ix-icons/ix-icons.esm.js",
   "files": [
+    "LICENSE.md",
+    "README.md",
+    "READMEOSS.html",
     "components/",
     "dist/",
     "loader/",
