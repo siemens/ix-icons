@@ -1,5 +1,19 @@
 # @siemens/ix-icons
 
+## 3.1.0
+
+### Minor Changes
+
+- [#85](https://github.com/siemens/ix-icons/pull/85) [`ba9b506`](https://github.com/siemens/ix-icons/commit/ba9b5060f5b5ceeb852bd34a23512fb752f18354) Thanks [@danielleroux](https://github.com/danielleroux)! - Update dependencies, move stencil/core to devDependencies
+
+### Patch Changes
+
+- [#88](https://github.com/siemens/ix-icons/pull/88) [`c83174b`](https://github.com/siemens/ix-icons/commit/c83174bc3a468895113d0f6461e9fd97b58cd59b) Thanks [@silviowolf](https://github.com/silviowolf)! - Remove transparency form license.svg
+
+  Fixes siemens/ix#1935
+
+- [#86](https://github.com/siemens/ix-icons/pull/86) [`9bec0de`](https://github.com/siemens/ix-icons/commit/9bec0de543e2aefa5dcfd3fa11b7e71df6d7daa9) Thanks [@silviowolf](https://github.com/silviowolf)! - Update image for text-document
+
 ## 3.0.0
 
 ### Major Changes
