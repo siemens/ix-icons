@@ -86,7 +86,7 @@
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.1",
     "@playwright/test": "^1.50.0",
-    "@stencil/core": "^4.27.2",
+    "@stencil/core": "^4.35.1",
     "@stencil/sass": "^3.0.10",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.5.2",
