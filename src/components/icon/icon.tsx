@@ -104,6 +104,7 @@ export class Icon {
 
     return (
       <Host
+        role="img"
         style={style}
         class={{
           ['size-12']: this.size === '12',
@@ -112,7 +113,7 @@ export class Icon {
           ['size-32']: this.size === '32',
         }}
       >
-        <div class={'svg-container'} innerHTML={this.svgContent}></div>
+        <div class={'svg-container'} innerHTML={this.svgContent} aria-hidden="true"></div>
       </Host>
     );
   }
