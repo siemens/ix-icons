@@ -1,5 +1,12 @@
 # @siemens/ix-icons
 
+## 3.1.1
+
+### Patch Changes
+
+- [#90](https://github.com/siemens/ix-icons/pull/90) [`5bd49d4`](https://github.com/siemens/ix-icons/commit/5bd49d417527978d8198f7b9d06b88413492925c) Thanks [@lzeiml](https://github.com/lzeiml)! - Set aria-hidden for icon svg
+  Set "img" role for icon host element
+
 ## 3.1.0
 
 ### Minor Changes
