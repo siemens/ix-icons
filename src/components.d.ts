@@ -13,6 +13,7 @@ export namespace Components {
         "color"?: string;
         /**
           * Only fetch and parse svg data when icon is visible
+          * @default false
          */
         "lazyLoading": boolean;
         /**
@@ -21,6 +22,7 @@ export namespace Components {
         "name"?: string;
         /**
           * Size of the icon
+          * @default '24'
          */
         "size": '12' | '16' | '24' | '32';
     }
@@ -44,6 +46,7 @@ declare namespace LocalJSX {
         "color"?: string;
         /**
           * Only fetch and parse svg data when icon is visible
+          * @default false
          */
         "lazyLoading"?: boolean;
         /**
@@ -52,6 +55,7 @@ declare namespace LocalJSX {
         "name"?: string;
         /**
           * Size of the icon
+          * @default '24'
          */
         "size"?: '12' | '16' | '24' | '32';
     }
