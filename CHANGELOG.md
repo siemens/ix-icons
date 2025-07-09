@@ -1,5 +1,14 @@
 # @siemens/ix-icons
 
+## 3.1.1
+
+### Patch Changes
+
+- [#94](https://github.com/siemens/ix-icons/pull/94) [`9c93993`](https://github.com/siemens/ix-icons/commit/9c93993160702514a61cf5065484a5664e3769cc) Thanks [@danielleroux](https://github.com/danielleroux)! - Update stencil to v4.35.3
+
+- [#90](https://github.com/siemens/ix-icons/pull/90) [`5bd49d4`](https://github.com/siemens/ix-icons/commit/5bd49d417527978d8198f7b9d06b88413492925c) Thanks [@lzeiml](https://github.com/lzeiml)! - Set aria-hidden for icon svg
+  Set "img" role for icon host element
+
 ## 3.1.0
 
 ### Minor Changes
