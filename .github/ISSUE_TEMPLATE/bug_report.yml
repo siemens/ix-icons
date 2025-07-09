@@ -51,18 +51,18 @@ body:
       required: true
 
   - type: input
-    id: version
+    id: version-ix
     attributes:
-      label: Which version of @siemens/ix do you use?
+      label: Which version of ix do you use?
       description: The exact version of Siemens iX you use.
       placeholder: v3.x.x
     validations:
       required: true
 
   - type: input
-    id: version
+    id: version-ix-icons
     attributes:
-      label: Which version of @siemens/ix-icons do you use?
+      label: Which version of ix-icons do you use?
       description: The exact version of Siemens iX icons you use.
       placeholder: v3.x.x
     validations:
