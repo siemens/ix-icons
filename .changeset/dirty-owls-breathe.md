@@ -2,4 +2,4 @@
 '@siemens/ix-icons': patch
 ---
 
-Update to stencil 4.36.0
+Update to stencil 4.36.2
