@@ -1,5 +1,53 @@
 # @siemens/ix-icons
 
+## 3.2.0
+
+### Minor Changes
+
+- [#100](https://github.com/siemens/ix-icons/pull/100) [`8ca028f`](https://github.com/siemens/ix-icons/commit/8ca028fc66fcf528019363042fe04634ccae2128) Thanks [@silviowolf](https://github.com/silviowolf)! - ### Updated icons
+
+  Aligned angle of arrow tips to consistently 90°:
+
+  - download
+  - download-add
+  - download-list
+  - upload
+  - upload-success
+  - upload-failed
+  - lower-limit
+  - upper-limit
+
+  Made the shape that stands for "document" square instead of portrait format to be more generic:
+
+  - edit-document
+  - edit-document-filled
+
+  ### Added icons
+
+  - app-update
+  - cam-disk-600-seg
+  - cam-disk-6k-seg
+  - chart-error-bar
+  - collapse-all
+  - expand-all
+  - helmet-safety
+  - helmet-safety-filled
+  - import-check
+  - import-failed
+  - import-progress
+  - live-feed
+  - output-cam
+  - ruler-diagonal
+  - send-right
+  - send-right-filled
+  - send-top-right
+  - send-top-right-filled
+  - sensor
+
+### Patch Changes
+
+- [#98](https://github.com/siemens/ix-icons/pull/98) [`f4e3bdb`](https://github.com/siemens/ix-icons/commit/f4e3bdb8f8f1bcdffcce9775374f81c15ce5c65a) Thanks [@danielleroux](https://github.com/danielleroux)! - Update to stencil 4.36.2
+
 ## 3.1.1
 
 ### Patch Changes
