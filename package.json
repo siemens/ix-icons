@@ -12,9 +12,13 @@
   "bugs": {
     "url": "https://www.github.com/siemens/ix/issues"
   },
+  "packageManager": "pnpm@10.17.0",
   "engines": {
-    "pnpm": ">=9.x.x",
-    "node": ">=18.x.x"
+    "pnpm": ">=10.x.x",
+    "node": ">=22.19.x"
+  },
+  "volta": {
+    "node": "22.19.0"
   },
   "type": "module",
   "main": "dist/index.cjs.js",
