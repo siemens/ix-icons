@@ -21,7 +21,7 @@ export function parseSVGDataContent(content: string, element?: HTMLElement): str
   try {
     content = decodeURI(content);
   } catch {
-    // ignore
+    // Content is not a valid URI component, which can happen if it's already decoded. Proceed with the original content.
   }
 
   const svgDocument = parser.parseFromString(content, 'text/html');
