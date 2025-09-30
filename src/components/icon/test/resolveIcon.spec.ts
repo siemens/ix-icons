@@ -21,6 +21,18 @@ const exampleSvg = `
 </svg>
 `;
 
+const svgWithSpecialCharacters = `
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <filter x="-63.3%" y="-63.3%" width="226.5%" height="226.5%" filterUnits="objectBoundingBox" id="dropShadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="black" />
+    </filter>
+  </defs>
+ <polygon points="50,15 61,35 85,35 66,50 75,75 50,60 25,75 34,50 15,35 39,35" fill="gold" filter="url(#dropShadow)" />
+</svg>
+`;
+
 const invalidexampleSvg = `
 <?xml version="1.0" encoding="UTF-8"?>
 <script>
@@ -44,6 +56,13 @@ let fetch = (global.fetch = jest.fn((url: string) => {
   if (url === '/svg/bulb.svg') {
     return Promise.resolve({
       text: () => Promise.resolve(exampleSvg),
+      ok: true,
+    });
+  }
+
+  if (url === '/svg/specialCharacters.svg') {
+    return Promise.resolve({
+      text: () => Promise.resolve(svgWithSpecialCharacters),
       ok: true,
     });
   }
@@ -145,4 +164,11 @@ test('handle encoded URI data', async () => {
   expect(icon).toBe(
     `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.0953 3V4.755H19.4973L21.9583 11.3026L22 11.5321V11.5725C22 13.4726 20.4556 15.015 18.5478 15.015C16.7035 15.015 15.199 13.5737 15.1007 11.7609L15.1001 11.7488L15.0945 11.5381L15.1374 11.3026L17.5983 4.755H13.3814V16.68H19.3811V21H5.61999V16.68H11.6196V4.755H7.40276L9.86373 11.3026L9.90546 11.5321V11.5725C9.90546 13.4726 8.36104 15.015 6.45327 15.015C4.60898 15.015 3.10445 13.5737 3.00619 11.7609L3.00553 11.7488L3 11.5381L3.04282 11.3026L5.50379 4.755H3.9058V3H21.0953ZM7.38179 19.245H17.6193V18.435H7.38179V19.245ZM5.00926 12.4504H7.89736C7.60139 12.9344 7.06803 13.2576 6.46017 13.26L6.34174 13.2562L6.22565 13.2449C5.71119 13.1759 5.26891 12.8749 5.00926 12.4504ZM17.1038 12.4504C17.3635 12.8749 17.8057 13.1759 18.3202 13.2449L18.4363 13.2562L18.5547 13.26C19.1626 13.2576 19.6959 12.9344 19.9919 12.4504H17.1038ZM18.5478 7.23449L17.2467 10.695H19.849L18.5478 7.23449ZM6.45327 7.2345L7.75443 10.695H5.15212L6.45327 7.2345Z" fill="white"></path></svg>`,
   );
+});
+
+test('handle special characters in svg', async () => {
+  const element = document.createElement('ix-icon');
+  const data = await resolveIcon(element, 'specialCharacters');
+  const expected = '<svg width="100" height="100" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <defs> <filter x="-63.3%" y="-63.3%" width="226.5%" height="226.5%" filterUnits="objectBoundingBox" id="dropShadow"> <fedropshadow dx="2" dy="2" stdDeviation="2" flood-color="black"></fedropshadow> </filter> </defs> <polygon points="50,15 61,35 85,35 66,50 75,75 50,60 25,75 34,50 15,35 39,35" fill="gold" filter="url(#dropShadow)"></polygon> </svg>';
+  expect(data).toBe(expected);
 });
