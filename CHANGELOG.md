@@ -1,5 +1,35 @@
 # @siemens/ix-icons
 
+## 3.3.0
+
+### Minor Changes
+
+- [#110](https://github.com/siemens/ix-icons/pull/110) [`c43faca`](https://github.com/siemens/ix-icons/commit/c43facac91ec5cfdcd6e3ea3691018cd90127705) Thanks [@silviowolf](https://github.com/silviowolf)! - ### Updated icons
+
+  monitor-filled
+  monitor
+  screen-duplicate-filled
+  screen-duplicate
+  screen-filled
+  screen
+  screen-settings-filled
+  screen-settings
+
+  ### Added icons
+
+  command-line-filled
+  command-line
+  operating-system-add
+  operating-system-settings
+  palette-filled
+  palette
+  theme-filled
+  theme
+
+### Patch Changes
+
+- [`b6c6c33`](https://github.com/siemens/ix-icons/commit/b6c6c33b82f1ba0a03604cd787e9418054bf5a3c) Thanks [@danielleroux](https://github.com/danielleroux)! - Update stencil to 4.38.3
+
 ## 3.2.0
 
 ### Minor Changes
