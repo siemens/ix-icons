@@ -45,12 +45,33 @@ const pluginTest = (iconName: string): CustomPlugin => {
     fn: (() => {
       return {
         element: {
-          exit: node => {
+          exit: (node, ...params) => {
             const { attributes } = node;
 
             if (node.name === 'svg' && attributes.viewBox === undefined) {
               const errorMessage = `Missing viewBox for svg ${iconName}`;
               throw Error(errorMessage);
+            }
+
+            // Add desc element to SVG root
+            if (node.name === 'svg') {
+              const descElement = {
+                type: 'element',
+                name: 'desc',
+                attributes: {},
+                children: [
+                  {
+                    type: 'text',
+                    value: iconName,
+                  },
+                ],
+              };
+
+              // Insert desc as the first child
+              if (!node.children) {
+                node.children = [];
+              }
+              node.children.unshift(descElement);
             }
 
             if (!attributes) {
