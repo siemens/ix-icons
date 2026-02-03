@@ -10,6 +10,7 @@ runs:
 
     - name: Upgrade npm for OIDC support
       run: npm install -g npm@^11.8.0
+      shell: bash
 
     - name: Setup Node.js environment
       uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
