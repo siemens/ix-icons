@@ -1,5 +1,15 @@
 # @siemens/ix-icons
 
+## 3.4.0
+
+### Minor Changes
+
+- [#112](https://github.com/siemens/ix-icons/pull/112) [`7e99702`](https://github.com/siemens/ix-icons/commit/7e9970220d140476e5547891d50df4832d599df7) Thanks [@danielleroux](https://github.com/danielleroux)! - Add icon name as desc element to the svg
+
+### Patch Changes
+
+- [#114](https://github.com/siemens/ix-icons/pull/114) [`e344193`](https://github.com/siemens/ix-icons/commit/e3441939fa6364fa0ff0805587e5bcfd4d8d4872) Thanks [@danielleroux](https://github.com/danielleroux)! - Update stenicl to 4.41.3
+
 ## 3.3.0
 
 ### Minor Changes
