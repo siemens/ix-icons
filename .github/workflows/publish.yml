@@ -22,6 +22,9 @@ jobs:
 
       - uses: ./.github/workflows/actions/build
 
+      - name: Upgrade npm for OIDC support
+        run: npm install -g npm@^11.8.0 --no-man
+
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@06245a4e0a36c064a573d4150030f5ec548e4fcc
