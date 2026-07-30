@@ -59,15 +59,23 @@ declare namespace LocalJSX {
          */
         "size"?: '12' | '16' | '24' | '32';
     }
+
+    interface IxIconAttributes {
+        "size": '12' | '16' | '24' | '32';
+        "color": string;
+        "name": string;
+        "lazyLoading": boolean;
+    }
+
     interface IntrinsicElements {
-        "ix-icon": IxIcon;
+        "ix-icon": Omit<IxIcon, keyof IxIconAttributes> & { [K in keyof IxIcon & keyof IxIconAttributes]?: IxIcon[K] } & { [K in keyof IxIcon & keyof IxIconAttributes as `attr:${K}`]?: IxIconAttributes[K] } & { [K in keyof IxIcon & keyof IxIconAttributes as `prop:${K}`]?: IxIcon[K] };
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "ix-icon": LocalJSX.IxIcon & JSXBase.HTMLAttributes<HTMLIxIconElement>;
+            "ix-icon": LocalJSX.IntrinsicElements["ix-icon"] & JSXBase.HTMLAttributes<HTMLIxIconElement>;
         }
     }
 }
