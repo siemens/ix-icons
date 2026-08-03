@@ -1,5 +1,17 @@
 # @siemens/ix-icons
 
+## 3.5.0
+
+### Minor Changes
+
+- [#118](https://github.com/siemens/ix-icons/pull/118) [`d0faf3d`](https://github.com/siemens/ix-icons/commit/d0faf3d2e7bda70005cdc266e06b60a2ec60f9ed) Thanks [@silviowolf](https://github.com/silviowolf)! - - AI related icons added
+  - AAS (Asset Administration Shell) icons added
+  - various other icons added
+
+### Patch Changes
+
+- [#120](https://github.com/siemens/ix-icons/pull/120) [`96a9a06`](https://github.com/siemens/ix-icons/commit/96a9a06e36ef7649796449f95491cf709d27b55b) Thanks [@nuke-ellington](https://github.com/nuke-ellington)! - Updated Stencil to latest version (`@stencil/core` 4.43.5, `@stencil/sass` 3.3.2)
+
 ## 3.4.0
 
 ### Minor Changes
