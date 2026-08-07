@@ -25,7 +25,7 @@ export class Icon {
   @Prop() size: '12' | '16' | '24' | '32' = '24';
 
   /**
-   * Color of the icon
+   * Accept only CSS variables as color values e.g. `--si-sys-color-primary`
    */
   @Prop() color?: string;
 
@@ -99,7 +99,7 @@ export class Icon {
     } = {};
 
     if (this.color) {
-      style['color'] = `var(--theme-${this.color})`;
+      style['color'] = `var(${this.color})`;
     }
 
     return (
