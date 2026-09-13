@@ -94,15 +94,15 @@ describe('ix-icon', () => {
       }
     });
 
-    it('defaults to 24 when size is omitted', async () => {
+    it('defaults to 20 when size is omitted', async () => {
       const page = await newSpecPage({
         components: [Icon],
         html: `<ix-icon name="${rocket}"></ix-icon>`,
       });
 
-      expect(page.root!.size).toBe('24');
-      expect(page.root!.classList.contains('size-24')).toBe(true);
-      expect(page.root!.classList.contains('size-20')).toBe(false);
+      expect(page.root!.size).toBe('20');
+      expect(page.root!.classList.contains('size-20')).toBe(true);
+      expect(page.root!.classList.contains('size-24')).toBe(false);
     });
   });
 });

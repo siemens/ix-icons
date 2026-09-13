@@ -22,9 +22,9 @@ export class Icon {
   /**
    * Size of the icon
    *
-   * @since 3.6.0 Sizes `20` and `48` are available
+   * @since 3.6.0 Sizes `20` and `48` are available. Default size is `20`.
    */
-  @Prop() size: '12' | '16' | '20' | '24' | '32' | '48' = '24';
+  @Prop() size: '12' | '16' | '20' | '24' | '32' | '48' = '20';
 
   /**
    * Color of the icon
