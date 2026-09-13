@@ -1,0 +1,22 @@
+.changeset/eix-9-icon-sizes.md
+  h_c5a773bf2fda8b 1-5
+src/components.d.ts
+  h_c5a773bf2fda8b 25,28,59,62,66
+src/components/icon/icon.scss
+  h_c5a773bf2fda8b 51-54,58-61
+src/components/icon/icon.tsx
+  h_c5a773bf2fda8b 24-25,27,114,117
+src/components/icon/test/ix-icon.spec.tsx
+  h_c5a773bf2fda8b 72-107
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "18922f7e1c35adf6e10c340f8bb52a5da7a6508a",
+  "prompts": {},
+  "humans": {
+    "h_c5a773bf2fda8b": {
+      "author": "Alex Kaduk <o.kaduk@gmail.com>"
+    }
+  }
+}
