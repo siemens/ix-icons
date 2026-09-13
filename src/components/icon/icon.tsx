@@ -21,8 +21,10 @@ export class Icon {
 
   /**
    * Size of the icon
+   *
+   * @since 3.6.0 Sizes `20` and `48` are available
    */
-  @Prop() size: '12' | '16' | '24' | '32' = '24';
+  @Prop() size: '12' | '16' | '20' | '24' | '32' | '48' = '24';
 
   /**
    * Color of the icon
@@ -109,8 +111,10 @@ export class Icon {
         class={{
           ['size-12']: this.size === '12',
           ['size-16']: this.size === '16',
+          ['size-20']: this.size === '20',
           ['size-24']: this.size === '24',
           ['size-32']: this.size === '32',
+          ['size-48']: this.size === '48',
         }}
       >
         <div class={'svg-container'} innerHTML={this.svgContent} aria-hidden="true"></div>

@@ -48,6 +48,14 @@
   @include size(1rem);
 }
 
+:host(.size-20) {
+  @include size(1.25rem);
+}
+
 :host(.size-32) {
   @include size(2rem);
+}
+
+:host(.size-48) {
+  @include size(3rem);
 }
