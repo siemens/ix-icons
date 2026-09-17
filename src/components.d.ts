@@ -22,9 +22,10 @@ export namespace Components {
         "name"?: string;
         /**
           * Size of the icon
-          * @default '24'
+          * @since 3.6.0 Sizes `20` and `48` are available. Default size is `20`.
+          * @default '20'
          */
-        "size": '12' | '16' | '24' | '32';
+        "size": '12' | '16' | '20' | '24' | '32' | '48';
     }
 }
 declare global {
@@ -55,13 +56,14 @@ declare namespace LocalJSX {
         "name"?: string;
         /**
           * Size of the icon
-          * @default '24'
+          * @since 3.6.0 Sizes `20` and `48` are available. Default size is `20`.
+          * @default '20'
          */
-        "size"?: '12' | '16' | '24' | '32';
+        "size"?: '12' | '16' | '20' | '24' | '32' | '48';
     }
 
     interface IxIconAttributes {
-        "size": '12' | '16' | '24' | '32';
+        "size": '12' | '16' | '20' | '24' | '32' | '48';
         "color": string;
         "name": string;
         "lazyLoading": boolean;
