@@ -2,4 +2,5 @@
 '@siemens/ix-icons': major
 ---
 
-`color` property of the `ix-icon` accepts now any css custom property, previously prefixed with `--theme-`
+The `color` property of the `ix-icon` component now accepts any CSS custom property.
+Previously it prefixed the value with `--theme-`. This behavior has been removed.
