@@ -16,7 +16,7 @@
 
 :host {
   display: inline-flex;
-  @include size(1.5rem);
+  @include size(1.25rem);
   color: inherit;
 
   .svg-container {
@@ -48,6 +48,18 @@
   @include size(1rem);
 }
 
+:host(.size-20) {
+  @include size(1.25rem);
+}
+
+:host(.size-24) {
+  @include size(1.5rem);
+}
+
 :host(.size-32) {
   @include size(2rem);
+}
+
+:host(.size-48) {
+  @include size(3rem);
 }

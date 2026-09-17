@@ -61,9 +61,9 @@ Object.keys(groupedItems).forEach(key => {
 
     groupedItems[key].forEach(iconName => {
       iconContentPage.push(`<p>${iconName}</p>`);
-      iconContentPage.push(`<ix-icon id="${iconName}-by-name" name="${iconName}"></ix-icon>`);
-      iconContentPage.push(`<ix-icon id="${iconName}-by-url" name="/www/build/svg/${iconName}.svg"></ix-icon>`);
-      iconContentPage.push(`<ix-icon id="${iconName}-by-data" name="${icons[`icon${convertToCamelCase(iconName)}`]}"></ix-icon>`);
+      iconContentPage.push(`<ix-icon id="${iconName}-by-name" name="${iconName}" size="24"></ix-icon>`);
+      iconContentPage.push(`<ix-icon id="${iconName}-by-url" name="/www/build/svg/${iconName}.svg" size="24"></ix-icon>`);
+      iconContentPage.push(`<ix-icon id="${iconName}-by-data" name="${icons[`icon${convertToCamelCase(iconName)}`]}" size="24"></ix-icon>`);
     });
 
     await page.setContent(iconContentPage.join('\n'));

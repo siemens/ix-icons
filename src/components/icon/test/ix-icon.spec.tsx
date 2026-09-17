@@ -69,4 +69,40 @@ describe('ix-icon', () => {
     </div>
     `);
   });
+
+  describe('size', () => {
+    const sizeClasses = ['size-12', 'size-16', 'size-20', 'size-24', 'size-32', 'size-48'] as const;
+
+    it.each([
+      ['12', 'size-12'],
+      ['16', 'size-16'],
+      ['20', 'size-20'],
+      ['24', 'size-24'],
+      ['32', 'size-32'],
+      ['48', 'size-48'],
+    ] as const)('maps size="%s" to class %s', async (size, className) => {
+      const page = await newSpecPage({
+        components: [Icon],
+        html: `<ix-icon name="${rocket}" size="${size}"></ix-icon>`,
+      });
+
+      expect(page.root!.size).toBe(size);
+      expect(page.root!.classList.contains(className)).toBe(true);
+
+      for (const cls of sizeClasses) {
+        expect(page.root!.classList.contains(cls)).toBe(cls === className);
+      }
+    });
+
+    it('defaults to 20 when size is omitted', async () => {
+      const page = await newSpecPage({
+        components: [Icon],
+        html: `<ix-icon name="${rocket}"></ix-icon>`,
+      });
+
+      expect(page.root!.size).toBe('20');
+      expect(page.root!.classList.contains('size-20')).toBe(true);
+      expect(page.root!.classList.contains('size-24')).toBe(false);
+    });
+  });
 });
