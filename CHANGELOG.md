@@ -1,5 +1,11 @@
 # @siemens/ix-icons
 
+## 3.6.0
+
+### Minor Changes
+
+- [#125](https://github.com/siemens/ix-icons/pull/125) [`84c17e2`](https://github.com/siemens/ix-icons/commit/84c17e24ea066f2f628dbeff725937300b24c5bb) Thanks [@alexkaduk](https://github.com/alexkaduk)! - Add public icon sizes `20` and `48`. The omitted-size default is now `20`.
+
 ## 3.5.0
 
 ### Minor Changes
