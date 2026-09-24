@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface IxIcon {
         /**
-          * Color of the icon
+          * Accept only CSS variables as color values e.g. `--si-sys-color-primary`
          */
         "color"?: string;
         /**
@@ -42,7 +42,7 @@ declare global {
 declare namespace LocalJSX {
     interface IxIcon {
         /**
-          * Color of the icon
+          * Accept only CSS variables as color values e.g. `--si-sys-color-primary`
          */
         "color"?: string;
         /**
