@@ -16,7 +16,7 @@
 
 :host {
   display: inline-flex;
-  @include size(1.25rem);
+  @include size(var(--si-sys-sizing-size-60, 1.25rem));
   color: inherit;
 
   .svg-container {
@@ -41,25 +41,25 @@
 }
 
 :host(.size-12) {
-  @include size(0.75rem);
+  @include size(var(--si-sys-sizing-size-40, 0.75rem));
 }
 
 :host(.size-16) {
-  @include size(1rem);
+  @include size(var(--si-sys-sizing-size-50, 1rem));
 }
 
 :host(.size-20) {
-  @include size(1.25rem);
+  @include size(var(--si-sys-sizing-size-60, 1.25rem));
 }
 
 :host(.size-24) {
-  @include size(1.5rem);
+  @include size(var(--si-sys-sizing-size-70, 1.5rem));
 }
 
 :host(.size-32) {
-  @include size(2rem);
+  @include size(var(--si-sys-sizing-size-80, 2rem));
 }
 
 :host(.size-48) {
-  @include size(3rem);
+  @include size(var(--si-sys-sizing-size-100, 3rem));
 }
