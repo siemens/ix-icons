@@ -1,5 +1,15 @@
 # @siemens/ix-icons
 
+## 3.6.0
+
+### Minor Changes
+
+- [#123](https://github.com/siemens/ix-icons/pull/123) [`859c135`](https://github.com/siemens/ix-icons/commit/859c13579dc0d31cefd735d99c48ca2bbe6aef70) Thanks [@bernhardhi10](https://github.com/bernhardhi10)! - Add `hexagon`, `hexagon-filled`, `octagon`, and `octagon-filled` icons.
+
+- [#125](https://github.com/siemens/ix-icons/pull/125) [`84c17e2`](https://github.com/siemens/ix-icons/commit/84c17e24ea066f2f628dbeff725937300b24c5bb) Thanks [@alexkaduk](https://github.com/alexkaduk)! - Add public icon sizes `20` and `48`. The omitted-size default is now `20`.
+
+- [#124](https://github.com/siemens/ix-icons/pull/124) [`f2dda1d`](https://github.com/siemens/ix-icons/commit/f2dda1d38a55d93bd5c52ca6117b9b91ed3025d0) Thanks [@silviowolf](https://github.com/silviowolf)! - Add `ai-agent`, `ai-skill`, and `ai-sub-agent` icons for representing AI agents, skills, and sub-agents.
+
 ## 3.5.0
 
 ### Minor Changes
