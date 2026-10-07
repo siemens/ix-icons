@@ -18,11 +18,11 @@ importers:
         specifier: ^1.55.0
         version: 1.55.0
       '@stencil/core':
-        specifier: ^4.43.5
-        version: 4.43.5
+        specifier: ^4.45.2
+        version: 4.45.2
       '@stencil/sass':
         specifier: ^3.3.2
-        version: 3.3.2(@stencil/core@4.43.5)
+        version: 3.3.2(@stencil/core@4.45.2)
       '@types/fs-extra':
         specifier: ^9.0.13
         version: 9.0.13
@@ -714,8 +714,8 @@ packages:
   '@sinonjs/fake-timers@8.1.0':
     resolution: {integrity: sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==}
 
-  '@stencil/core@4.43.5':
-    resolution: {integrity: sha512-cgWD+GeuvJpTe1WQn40p02+BJ2j0j1YJ17GdkF2qKIQ23s2e3Zivq5yISXS3dcuV6oUJFN93jprdk+nk/sq99Q==}
+  '@stencil/core@4.45.2':
+    resolution: {integrity: sha512-CNkPVZsqyNMjFMX9bEkMJsvBbQxjLw480OaoamoqiLPdQCFjJQReeOjnWX1A5ivSn3UYEIJ6MoN5VXDkaHGt8Q==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
@@ -4954,7 +4954,7 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 1.8.6
 
-  '@stencil/core@4.43.5':
+  '@stencil/core@4.45.2':
     optionalDependencies:
       '@rollup/rollup-darwin-arm64': 4.44.0
       '@rollup/rollup-darwin-x64': 4.44.0
@@ -4965,9 +4965,9 @@ snapshots:
       '@rollup/rollup-win32-arm64-msvc': 4.44.0
       '@rollup/rollup-win32-x64-msvc': 4.44.0
 
-  '@stencil/sass@3.3.2(@stencil/core@4.43.5)':
+  '@stencil/sass@3.3.2(@stencil/core@4.45.2)':
     dependencies:
-      '@stencil/core': 4.43.5
+      '@stencil/core': 4.45.2
       sass-embedded: 1.100.0
 
   '@tootallnate/once@1.1.2': {}
