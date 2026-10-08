@@ -69,6 +69,14 @@ defineCustomElements();
 
    You only need to add the same icon once. Additional calls to `addIcons` will not add redundant copies of the same icons to the collection.
 
+   Re-adding an icon name that is already registered replaces the existing icon data and logs a console warning. If you register the same icons from several places on purpose (for example, in multiple lazily loaded modules), pass `skipExisting: true` to keep the icons that are already registered. Icons that aren't registered yet are still added, and no warning is logged:
+
+   ```javascript
+   addIcons({ iconStar, skipExisting: true });
+   ```
+
+   `addIconToCache(name, icon, skipExisting)` accepts the same flag as an optional third argument.
+
 ### Use the `ix-icon` component with custom SVG's
 
 ```tsx
