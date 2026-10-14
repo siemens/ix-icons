@@ -1,5 +1,6 @@
 ---
-'@siemens/ix-icons': minor
+'@siemens/ix-icons': major
 ---
 
-The `color` property of the `ix-icon` component now accepts CSS custom properties directly while continuing to support legacy theme token names. For example, a legacy token such as `primary` is still resolved as `var(--theme-primary)`, while CSS custom properties must be passed with their leading `--` prefix, for example `--si-sys-color-primary`.
+The `color` property of the `ix-icon` component now accepts any CSS custom property.
+Previously it prefixed the value with `--theme-`. This behavior has been removed.

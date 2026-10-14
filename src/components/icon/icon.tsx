@@ -27,7 +27,7 @@ export class Icon {
   @Prop() size: '12' | '16' | '20' | '24' | '32' | '48' = '20';
 
   /**
-   * CSS custom property (e.g. `--si-sys-color-primary`) or legacy theme token (e.g. `primary`)
+   * Accept only CSS variables as color values e.g. `--si-sys-color-primary`
    */
   @Prop() color?: string;
 
@@ -101,8 +101,7 @@ export class Icon {
     } = {};
 
     if (this.color) {
-      const colorVariable = this.color.startsWith('--') ? this.color : `--theme-${this.color}`;
-      style['color'] = `var(${colorVariable})`;
+      style['color'] = `var(${this.color})`;
     }
 
     return (
