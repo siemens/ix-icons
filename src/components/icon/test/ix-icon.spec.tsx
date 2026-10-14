@@ -105,4 +105,24 @@ describe('ix-icon', () => {
       expect(page.root!.classList.contains('size-24')).toBe(false);
     });
   });
+
+  describe('color', () => {
+    it('supports legacy theme token names', async () => {
+      const page = await newSpecPage({
+        components: [Icon],
+        html: `<ix-icon name="${rocket}" color="primary"></ix-icon>`,
+      });
+
+      expect(page.root!.style.color).toBe('var(--theme-primary)');
+    });
+
+    it('supports CSS custom property names without a theme prefix', async () => {
+      const page = await newSpecPage({
+        components: [Icon],
+        html: `<ix-icon name="${rocket}" color="--si-sys-color-primary"></ix-icon>`,
+      });
+
+      expect(page.root!.style.color).toBe('var(--si-sys-color-primary)');
+    });
+  });
 });
