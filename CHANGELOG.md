@@ -1,5 +1,11 @@
 # @siemens/ix-icons
 
+## 3.7.0
+
+### Minor Changes
+
+- [#130](https://github.com/siemens/ix-icons/pull/130) [`b6070f3`](https://github.com/siemens/ix-icons/commit/b6070f36060bf48ee40c17b36b985ee7327f4f46) Thanks [@silviowolf](https://github.com/silviowolf)! - Add multiple variants for alarm and warning status icons and refine the info and warning icons.
+
 ## 3.6.0
 
 ### Minor Changes
