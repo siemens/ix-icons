@@ -152,19 +152,27 @@ function removePrefix(name: string, prefix: string) {
   return name;
 }
 
-export function addIcons(icons: { [name: string]: any }) {
+export function addIcons(icons: { [name: string]: any, skipExisting?: boolean }) {
   Object.keys(icons).forEach(name => {
+    if (name === 'skipExisting') {
+      return;
+    }
+
     const icon = icons[name];
     name = removePrefix(name, 'icon');
 
-    addIconToCache(name, icon);
+    addIconToCache(name, icon, icons.skipExisting ?? false);
   });
 }
 
-export function addIconToCache(name: string, icon: string) {
+export function addIconToCache(name: string, icon: string, skipExisting: boolean = false) {
   const cache = getIconCacheMap();
 
   if (cache.has(name)) {
+    if (skipExisting) {
+      return;
+    }
+
     console.warn(`Icon name '${name}' already in cache. Overwritting with new icon data.`);
   }
 
