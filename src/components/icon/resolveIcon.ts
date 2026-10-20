@@ -152,16 +152,12 @@ function removePrefix(name: string, prefix: string) {
   return name;
 }
 
-export function addIcons(icons: { [name: string]: any, skipExisting?: boolean }) {
+export function addIcons(icons: { [name: string]: any}, skipExisting: boolean = false) {
   Object.keys(icons).forEach(name => {
-    if (name === 'skipExisting') {
-      return;
-    }
-
     const icon = icons[name];
     name = removePrefix(name, 'icon');
 
-    addIconToCache(name, icon, icons.skipExisting ?? false);
+    addIconToCache(name, icon, skipExisting);
   });
 }
 

@@ -203,20 +203,20 @@ describe('skipExisting', () => {
 
   test('addIcons keeps existing icons without warning when skipExisting is true', () => {
     addIcons({ iconStarFilled });
-    addIcons({ iconStarFilled: iconStar, skipExisting: true });
+    addIcons({ iconStarFilled: iconStar }, true);
 
     expect(warnSpy).not.toHaveBeenCalled();
     expect(getIconCacheMap().get('starFilled')).toBe(parseSVGDataContent(iconStarFilled));
     expect(getIconCacheMap().get('star-filled')).toBe(parseSVGDataContent(iconStarFilled));
   });
 
-  test('addIcons does not register skipExisting as an icon', () => {
-    addIcons({ iconStarFilled, skipExisting: true });
+  test('addIcons adds new icons when skipExisting is true', () => {
+    addIcons({ iconStarFilled }, true);
 
     const cacheMap = getIconCacheMap();
     expect(cacheMap.size).toBe(2);
-    expect(cacheMap.has('skipExisting')).toBeFalsy();
-    expect(cacheMap.has('skip-existing')).toBeFalsy();
+    expect(cacheMap.get('starFilled')).toBe(parseSVGDataContent(iconStarFilled));
+    expect(cacheMap.get('star-filled')).toBe(parseSVGDataContent(iconStarFilled));
     expect(errorSpy).not.toHaveBeenCalled();
   });
 });
