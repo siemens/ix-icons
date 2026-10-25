@@ -210,6 +210,36 @@ describe('skipExisting', () => {
     expect(getIconCacheMap().get('star-filled')).toBe(parseSVGDataContent(iconStarFilled));
   });
 
+  test('addIconToCache keeps an existing kebab-case icon when adding the camelCase name with skipExisting', () => {
+    addIconToCache('star-filled', iconStar);
+    addIconToCache('starFilled', iconStarFilled, true);
+
+    const cacheMap = getIconCacheMap();
+    expect(warnSpy).not.toHaveBeenCalled();
+    expect(cacheMap.get('star-filled')).toBe(parseSVGDataContent(iconStar));
+    expect(cacheMap.has('starFilled')).toBe(false);
+  });
+
+  test('addIcons keeps an existing kebab-case icon when adding the camelCase name with skipExisting', () => {
+    addIconToCache('star-filled', iconStar);
+    addIcons({ iconStarFilled }, true);
+
+    const cacheMap = getIconCacheMap();
+    expect(warnSpy).not.toHaveBeenCalled();
+    expect(cacheMap.get('star-filled')).toBe(parseSVGDataContent(iconStar));
+    expect(cacheMap.has('starFilled')).toBe(false);
+  });
+
+  test('addIcons overwrites an existing kebab-case icon with the camelCase name by default', () => {
+    addIconToCache('star-filled', iconStar);
+    addIcons({ iconStarFilled });
+
+    const cacheMap = getIconCacheMap();
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(cacheMap.get('star-filled')).toBe(parseSVGDataContent(iconStarFilled));
+    expect(cacheMap.get('starFilled')).toBe(parseSVGDataContent(iconStarFilled));
+  });
+
   test('addIcons adds new icons when skipExisting is true', () => {
     addIcons({ iconStarFilled }, true);
 

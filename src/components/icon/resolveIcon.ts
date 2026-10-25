@@ -152,7 +152,7 @@ function removePrefix(name: string, prefix: string) {
   return name;
 }
 
-export function addIcons(icons: { [name: string]: any}, skipExisting: boolean = false) {
+export function addIcons(icons: { [name: string]: any }, skipExisting: boolean = false) {
   Object.keys(icons).forEach(name => {
     const icon = icons[name];
     name = removePrefix(name, 'icon');
@@ -161,10 +161,16 @@ export function addIcons(icons: { [name: string]: any}, skipExisting: boolean = 
   });
 }
 
+function toKebabCase(name: string) {
+  return name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z0-9])/g, '$1-$2').toLowerCase();
+}
+
 export function addIconToCache(name: string, icon: string, skipExisting: boolean = false) {
   const cache = getIconCacheMap();
 
-  if (cache.has(name)) {
+  const kebabCaseName = toKebabCase(name);
+
+  if (cache.has(kebabCaseName)) {
     if (skipExisting) {
       return;
     }
@@ -176,9 +182,7 @@ export function addIconToCache(name: string, icon: string, skipExisting: boolean
 
   cache.set(name, svg);
 
-  const toKebabCase = name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z0-9])/g, '$1-$2').toLowerCase();
-
-  if (name != toKebabCase) {
-    cache.set(toKebabCase, svg);
+  if (name !== kebabCaseName) {
+    cache.set(kebabCaseName, svg);
   }
 }
