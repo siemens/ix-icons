@@ -1,5 +1,13 @@
 # @siemens/ix-icons
 
+## 3.7.1
+
+### Patch Changes
+
+- [#138](https://github.com/siemens/ix-icons/pull/138) [`b780e1e`](https://github.com/siemens/ix-icons/commit/b780e1eb5335b1e0cab35e4a1ace7bfa85c13304) Thanks [@github-actions](https://github.com/apps/github-actions)! - Revert the default `size` of the `ix-icon` component from `20` back to `24`. Sizes `20` and `48` remain available.
+
+  The default size change was introduced by [#125](https://github.com/siemens/ix-icons/pull/125) and shipped in v3.6.0 and v3.7.0, but was a change for upcoming v4.
+
 ## 3.7.0
 
 ### Minor Changes
