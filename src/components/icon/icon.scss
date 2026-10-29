@@ -45,21 +45,21 @@
 }
 
 :host(.size-16) {
-  @include size(var(--si-sys-sizing-size-50, 1rem));
+  @include size(var(--si-sys-sizing-icon-sm, 1rem));
 }
 
 :host(.size-20) {
-  @include size(var(--si-sys-sizing-size-60, 1.25rem));
+  @include size(var(--si-sys-sizing-icon-md, 1.25rem));
 }
 
 :host(.size-24) {
-  @include size(var(--si-sys-sizing-size-70, 1.5rem));
+  @include size(var(--si-sys-sizing-icon-lg, 1.5rem));
 }
 
 :host(.size-32) {
-  @include size(var(--si-sys-sizing-size-80, 2rem));
+  @include size(var(--si-sys-sizing-icon-xl, 2rem));
 }
 
 :host(.size-48) {
-  @include size(var(--si-sys-sizing-size-100, 3rem));
+  @include size(var(--si-sys-sizing-icon-xxl, 3rem));
 }
