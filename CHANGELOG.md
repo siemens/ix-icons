@@ -1,5 +1,12 @@
 # @siemens/ix-icons
 
+## 4.0.0
+
+### Major Changes
+
+- [#121](https://github.com/siemens/ix-icons/pull/121) [`b3e063a`](https://github.com/siemens/ix-icons/commit/b3e063a20ca4b4d9e012b62a7d86a1341ba5d852) Thanks [@danielleroux](https://github.com/danielleroux)! - The `color` property of the `ix-icon` component now accepts any CSS custom property.
+  Previously it prefixed the value with `--theme-`. This behavior has been removed.
+
 ## 3.7.0
 
 ### Minor Changes
