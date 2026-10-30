@@ -1,0 +1,40 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabledManagers": ["npm", "github-actions"],
+  "timezone": "Europe/Berlin",
+  "schedule": ["at any time"],
+  "dependencyDashboard": true,
+  "prConcurrentLimit": 5,
+  "minimumReleaseAge": "2 days",
+  "packageRules": [
+    {
+      "description": "Do not delay Siemens dependency updates",
+      "matchPackageNames": ["/^@siemens\\//"],
+      "minimumReleaseAge": "0 days"
+    },
+    {
+      "description": "Group root runtime dependencies",
+      "matchFileNames": ["/^package\\.json$/"],
+      "matchDepTypes": ["dependencies", "optionalDependencies", "peerDependencies"],
+      "groupName": "root dependencies",
+      "separateMajorMinor": false
+    },
+    {
+      "description": "Group root development dependencies",
+      "matchFileNames": ["/^package\\.json$/"],
+      "matchDepTypes": ["devDependencies"],
+      "groupName": "root dev dependencies",
+      "separateMajorMinor": false
+    },
+    {
+      "description": "Keep the Node.js runtime (Volta pin and engines) on the latest LTS line",
+      "matchFileNames": ["/^package\\.json$/"],
+      "matchDepTypes": ["volta", "engines"],
+      "matchPackageNames": ["node"],
+      "versioning": "node",
+      "groupName": "Node.js LTS runtime",
+      "separateMajorMinor": false
+    }
+  ]
+}
