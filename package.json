@@ -15,10 +15,7 @@
   "packageManager": "pnpm@10.17.0",
   "engines": {
     "pnpm": ">=10.x.x",
-    "node": "24.22.2"
-  },
-  "volta": {
-    "node": "24.22.2"
+    "node": "^24.22.2"
   },
   "type": "module",
   "main": "dist/index.cjs.js",
