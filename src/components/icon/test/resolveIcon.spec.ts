@@ -1,7 +1,7 @@
 /*
  * COPYRIGHT (c) Siemens AG 2018-2023 ALL RIGHTS RESERVED.
  */
-import { resolveIcon, getIconCacheMap, getIconUrl, addIcons } from '../resolveIcon';
+import { resolveIcon, getIconCacheMap, getIconUrl, addIcons, addIconToCache } from '../resolveIcon';
 import { parseSVGDataContent } from '../parser';
 
 export const iconStarFilled =
@@ -153,6 +153,102 @@ test('add icons', async () => {
   expect(cacheMap.size).toBe(2);
   expect(cacheMap.has('starFilled')).toBeTruthy();
   expect(cacheMap.has('star-filled')).toBeTruthy();
+});
+
+describe('skipExisting', () => {
+  let warnSpy: jest.SpyInstance;
+  let errorSpy: jest.SpyInstance;
+
+  beforeEach(() => {
+    getIconCacheMap().clear();
+    warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    warnSpy.mockRestore();
+    errorSpy.mockRestore();
+  });
+
+  test('addIconToCache warns when overwriting an existing icon by default', () => {
+    addIconToCache('star', iconStar);
+    addIconToCache('star', iconStarFilled);
+
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(warnSpy).toHaveBeenCalledWith(`Icon name 'star' already in cache. Overwritting with new icon data.`);
+    expect(getIconCacheMap().get('star')).toBe(parseSVGDataContent(iconStarFilled));
+  });
+
+  test('addIconToCache keeps the existing icon without warning when skipExisting is true', () => {
+    addIconToCache('star', iconStar);
+    addIconToCache('star', iconStarFilled, true);
+
+    expect(warnSpy).not.toHaveBeenCalled();
+    expect(getIconCacheMap().get('star')).toBe(parseSVGDataContent(iconStar));
+  });
+
+  test('addIconToCache adds a new icon when skipExisting is true', () => {
+    addIconToCache('starFilled', iconStarFilled, true);
+
+    expect(getIconCacheMap().get('starFilled')).toBe(parseSVGDataContent(iconStarFilled));
+    expect(getIconCacheMap().get('star-filled')).toBe(parseSVGDataContent(iconStarFilled));
+  });
+
+  test('addIcons warns when re-adding icons by default', () => {
+    addIcons({ iconStarFilled });
+    addIcons({ iconStarFilled });
+
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+  });
+
+  test('addIcons keeps existing icons without warning when skipExisting is true', () => {
+    addIcons({ iconStarFilled });
+    addIcons({ iconStarFilled: iconStar }, true);
+
+    expect(warnSpy).not.toHaveBeenCalled();
+    expect(getIconCacheMap().get('starFilled')).toBe(parseSVGDataContent(iconStarFilled));
+    expect(getIconCacheMap().get('star-filled')).toBe(parseSVGDataContent(iconStarFilled));
+  });
+
+  test('addIconToCache keeps an existing kebab-case icon when adding the camelCase name with skipExisting', () => {
+    addIconToCache('star-filled', iconStar);
+    addIconToCache('starFilled', iconStarFilled, true);
+
+    const cacheMap = getIconCacheMap();
+    expect(warnSpy).not.toHaveBeenCalled();
+    expect(cacheMap.get('star-filled')).toBe(parseSVGDataContent(iconStar));
+    expect(cacheMap.has('starFilled')).toBe(false);
+  });
+
+  test('addIcons keeps an existing kebab-case icon when adding the camelCase name with skipExisting', () => {
+    addIconToCache('star-filled', iconStar);
+    addIcons({ iconStarFilled }, true);
+
+    const cacheMap = getIconCacheMap();
+    expect(warnSpy).not.toHaveBeenCalled();
+    expect(cacheMap.get('star-filled')).toBe(parseSVGDataContent(iconStar));
+    expect(cacheMap.has('starFilled')).toBe(false);
+  });
+
+  test('addIcons overwrites an existing kebab-case icon with the camelCase name by default', () => {
+    addIconToCache('star-filled', iconStar);
+    addIcons({ iconStarFilled });
+
+    const cacheMap = getIconCacheMap();
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(cacheMap.get('star-filled')).toBe(parseSVGDataContent(iconStarFilled));
+    expect(cacheMap.get('starFilled')).toBe(parseSVGDataContent(iconStarFilled));
+  });
+
+  test('addIcons adds new icons when skipExisting is true', () => {
+    addIcons({ iconStarFilled }, true);
+
+    const cacheMap = getIconCacheMap();
+    expect(cacheMap.size).toBe(2);
+    expect(cacheMap.get('starFilled')).toBe(parseSVGDataContent(iconStarFilled));
+    expect(cacheMap.get('star-filled')).toBe(parseSVGDataContent(iconStarFilled));
+    expect(errorSpy).not.toHaveBeenCalled();
+  });
 });
 
 test('handle encoded URI data', async () => {
