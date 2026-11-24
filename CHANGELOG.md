@@ -1,5 +1,18 @@
 # @siemens/ix-icons
 
+## 4.0.0
+
+### Major Changes
+
+- [#121](https://github.com/siemens/ix-icons/pull/121) [`b3e063a`](https://github.com/siemens/ix-icons/commit/b3e063a20ca4b4d9e012b62a7d86a1341ba5d852) Thanks [@danielleroux](https://github.com/danielleroux)! - The `color` property of the `ix-icon` component now accepts any CSS custom property.
+  Previously it prefixed the value with `--theme-`. This behavior has been removed.
+
+- [`31c5dfd`](https://github.com/siemens/ix-icons/commit/31c5dfd43c3ba2a0d17e1263dd1e0c6b21138cf0) Thanks [@danielleroux](https://github.com/danielleroux)! - Change default icon size from 24px to 20px
+
+### Minor Changes
+
+- [#127](https://github.com/siemens/ix-icons/pull/127) [`c2f9540`](https://github.com/siemens/ix-icons/commit/c2f9540de6818a5796ea0ca83501a6a32932d2b1) Thanks [@benjgil](https://github.com/benjgil)! - Add `skipExisting` option to `addIcons` and `addIconToCache`. When enabled, icons that are already in the cache are left unchanged and no overwrite warning is logged.
+
 ## 3.7.0
 
 ### Minor Changes
